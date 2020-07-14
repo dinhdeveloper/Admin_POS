@@ -22,7 +22,7 @@ public class EmployeeListAdapter extends SuperAdapter<EmployeeModel> {
     public interface EmployeeListAdapterListener {
         void onClickItem(EmployeeModel model);
 
-        void setStatusSwich(EmployeeModel item, boolean isCheked);
+        void setStatusSwich(EmployeeModel item, boolean isCheked, int position);
     }
 
     public void setListener(EmployeeListAdapterListener listener) {
@@ -65,11 +65,20 @@ public class EmployeeListAdapter extends SuperAdapter<EmployeeModel> {
                     }
                 });
 
-                status_employee.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                status_employee.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (listener != null)
-                            listener.setStatusSwich(item, isChecked);
+                    public void onClick(View v) {
+
+//                        if (listener != null)
+//                            listener.setStatusSwich(item,layoutPosition);
+
+//                        status_employee.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                            @Override
+//                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                                if (listener != null)
+//                                    listener.setStatusSwich(item, isChecked,layoutPosition);
+//                            }
+//                        });
                     }
                 });
             }

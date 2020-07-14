@@ -8,16 +8,18 @@ import android.widget.LinearLayout;
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import b.laixuantam.myaarlibrary.helper.AppUtils;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.R;
+import qtc.project.pos.activity.LoginActivity;
 
 public class ActivityLoginView extends BaseView<ActivityLoginView.UiContainer> implements ActivityLoginViewInterface {
 
+    LoginActivity activity;
     ActivityLoginViewCallback callback;
 
     @Override
     public void initialize(ActivityLoginViewCallback callback) {
         this.callback = callback;
-
         ui.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

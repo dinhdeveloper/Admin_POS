@@ -10,4 +10,6 @@ public interface FragmentEmployeeListViewInterface extends BaseViewInterface {
     void init(HomeActivity activity,FragmentEmployeeListViewCallback callback);
 
     void mappingRecyclerView(ArrayList<EmployeeModel> list);
+
+    void showPopup();
 }

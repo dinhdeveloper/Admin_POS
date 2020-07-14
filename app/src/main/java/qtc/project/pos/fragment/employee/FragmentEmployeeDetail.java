@@ -103,8 +103,10 @@ public class FragmentEmployeeDetail extends BaseFragment<FragmentEmployeeDetailV
                     ;
                     if (body.getSuccess().equals("true")) {
                         view.showDiaLogUpdate();
+                        Log.e("AAAAA",body.getMessage());
                     } else if (body.getSuccess().equals("false")) {
                         Toast.makeText(activity, "" + body.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("AAAAA",body.getMessage());
                     }
                 }
 

@@ -19,4 +19,6 @@ public interface HomeActivityViewCallback {
     void onClickItemNav(Fragment fragment);
 
     void logOut();
+
+    void onClickLogin(String oldPass, String newPass,String employee_id);
 }

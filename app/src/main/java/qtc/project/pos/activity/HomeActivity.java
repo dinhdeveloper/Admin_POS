@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
+import b.laixuantam.myaarlibrary.api.ApiRequest;
+import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseFragmentActivity;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
@@ -45,6 +47,7 @@ import b.laixuantam.myaarlibrary.widgets.multiple_media_picker.Gallery;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import qtc.project.pos.R;
 //import qtc.project.pos.fragment.account.profile_manager.FragmentProfileManager;
+import qtc.project.pos.api.employee.UpdatePassEmployeeRequest;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.fragment.home.FragmentHome;
 import qtc.project.pos.fragment.levelcustomer.FragmentCreateLevelCustomer;
@@ -61,6 +64,8 @@ import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.FragmentTom
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.thongke.FragmentThongKe;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.tongdoanhthu.FragmentTongDoanhThu;
 import qtc.project.pos.fragment.report.thongkekho.tonkho_vs_doanhthu.FragmentTK_TonKho_VS_DoanhThu;
+import qtc.project.pos.model.BaseResponseModel;
+import qtc.project.pos.model.EmployeeModel;
 import qtc.project.pos.model.SupplierModel;
 import qtc.project.pos.ui.views.action_bar.base_main_actionbar.BaseMainActionbarViewInterface;
 import qtc.project.pos.ui.views.activity.home_activity.HomeActivityView;
@@ -270,6 +275,39 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
         AppProvider.getPreferences().clear();
         finish();
         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
+    @Override
+    public void onClickLogin(String oldPass, String newPass,String employee_id) {
+        showProgress();
+        if (oldPass != null && newPass != null) {
+            UpdatePassEmployeeRequest.ApiParams params = new UpdatePassEmployeeRequest.ApiParams();
+            params.id_employee = employee_id;
+            params.old_password = oldPass;
+            params.new_password = newPass;
+
+            AppProvider.getApiManagement().call(UpdatePassEmployeeRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<EmployeeModel>>() {
+                @Override
+                public void onSuccess(BaseResponseModel<EmployeeModel> body) {
+                    dismissProgress();
+                    if (body.getSuccess().equals("true")){
+                        view.updatePopup();
+                    }else if (body.getSuccess().equals("false")){
+                        Toast.makeText(getApplicationContext(), ""+body.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onError(ErrorApiResponse error) {
+
+                }
+
+                @Override
+                public void onFail(ApiRequest.RequestError error) {
+
+                }
+            });
+        }
     }
 
     public void FullScreencall() {

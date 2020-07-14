@@ -48,7 +48,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Cấp độ vip"
+                            android:text="Thêm cấp độ"
                             android:textColor="@color/white"
                             android:textSize="20dp"
                             android:textStyle="bold" />
@@ -203,7 +203,7 @@
                     android:textColor="@color/colorAAA"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="5. Mô tả sản phẩm "
+                    android:text="5. Mô tả cấp độ"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

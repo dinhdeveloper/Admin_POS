@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    android:layout_width="250dp"
     android:layout_height="match_parent"
     android:background="#F2F2F2"
     android:orientation="vertical"
@@ -70,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/thongtin_taikhoan"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="@dimen/dp10"
             android:layout_marginHorizontal="18dp"
@@ -98,6 +99,7 @@
             android:layout_height="1dp"/>
 
         <LinearLayout
+            android:id="@+id/thaydoi_mk"
             android:layout_marginVertical="@dimen/dp20"
             android:layout_marginHorizontal="18dp"
             android:orientation="horizontal"

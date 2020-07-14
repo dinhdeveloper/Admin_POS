@@ -1,11 +1,14 @@
 package qtc.project.pos.ui.views.fragment.levelcustomer.detail;
 
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +23,7 @@ import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.customer.CustomerAdapter;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.LevelCustomerModel;
 import qtc.project.pos.ui.views.fragment.levelcustomer.FragmentLevelCustomerView;
@@ -45,7 +49,7 @@ public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCusto
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchCustomer(ui.edit_filter.getText().toString(),level_id);
+                    searchCustomer(ui.edit_filter.getText().toString(), level_id);
                     return true;
                 }
                 Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
@@ -56,20 +60,19 @@ public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCusto
         ui.image_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ui.edit_filter.getText().toString()!=null){
-                    searchCustomer(ui.edit_filter.getText().toString(),level_id);
-                }
-                else {
+                if (ui.edit_filter.getText().toString() != null) {
+                    searchCustomer(ui.edit_filter.getText().toString(), level_id);
+                } else {
                     Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void searchCustomer(String toString,String id) {
-        if (callback != null){
-            if (toString!=null){
-                callback.callDataSearchCus(toString,id);
+    private void searchCustomer(String toString, String id) {
+        if (callback != null) {
+            if (toString != null) {
+                callback.callDataSearchCus(toString, id);
             }
         }
     }
@@ -89,11 +92,11 @@ public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCusto
     public void sendDataToView(LevelCustomerModel model) {
         level_id = model.getId();
         ui.name_level_customer_header.setText(model.getName());
-        ui.id_level_customer.setText(model.getId());
+        ui.id_level_customer.setText(model.getId_code());
         ui.name_level_customer.setText(model.getName());
         ui.discount_level.setText(model.getDiscount());
         ui.description_level.setText(model.getDescription());
-
+        AppProvider.getImageHelper().displayImage(Consts.HOST_API + model.getImage(), ui.image_level, null, R.drawable.imageloading);
         ui.tongkhachhang.setText("Có tất cả " + model.getTotal_customer() + " khách hàng.");
 
         ui.choose_file_image.setOnClickListener(new View.OnClickListener() {
@@ -144,8 +147,37 @@ public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCusto
         ui.layout_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (callback!=null)
-                    callback.deleteLevelCustomer(level_id);
+
+                LayoutInflater layoutInflater = activity.getLayoutInflater();
+                View popupView = layoutInflater.inflate(R.layout.alert_dialog_waiting, null);
+                TextView title_text = popupView.findViewById(R.id.title_text);
+                TextView content_text = popupView.findViewById(R.id.content_text);
+                Button cancel_button = popupView.findViewById(R.id.cancel_button);
+                Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+
+                title_text.setText("Cảnh báo");
+                content_text.setText("Bạn có muốn xóa cấp độ này không?");
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                alert.setView(popupView);
+                AlertDialog dialog = alert.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+                cancel_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                custom_confirm_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (callback != null)
+                            callback.deleteLevelCustomer(level_id);
+                        dialog.dismiss();
+                    }
+                });
             }
         });
     }

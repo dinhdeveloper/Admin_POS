@@ -12,6 +12,7 @@ import b.laixuantam.myaarlibrary.dependency.AppProvider;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
+import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.LevelCustomerModel;
 
 public class LevelCustomerAdapter extends SuperAdapter<LevelCustomerModel> {
@@ -38,10 +39,10 @@ public class LevelCustomerAdapter extends SuperAdapter<LevelCustomerModel> {
         TextView discount = holder.findViewById(R.id.discount);
         LinearLayout layoutLevelCus = holder.findViewById(R.id.layoutLevelCus);
 
-        AppProvider.getImageHelper().displayImage(item.getImage(), imageLevel, null, R.drawable.imageloading);
+        AppProvider.getImageHelper().displayImage(Consts.HOST_API+item.getImage(), imageLevel, null, R.drawable.imageloading);
         description.setText(item.getDescription());
         nameLevel.setText(item.getName());
-        discount.setText("Có "+item.getDiscount()+" người hiển thị.");
+        discount.setText("Có "+item.getTotal_customer()+" người hiển thị.");
 
         layoutLevelCus.setOnClickListener(new View.OnClickListener() {
             @Override

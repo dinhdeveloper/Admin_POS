@@ -90,13 +90,14 @@ public class FragmentEmployeeList extends BaseFragment<FragmentEmployeeListViewI
             EmployeeRequest.ApiParams params = new EmployeeRequest.ApiParams();
             params.type_manager = "update_employee";
             params.id_employee = AppProvider.getPreferences().getUserModel().getId();
+
             params.status = employeeModel.getStatus();
             AppProvider.getApiManagement().call(EmployeeRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<EmployeeModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<EmployeeModel> body) {
                     dismissProgress();
                     if (body.getSuccess().equals("true")) {
-                        Toast.makeText(activity, "" + body.getMessage(), Toast.LENGTH_SHORT).show();
+                        view.showPopup();
                     } else if (body.getSuccess().equals("false")) {
                         Toast.makeText(activity, "" + body.getMessage(), Toast.LENGTH_SHORT).show();
                     }

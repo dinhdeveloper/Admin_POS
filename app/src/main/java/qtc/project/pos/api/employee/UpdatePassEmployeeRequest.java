@@ -2,20 +2,19 @@ package qtc.project.pos.api.employee;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.BaseApiParams;
-import qtc.project.pos.api.customer.CustomerRequest;
 import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.BaseResponseModel;
-import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.EmployeeModel;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
-@ApiRequest.ApiName("employee_manager")
-public class EmployeeRequest  extends ApiRequest<EmployeeRequest.Service, BaseResponseModel<EmployeeModel>, EmployeeRequest.ApiParams> {
-    public EmployeeRequest() {
-        super(EmployeeRequest.Service.class, RequestOrigin.NONE, Consts.HOST_API, Consts.MODE, Consts.TRUST_CERTIFICATE);
+@ApiRequest.ApiName("update_password_employee")
+public class UpdatePassEmployeeRequest  extends ApiRequest<UpdatePassEmployeeRequest.Service, BaseResponseModel<EmployeeModel>, UpdatePassEmployeeRequest.ApiParams> {
+
+    public UpdatePassEmployeeRequest() {
+        super(UpdatePassEmployeeRequest.Service.class, RequestOrigin.NONE, Consts.HOST_API, Consts.MODE, Consts.TRUST_CERTIFICATE);
     }
 
     @Override
@@ -24,8 +23,8 @@ public class EmployeeRequest  extends ApiRequest<EmployeeRequest.Service, BaseRe
     }
 
     @Override
-    protected Call<BaseResponseModel<EmployeeModel>> call(EmployeeRequest.ApiParams params) {
-        params.detect = "employee_manager";
+    protected Call<BaseResponseModel<EmployeeModel>> call(UpdatePassEmployeeRequest.ApiParams params) {
+        params.detect = "update_password_employee";
         return getService().call(params);
     }
 
@@ -33,7 +32,7 @@ public class EmployeeRequest  extends ApiRequest<EmployeeRequest.Service, BaseRe
     interface Service {
         @Headers(Consts.HEADES)
         @POST(Consts.REST_ENDPOINT)
-        Call<BaseResponseModel<EmployeeModel>> call(@Body EmployeeRequest.ApiParams params);
+        Call<BaseResponseModel<EmployeeModel>> call(@Body UpdatePassEmployeeRequest.ApiParams params);
     }
 
     public static class ApiParams extends BaseApiParams {
