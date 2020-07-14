@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Point of Sales</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="title_select_image_from_gallery">Chọn ảnh từ thư viện</string>
+    <string name="title_select_image_from_camera">Chọn ảnh từ Camera</string>
+    <string name="error_load_file_image">Không thể tải hình ảnh</string>
+    <string name="empty_list">Danh sách trống</string>
+    <string name="error_loadmore">Không thể tải thêm.</string>
+
+    <string name="title_date_select_slideDateTimeDialog">Chọn ngày</string>
+    <string name="title_time_select_slideDateTimeDialog">Chọn giờ</string>
+
+    <string name="crash_dialog_ok_toast">Cảm ơn!</string>
+    <string name="crash_dialog_text">Đã xảy ra lỗi trong quá trình chạy ứng dụng, hãy click \'OK\' để gửi email về lỗi cho nhóm phát triển. \nTrân trọng cảm ơn!</string>
+    <string name="crash_dialog_title">Lỗi ứng dụng</string>
+    <string name="crash_notif_title">Lỗi ứng dụng</string>
+
+    <string name="txt_message_sign">Bạn phải đăng nhập để tiếp tục thực hiện</string>
+
+    <string name="login_error">Đăng nhập không thành công.</string>
+
+    <string name="title_forgot_pasword">Quên mật khẩu?</string>
+    <string name="title_button_register">Đăng ký mới ở đây</string>
+    <string name="title_login">Đăng nhập</string>
+    <string name="title_phone">Số điện thoại</string>
+    <string name="title_login_input">Nhập thông tin của bạn</string>
+    <string name="title_button_have_account">Tôi có tài khoản khác</string>
+    <string name="title_find_account">Tìm tài khoản của bạn \n Nhập số điện thoại để khôi phục</string>
+    <string name="title_sns_code_forgot_password">Chúng tôi sẽ gửi cho bạn mã để xác nhận tài khoản này là của bạn</string>
+    <string name="login_password">Mật khẩu</string>
+    <string name="lb_wellcome_app">Wellcome to APP</string>
+
+    <string name="description">Cầu thủ Nghệ An nói chung, Quế Ngọc Hải nói riêng luôn thi đấu với tinh thần máu lửa, đôi khi tới mức thô bạo. Thứ tinh thần đó trở thành bản sắc rất riêng. Song, từ ngày về Viettel, trung vệ sinh năm 1993 đang dần đánh mất thứ vũ khí quan trọng này.</string>
+
+
+    <string-array name="year">
+        <item>2010</item>
+        <item>2011</item>
+        <item>2012</item>
+        <item>2013</item>
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+        <item>2024</item>
+        <item>2025</item>
+        <item>2026</item>
+        <item>2027</item>
+        <item>2028</item>
+        <item>2029</item>
+        <item>2030</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hinhnen"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_detail_person_level_customer"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/layout_detail_all"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_toolbar_home"
+                android:minHeight="?attr/actionBarSize"
+                android:paddingRight="8dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageNavLeft"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_icon_back" />
+
+                        <TextView
+                            android:id="@+id/name_level_customer_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Cấp độ vip"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.Toolbar>
+
+            <LinearLayout
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/colorAAA"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="1. HÌNH ẢNH"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/choose_file_image"
+                    android:background="@drawable/custom_background_chon_file"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="chọn file"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/image_level"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/dp20"
+                android:layout_width="210dp"
+                android:layout_height="130dp"/>
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <TextView
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:textColor="@color/colorAAA"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="2. Mã cấp độ "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/id_level_customer"
+                android:textSize="14dp"
+                android:layout_marginVertical="@dimen/dp10"
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:background="@color/hinhnen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <View
+                android:layout_marginBottom="@dimen/dp10"
+                android:background="@color/colorAAA"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <TextView
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:textColor="@color/colorAAA"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="3. Tên "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/name_level_customer"
+                android:textSize="14dp"
+                android:layout_marginVertical="@dimen/dp10"
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:background="@color/hinhnen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <View
+                android:layout_marginBottom="@dimen/dp10"
+                android:background="@color/colorAAA"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <TextView
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:textColor="@color/colorAAA"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="4. Discount(%) "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/discount_level"
+                android:textSize="14dp"
+                android:layout_marginVertical="@dimen/dp10"
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:background="@color/hinhnen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <View
+                android:layout_marginBottom="@dimen/dp10"
+                android:background="@color/colorAAA"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <TextView
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:textColor="@color/colorAAA"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="5. Mô tả sản phẩm "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/description_level"
+                android:textSize="14dp"
+                android:layout_marginVertical="@dimen/dp10"
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:background="@color/hinhnen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <View
+                android:layout_marginBottom="@dimen/dp10"
+                android:background="@color/colorAAA"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:textColor="@color/colorAAA"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="6. Số người nhận được cấp độ vip "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_marginVertical="@dimen/dp15"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_marginVertical="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:id="@+id/xemchitiet"
+                    android:background="@drawable/custom_background_chon_file"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="Xem chi tiết"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <!--btn-->
+            <LinearLayout
+                android:id="@+id/layout_update"
+                android:background="@drawable/custom_background_button_login"
+                android:layout_gravity="center"
+                android:layout_width="200dp"
+                android:layout_height="40dp">
+                <TextView
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Cập nhật"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_delete"
+                android:layout_marginVertical="@dimen/dp20"
+                android:background="@drawable/custom_background_btn_delete"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="40dp">
+                <TextView
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Xóa"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorPrimary">#009464</color>
+    <color name="colorPrimaryDark">#009464</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="black">#333333</color>
+    <color name="red">#e31b23</color>
+    <color name="red_press">#b61619</color>
+
+    <color name="white">#ffffff</color>
+    <color name="white_opacity">#DCffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="medium_gray">#959595</color>
+    <color name="light_gray_border">#d9d9d9</color>
+    <color name="light_gray">#d9d9d9</color>
+    <color name="blue">#0099CC</color>
+    <color name="bright_blue">#33B5E5</color>
+    <color name="blue_background_card">#3b73af</color>
+    <color name="background_chat">#F5F5F5</color>
+
+    <color name="blue_background_login_fb">#3b5998</color>
+    <color name="blue_background_login_fb_press">#303F9F</color>
+
+    <color name="loginBackground">#7266ba</color>
+
+    <color name="login_button">#5d54ba</color>
+    <color name="login_button_press">#5452c1</color>
+    <color name="button_hd_banhang">#edf1f2</color>
+    <color name="button_press">#4c7c7c7c</color>
+
+    <color name="mb_gray">#66dedede</color>
+
+    <color name="bg_edit_text_booking_form">#888888</color>
+    <color name="color_text_booking_form_light">#959595</color>
+    <color name="color_text_booking_form">#555555</color>
+
+    <color name="colorInversePrimaryText">#FFFFFF</color>
+    <color name="colorPrimaryButton">#2196F3</color>
+    <color name="colorSuccessButton">#0F9D58</color>
+    <color name="colorDangerButton">#FF5252</color>
+
+
+    <color name="gray">#a6a6a6</color>
+    <color name="green">#27c24c</color>
+    <color name="txt_default">#808080</color>
+    <color name="gray_very_light">#DDDDDD</color>
+    <color name="gray_light_opacity">#DCBBBBBB</color>
+
+    <color name="color_primary">#009464</color>
+    <color name="color_primary_active">#009464</color>
+    <color name="color_info">#23b7e5</color>
+    <color name="color_info_active">#19a9d5</color>
+    <color name="color_danger">#f05050</color>
+    <color name="color_danger_active">#ee3939</color>
+    <color name="color_default">#fcfdfd</color>
+    <color name="color_default_active">#edf1f2</color>
+    <color name="color_success">#27c24c</color>
+    <color name="color_success_active">#23ad44</color>
+
+    <color name="color_background_default">#F5F5F5</color>
+
+    <color name="color_text_default">#808080</color>
+
+    <color name="bg_item_normal_state">#ffffff</color>
+    <color name="bg_item_swiping_state">#ffddddff</color>
+    <color name="bg_item_swiping_active_state">#ff9999ff</color>
+    <color name="bg_swipe_item_delete">#f05050</color>
+
+
+    <color name="contentTextColor">#4d4d4d</color>
+    <color name="contentTextHintColor">#b8b8b8</color>
+    <color name="contentTextHintColorDarker">#999999</color>
+    <color name="gray_light">#d2d4d6</color>
+    <color name="black_alpha_0p">#00000000</color>
+    <color name="black_alpha_50p">#74000000</color>
+    <color name="black_alpha_70p">#b2000000</color>
+    <color name="blue_light">#73c3fe</color>
+
+    <color name="titleTabColor">#ffffff</color>
+    <color name="titleSelectedTabColor">#3F51B5</color>
+
+    <item name="gray_holo_dark" type="color">#ff464646</item>
+    <item name="gray_holo_light" type="color">#ffd0d0d0</item>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="yellow">#ffea00</color>
+    <color name="button_background" tools:ignore="MissingDefaultResource">#023373</color>
+
+
+
+    <color name="dangnhap">#726A95</color>
+    <color name="edittextpassword">#BDBDBD</color>
+    <color name="colorYellow">#FFC107</color>
+    <color name="colorYellowTwo">#E6CC7C</color>
+    <color name="colorText">#000000</color>
+    <color name="colorTextOne">#BFBDBD</color>
+    <color name="colorBg">#F6F5F5</color>
+    <color name="colorTextCategory">#2C4747</color>
+    <color name="colorPrice">#EF082A</color>
+    <color name="placeholder_bg">#dddddd</color>
+    <color name="colorZZZ">#465FEC</color>
+    <color name="colorAAA">#709FB0</color>
+    <color name="colorBBB">#726A95</color>
+    <color name="colorCCC">#A0C1B8</color>
+    <color name="hinhnen">#F3ECD3</color>
+    <color name="hinhnen_login">#709FB0</color>
+    <color name="text">#FF6D4C</color>
+    <color name="background_toolbar_home">#709FB0</color>
+    <color name="text_filter">#2BB5D1</color>
+    <color name="bg_filter">#F2F2F2</color>
+    <color name="tien">#FFC32D</color>
+</resources>

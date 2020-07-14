@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="@dimen/dp10"
+    android:elevation="@dimen/dp5"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/custom_background_layout"
+    android:id="@+id/layoutItemOrder"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:padding="@dimen/dp10"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/name_customer"
+                android:layout_marginVertical="2dp"
+                android:textColor="@color/colorAAA"
+                android:textSize="@dimen/dp15"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:text="A Lý( con chú thìn)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:src="@drawable/ic_golden"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/id_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="2dp"
+            android:text="Mã đơn : MDH121435"
+            android:textColor="@color/colorBBB"
+            android:textSize="@dimen/dp15"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginVertical="2dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/ic_phone_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/phone_customer"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:textColor="@color/colorText"
+                android:text="0998767981"
+                android:textSize="@dimen/dp15"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginVertical="2dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:paddingTop="@dimen/dp5"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_location_on_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/address_customer"
+                android:maxLines="2"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:textColor="@color/colorText"
+                android:text="289 Lý trọng tuyển phường 2, quận 8, TP HCM"
+                android:textSize="@dimen/dp15"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginVertical="2dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:paddingTop="@dimen/dp5"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_clock_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/date_order"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:textColor="@color/colorText"
+                android:maxLines="2"
+                android:text="29-03-2021 09:00 (buổi sáng)"
+                android:textSize="@dimen/dp15"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_status"
+        android:background="@drawable/custom_border_button_item_ordel"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/status"
+            android:text="Hoàn thành"
+            android:textSize="@dimen/dp15"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

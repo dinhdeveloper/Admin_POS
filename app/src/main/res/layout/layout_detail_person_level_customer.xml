@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/hinhnen"
+    android:paddingRight="50dp"
+    android:paddingBottom="50dp"
+    android:id="@+id/layout_detail_persion"
+    android:visibility="gone"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:paddingTop="@dimen/dp10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/xemchitietkk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dp20"
+            android:text="Xem chi tiết"
+            android:textColor="@color/colorAAA"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/xemchitietkk"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginBottom="@dimen/dp20"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/layout_search"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/custom_background_search_level_detail"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/dp15">
+
+                <ImageView
+                    android:id="@+id/image_search"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:src="@drawable/ic_search" />
+
+                <EditText
+                    android:id="@+id/edit_filter"
+                    android:layout_width="200dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:background="@color/white"
+                    android:gravity="start|center"
+                    android:hint="Lý Hiển Long, Trần..."
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:textColor="@color/colorText" />
+            </LinearLayout>
+        </LinearLayout>
+        <!--end search-->
+
+        <TextView
+            android:id="@+id/tongkhachhang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#91D5DA"
+            android:textSize="@dimen/dp15"
+            android:textStyle="italic|bold" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/tongkhachhang">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_list_customer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.NestedScrollView>
+
+
+        <android.support.design.widget.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp20">
+
+            <TextView
+                android:id="@+id/txtBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center|right"
+                android:layout_marginRight="@dimen/dp20"
+                android:gravity="right"
+                android:text="Quay lại"
+                android:textColor="@color/dangnhap"
+                android:textSize="@dimen/dp20"
+                android:textStyle="bold" />
+        </android.support.design.widget.BottomNavigationView>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

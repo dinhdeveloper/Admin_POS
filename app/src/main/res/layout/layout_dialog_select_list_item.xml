@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutRootView"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <EditText
+        android:id="@+id/edtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:hint="Tìm kiếm"
+        android:imeOptions="actionDone"
+        android:inputType="text|textNoSuggestions"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/txt_default" />
+
+    <ListView
+        android:id="@+id/lvListSelect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/edtSearch"
+        tools:listitem="@layout/row_item_product">
+
+    </ListView>
+
+    <b.laixuantam.myaarlibrary.widgets.CustomProgressBar
+        android:id="@+id/loadingView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:foreground_color="@color/red" />
+
+    <RelativeLayout
+        android:id="@+id/layoutEmptyList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/empty_list"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

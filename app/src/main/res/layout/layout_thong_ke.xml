@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/layout_thongke"
+    android:visibility="visible"
+    android:background="@color/hinhnen"
+    android:layout_marginVertical="@dimen/dp20"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Chọn mốc thời gian:"
+        android:textColor="@color/contentTextHintColorDarker"
+        android:textSize="@dimen/dp20"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginVertical="@dimen/dp15"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/layout_to"
+            android:elevation="@dimen/dp5"
+            android:background="@drawable/border_shape_white_layout_search_contact"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+            <TextView
+                android:id="@+id/date_to"
+                android:text="Năm"
+                android:layout_marginVertical="@dimen/dp10"
+                android:textSize="@dimen/dp20"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/text_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:src="@drawable/ic_calendar"
+                android:layout_gravity="center"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    <!--end-->
+
+    <LinearLayout
+        android:id="@+id/layout_search"
+        android:background="@drawable/custom_background_button_login"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="40dp">
+        <TextView
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="Tìm kiếm"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+    <View
+        android:layout_marginVertical="@dimen/dp15"
+        android:background="@color/colorAAA"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:id="@+id/layout_status"
+        android:visibility="gone"
+        android:layout_marginHorizontal="@dimen/dp15"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_list"
+            android:layout_marginVertical="@dimen/dp10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="Tổng doanh thu"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/colorAAA"
+            android:textSize="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp20"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/layout_show_tien"
+            android:background="@drawable/border_shape_white_layout_search_contact"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:src="@drawable/ic_money"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tong_tien"
+                android:textStyle="bold"
+                android:textSize="@dimen/dp20"
+                android:textColor="@color/tien"
+                android:layout_marginRight="@dimen/dp10"
+                android:text="Tùy chọn"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="320dp"
+    android:elevation="@dimen/dp5"
+    android:gravity="center"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="@dimen/dp10"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/custom_background_layout"
+    android:orientation="vertical">
+
+    <ImageView
+        android:src="@drawable/xaphong"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"/>
+    <LinearLayout
+        android:layout_margin="@dimen/dp10"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="Nước xả comfor 860ml"
+            android:textColor="@color/colorAAA"
+            android:textSize="21dp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginVertical="@dimen/dp5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_home_work_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="18dp"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:text="Gia: "
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/text"
+                android:text="1,900,00 D"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+            <TextView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/text"
+                android:text="1,900,00 D"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginVertical="@dimen/dp5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_home_work_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="18dp"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:text="Kho: "
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="8"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

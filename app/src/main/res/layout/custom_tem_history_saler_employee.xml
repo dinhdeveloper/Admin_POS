@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/dp5"
+    android:padding="10dp"
+    android:layout_margin="@dimen/dp10"
+    android:id="@+id/layout_item"
+    android:background="@drawable/border_shape_white_layout_search_contact"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_margin="@dimen/dp5"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Mã NV tạo hóa đơn: "
+                    android:textColor="@color/colorAAA"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/id_employee"
+                    android:text="134vdvf3"
+                    android:textColor="@color/colorAAA"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--end-->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Người đảm nhiệm: "
+                    android:textStyle="normal"
+                    android:textColor="@color/dangnhap"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/name_employee"
+                    android:text="134vdvf3"
+                    android:textStyle="normal"
+                    android:textColor="@color/text"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--end-->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Ngày tạo đơn: "
+                    android:textStyle="normal"
+                    android:textColor="@color/dangnhap"
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/date_create"
+                    android:text="134vdvf3"
+                    android:textStyle="normal"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--end-->
+        </LinearLayout>
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/ic_next_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hinhnen"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_toolbar_home"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingRight="8dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/dp5"
+                    android:id="@+id/imageNavLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_back_24" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Báo cáo thống kê kho"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/dp15"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/layoutBCXN_KHO"
+            android:layout_marginVertical="@dimen/dp10"
+            android:orientation="horizontal"
+            android:elevation="3dp"
+            android:background="@drawable/custom_background_item_home"
+            android:paddingVertical="18dp"
+            android:paddingHorizontal="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:textSize="@dimen/dp20"
+                android:layout_weight="1"
+                android:text="Báo cáo xuất nhập kho"
+                android:textStyle="bold"
+                android:textColor="@color/dangnhap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/ic_icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutBCAT_KHO"
+            android:layout_marginVertical="@dimen/dp10"
+            android:orientation="horizontal"
+            android:elevation="3dp"
+            android:background="@drawable/custom_background_item_home"
+            android:paddingVertical="18dp"
+            android:paddingHorizontal="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:textSize="@dimen/dp20"
+                android:layout_weight="1"
+                android:text="Báo cáo an toàn kho"
+                android:textStyle="bold"
+                android:textColor="@color/dangnhap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/ic_icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutBCTK_VS_DT"
+            android:layout_marginVertical="@dimen/dp10"
+            android:orientation="horizontal"
+            android:elevation="3dp"
+            android:background="@drawable/custom_background_item_home"
+            android:paddingVertical="18dp"
+            android:paddingHorizontal="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:textSize="@dimen/dp20"
+                android:layout_weight="1"
+                android:text="Thống kê tồn kho so với doanh thu"
+                android:textStyle="bold"
+                android:textColor="@color/dangnhap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/ic_icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

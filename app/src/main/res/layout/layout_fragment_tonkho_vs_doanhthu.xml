@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hinhnen"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_toolbar_home"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingRight="8dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageNavLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp5"
+                    android:src="@drawable/ic_back_24" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Thống kê tồn kho &amp; DT"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginVertical="@dimen/dp20"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Chọn mốc thời gian:"
+                android:textColor="@color/contentTextHintColorDarker"
+                android:textSize="@dimen/dp20"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginVertical="@dimen/dp15"
+                android:layout_marginHorizontal="60dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/layout_to"
+                    android:elevation="@dimen/dp5"
+                    android:background="@drawable/border_shape_white_layout_search_contact"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <TextView
+                        android:id="@+id/date_to"
+                        android:text="Từ"
+                        android:layout_marginVertical="@dimen/dp10"
+                        android:textSize="@dimen/dp20"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/text_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:src="@drawable/ic_calendar"
+                        android:layout_gravity="center"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:textSize="@dimen/dp15"
+                    android:textStyle="bold"
+                    android:textColor="@color/text"
+                    android:text="To"
+                    android:layout_marginHorizontal="@dimen/dp15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_from"
+                    android:elevation="@dimen/dp5"
+                    android:background="@drawable/border_shape_white_layout_search_contact"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <TextView
+                        android:id="@+id/date_end"
+                        android:text="Đến"
+                        android:layout_marginVertical="@dimen/dp10"
+                        android:textSize="@dimen/dp20"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/text_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:background="@drawable/calendar_header"
+                        android:src="@drawable/ic_calendar"
+                        android:layout_gravity="center"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+            <!--end-->
+
+            <LinearLayout
+                android:id="@+id/layout_search"
+                android:background="@drawable/custom_background_button_login"
+                android:layout_gravity="center"
+                android:layout_width="200dp"
+                android:layout_height="40dp">
+                <TextView
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Tìm kiếm"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+
+            <View
+                android:layout_marginVertical="@dimen/dp15"
+                android:background="@color/colorAAA"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:id="@+id/layout_status"
+                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/dp15"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:text="Số liệu thống kê:"
+                    android:textColor="@color/colorAAA"
+                    android:textSize="@dimen/dp20"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!--chart-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@drawable/custom_background_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:textColor="@color/dangnhap"
+                            android:text="Tổng quan:"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_marginRight="10dp"
+                                android:layout_gravity="right"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:layout_margin="10dp"
+                                    android:textColor="#000000"
+                                    android:text="Tồn kho"
+                                    android:textSize="13dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                                <ImageView
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/custom_icon_ton_kho"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_marginRight="10dp"
+                                android:layout_gravity="right"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:layout_margin="10dp"
+                                    android:textColor="#000000"
+                                    android:text="Doanh thu"
+                                    android:textSize="13dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                                <ImageView
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/custom_icon_doanh_thu"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_list"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hinhnen"
+    android:visibility="gone"
+    android:id="@+id/layout_qldh_data"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="Kết quả:"
+        android:padding="@dimen/dp20"
+        android:textSize="14dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_qllh"
+        android:paddingHorizontal="@dimen/dp20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_marginVertical="@dimen/dp20"
+        android:background="@color/colorAAA"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_qllh_detail"
+                android:paddingHorizontal="@dimen/dp20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

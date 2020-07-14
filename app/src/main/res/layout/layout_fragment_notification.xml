@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_header" />
+
+    <RelativeLayout
+        android:id="@+id/layoutListNotify"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="visible"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tvLableNotify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="Thông báo"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <b.laixuantam.myaarlibrary.widgets.cptr.PtrClassicFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ptrClassicFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tvLableNotify"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:visibility="visible"
+            cube_ptr:ptr_duration_to_close="200"
+            cube_ptr:ptr_duration_to_close_header="700"
+            cube_ptr:ptr_keep_header_when_refresh="true"
+            cube_ptr:ptr_pull_to_fresh="false"
+            cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+            cube_ptr:ptr_resistance="1.8">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_list_notification"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/row_item_notification" />
+        </b.laixuantam.myaarlibrary.widgets.cptr.PtrClassicFrameLayout>
+
+        <include
+            android:id="@+id/layoutEmptyList"
+            layout="@layout/layout_empty_list"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutNotifyDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/transparent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgNotificationDetailLayoutNotifyDetail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/no_image_full" />
+
+            <TextView
+                android:id="@+id/tvNotificationTitleLayoutNotifyDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:text="address" />
+
+            <TextView
+                android:id="@+id/tvNotificationDescriptionLayoutNotifyDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                tools:text="address" />
+
+            <TextView
+                android:id="@+id/tvNotificationDateCreateLayoutNotifyDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textStyle="italic"
+                tools:text="date_create" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

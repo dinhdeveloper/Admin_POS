@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hinhnen"
+    android:id="@+id/fragmentHome"
+    android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_toolbar_home"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingRight="8dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageNavLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_menu_24" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Quản lý"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/layoutQLSP"
+                    android:layout_marginVertical="@dimen/dp10"
+                    android:orientation="horizontal"
+                    android:elevation="3dp"
+                    android:background="@drawable/custom_background_item_home"
+                    android:paddingVertical="18dp"
+                    android:paddingHorizontal="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_quanlysanpham"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:textSize="@dimen/dp20"
+                        android:layout_weight="1"
+                        android:text="Quản lý sản phẩm"
+                        android:textStyle="bold"
+                        android:textColor="@color/dangnhap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutQLKH"
+                    android:layout_marginVertical="@dimen/dp10"
+                    android:orientation="horizontal"
+                    android:elevation="3dp"
+                    android:background="@drawable/custom_background_item_home"
+                    android:paddingVertical="18dp"
+                    android:paddingHorizontal="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/ic_icon_quanlykhachhang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:textSize="@dimen/dp20"
+                        android:layout_weight="1"
+                        android:text="Quản lý khách hàng"
+                        android:textStyle="bold"
+                        android:textColor="@color/dangnhap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutQLDH"
+                    android:layout_marginVertical="@dimen/dp10"
+                    android:orientation="horizontal"
+                    android:elevation="@dimen/dp5"
+                    android:background="@drawable/custom_background_item_home"
+                    android:paddingVertical="18dp"
+                    android:paddingHorizontal="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_quanlydonhang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:textSize="@dimen/dp20"
+                        android:layout_weight="1"
+                        android:text="Quản lý đơn hàng"
+                        android:textStyle="bold"
+                        android:textColor="@color/dangnhap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layoutQLNV"
+                    android:layout_marginVertical="@dimen/dp10"
+                    android:orientation="horizontal"
+                    android:elevation="@dimen/dp5"
+                    android:background="@drawable/custom_background_item_home"
+                    android:paddingVertical="18dp"
+                    android:paddingHorizontal="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_quanlynhanvien"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:textSize="@dimen/dp20"
+                        android:layout_weight="1"
+                        android:text="Quản lý nhân viên"
+                        android:textStyle="bold"
+                        android:textColor="@color/dangnhap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layoutQLCDKH"
+                    android:layout_marginVertical="@dimen/dp10"
+                    android:orientation="horizontal"
+                    android:elevation="@dimen/dp5"
+                    android:background="@drawable/custom_background_item_home"
+                    android:paddingVertical="18dp"
+                    android:paddingHorizontal="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_quanlycapdokhachhang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:textSize="@dimen/dp20"
+                        android:layout_weight="1"
+                        android:text="Quản lý cấp độ khách hàng"
+                        android:textStyle="bold"
+                        android:textColor="@color/dangnhap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layoutQLTK"
+                    android:layout_marginVertical="@dimen/dp10"
+                    android:orientation="horizontal"
+                    android:elevation="@dimen/dp5"
+                    android:background="@drawable/custom_background_item_home"
+                    android:paddingVertical="18dp"
+                    android:paddingHorizontal="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_quanlythongke"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:textSize="@dimen/dp20"
+                        android:layout_weight="1"
+                        android:text="Quản lý thống kê - báo cáo"
+                        android:textStyle="bold"
+                        android:textColor="@color/dangnhap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layoutQLNCU"
+                    android:layout_marginVertical="@dimen/dp10"
+                    android:orientation="horizontal"
+                    android:elevation="@dimen/dp5"
+                    android:background="@drawable/custom_background_item_home"
+                    android:paddingVertical="18dp"
+                    android:paddingHorizontal="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_quanlynhacungung"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:textSize="@dimen/dp20"
+                        android:layout_weight="1"
+                        android:text="Quản lý nhà cung ứng"
+                        android:textStyle="bold"
+                        android:textColor="@color/dangnhap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

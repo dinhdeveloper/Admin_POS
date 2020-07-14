@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hinhnen"
+    android:id="@+id/fragmentProduct"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_background_toolbar_product"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingRight="12dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageNavLeft"
+                    android:layout_margin="@dimen/dp5"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_icon_back" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Quản lý đơn hàng"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+            </LinearLayout>
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="Đây là danh mục các đơn hàng ta sẽ quản lý sửa đổi vận hành hệ thống"
+                android:textColor="@color/white"
+                android:textSize="11dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/dp20"
+                android:layout_marginVertical="@dimen/dp20"
+                android:background="#4FFFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <TextView
+                    android:textSize="@dimen/dp20"
+                    android:textColor="@color/white"
+                    android:text="Danh sách quản lý đơn hàng"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/kkkk"
+                    android:src="@drawable/ic_icon_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginVertical="@dimen/dp15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:paddingHorizontal="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:background="@drawable/custom_background_search"
+                    android:layout_width="290dp"
+                    android:layout_height="40dp">
+                    <ImageView
+                        android:id="@+id/ic_search"
+                        android:src="@drawable/ic_search"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:id="@+id/edit_filter"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:background="@color/white"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:hint="Mã khách hàng..."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:background="@drawable/custom_background_filter">
+
+                    <ImageView
+                        android:id="@+id/image_filter"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_filter" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_show_filter"
+                android:visibility="gone"
+                android:background="@drawable/calendar_header"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_gravity="center"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image_close"
+                    android:layout_margin="@dimen/dp5"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_delete_noti"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="300dp"
+                    android:paddingHorizontal="@dimen/dp15"
+                    android:layout_marginHorizontal="@dimen/dp10"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:id="@+id/date_start"
+                        android:textColor="@color/colorCCC"
+                        android:textSize="13dp"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/date_end"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorCCC"
+                        android:textSize="13dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <!--end-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dp15" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</LinearLayout>

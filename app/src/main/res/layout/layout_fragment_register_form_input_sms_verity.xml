@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nhập mã xác nhận"
+            android:textAllCaps="true"
+            android:textColor="@color/color_text_default"
+            android:textSize="18sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Từ tin nhắn"
+            android:textColor="@color/color_text_default"
+            android:textSize="16sp"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="40dp">
+
+        <com.infideap.blockedittext.BlockEditText
+            android:id="@+id/blockEditTextAuthPhoneRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:bet_defaultLength="1"
+            app:bet_inputType="Integer"
+            app:bet_numberOfBlock="6"
+            app:bet_textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvStatusSmSPhoneAuthRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:text="mã xác thực không chính xác"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/btnContinueRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/button_login_background"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Tiếp tục"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/btnReSendSmsCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:padding="5dp"
+            android:text="Gửi lại mã"
+            android:textColor="@color/color_text_default"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/hinhnen"
+    android:layout_marginVertical="@dimen/dp10"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginVertical="@dimen/dp10"
+        android:layout_marginHorizontal="25dp"
+        android:background="@drawable/border_shape_white_layout_search_contact"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_background_top_sp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/top_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp20"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/name_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:textColor="@color/colorAAA"
+            android:textSize="@dimen/dp15"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorCCC" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Số lượng bán ra(cái):"
+                android:textColor="@color/dangnhap"
+                android:textSize="@dimen/dp15"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/quantity_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="#2BB5D1"
+                android:textSize="@dimen/dp15"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorCCC" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Doanh thu:"
+                android:textColor="@color/dangnhap"
+                android:textSize="@dimen/dp15"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/total_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/text"
+                android:textSize="@dimen/dp15"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <View
+        android:layout_marginVertical="@dimen/dp5"
+        android:background="@color/colorAAA"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+</LinearLayout>

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Họ tên"
+            android:textColorHint="@color/black"
+            android:theme="@style/inputLayout.login">
+
+            <EditText
+                android:id="@+id/edtUserFullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:paddingBottom="23dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="fullname" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/lbGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:text="Giới tính"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/lbGender"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btnGenderFeMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:text="Nữ"
+                        android:textColor="@color/black" />
+
+                    <RadioButton
+                        android:id="@+id/btnGenderMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:text="Nam"
+                        android:textColor="@color/black" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/black" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Ngày sinh"
+                android:textColor="@color/black" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <b.laixuantam.myaarlibrary.widgets.CustomBirthdayInput
+                    android:id="@+id/inputBirthdayView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textSize="14sp"
+                    android:visibility="visible"
+                    tools:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvUserBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/transparent"
+                    android:digits="0123456789"
+                    android:gravity="center_vertical"
+                    android:inputType="number|none"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="18/09/1993" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/black" />
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textColorHint="@color/color_text_default"
+            android:theme="@style/inputLayout.login"
+            android:visibility="gone">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:paddingBottom="23dp"
+                android:singleLine="true"
+                android:textColor="@color/black" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="Số điện thoại"
+            android:textColorHint="@color/black"
+            android:theme="@style/inputLayout.login">
+
+            <EditText
+                android:id="@+id/edtUserPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="@string/dummy_text"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:paddingBottom="23dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="0123456789" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Địa chỉ cá nhân"
+            android:textColorHint="@color/black"
+            android:theme="@style/inputLayout.login">
+
+            <EditText
+                android:id="@+id/edtUserAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:paddingBottom="23dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="address" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textColorHint="@color/black"
+            android:theme="@style/inputLayout.login"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/edtUserEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions|textEmailAddress"
+                android:maxLines="1"
+                android:paddingBottom="23dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="email" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:text="Khu công nghiệp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/btnSelectIndustrial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/color_text_default"
+                    android:gravity="center_vertical"
+                    android:text="Chọn"
+                    android:textColor="@color/black" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvIndustrialSelected"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:hint="Chọn khu công nghiệp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="khu công nghiệp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:text="Địa chỉ nhận hàng"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/btnSelectCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/color_text_default"
+                    android:gravity="center_vertical"
+                    android:text="Chọn"
+                    android:textColor="@color/black" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCompanySelected"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:hint="Chọn công ty"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="công ty" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/black" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/btnSubmitUpdateProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_login_background_disable"
+            android:enabled="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Cập nhật"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hinhnen"
+    android:id="@+id/fragmentProduct"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_background_toolbar_product"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingRight="12dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageNavLeft"
+                    android:layout_margin="@dimen/dp5"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_icon_back" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Quản lý thống kê- báo cáo"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+            </LinearLayout>
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="Đây là danh mục thống kê - báo cáo ta sẽ quản lý sửa đổi vận hành hệ thống"
+                android:textColor="@color/white"
+                android:textSize="11dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/dp20"
+                android:layout_marginVertical="@dimen/dp20"
+                android:background="#4FFFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <TextView
+                    android:textSize="@dimen/dp20"
+                    android:textColor="@color/white"
+                    android:text="Danh sách thống kê- báo cáo"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:src="@drawable/ic_icon_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:orientation="vertical"
+            android:layout_marginVertical="@dimen/dp10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/layoutBCTK_KHO"
+                android:layout_marginVertical="@dimen/dp10"
+                android:orientation="horizontal"
+                android:elevation="3dp"
+                android:background="@drawable/custom_background_item_home"
+                android:paddingVertical="18dp"
+                android:paddingHorizontal="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_bctkkho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:textSize="@dimen/dp20"
+                    android:layout_weight="1"
+                    android:text="Báo cáo thống kê kho"
+                    android:textStyle="bold"
+                    android:textColor="@color/dangnhap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_icon_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutBCTK_BH"
+                android:layout_marginVertical="@dimen/dp10"
+                android:orientation="horizontal"
+                android:elevation="3dp"
+                android:background="@drawable/custom_background_item_home"
+                android:paddingVertical="18dp"
+                android:paddingHorizontal="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_bctkbanhang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:textSize="@dimen/dp20"
+                    android:layout_weight="1"
+                    android:text="Báo cáo thống kê bán hàng"
+                    android:textStyle="bold"
+                    android:textColor="@color/dangnhap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_icon_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</LinearLayout>
