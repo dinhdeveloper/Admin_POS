@@ -13,6 +13,7 @@ public class CustomerModel extends BaseResponseModel {
     private String level_id;
     private String level_code;
     private String level_name;
+    private String level_image;
     private String level_discount;
     private String level_description;
 
@@ -110,5 +111,13 @@ public class CustomerModel extends BaseResponseModel {
 
     public void setLevel_description(String level_description) {
         this.level_description = level_description;
+    }
+
+    public String getLevel_image() {
+        return level_image;
+    }
+
+    public void setLevel_image(String level_image) {
+        this.level_image = level_image;
     }
 }

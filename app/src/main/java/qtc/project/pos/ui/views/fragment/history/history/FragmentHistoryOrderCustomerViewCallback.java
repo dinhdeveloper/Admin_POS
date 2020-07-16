@@ -6,4 +6,6 @@ public interface FragmentHistoryOrderCustomerViewCallback {
     void onBackProgress();
 
     void sentDataToDetail(OrderCustomerModel model);
+
+    void searchHistoryOrderCustomer(String order_id, String customer_id);
 }

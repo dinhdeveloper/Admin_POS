@@ -205,7 +205,7 @@
                     android:textColor="@color/colorAAA"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="5. Mô tả sản phẩm "
+                    android:text="5. Mô tả cấp độ "
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -232,12 +232,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp">
                 <TextView
+                    android:id="@+id/so_nguoi_nhan_duoc_cap_do"
                     android:layout_weight="1"
                     android:layout_marginHorizontal="@dimen/dp20"
                     android:textColor="@color/colorAAA"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="6. Số người nhận được cấp độ vip "
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

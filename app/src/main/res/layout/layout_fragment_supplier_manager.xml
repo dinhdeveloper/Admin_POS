@@ -122,8 +122,15 @@
                         android:background="@color/white"
                         android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
-                        android:hint="Tên khách hàng..."
+                        android:hint="Tên nhà cung ứng..."
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:id="@+id/image_close"
+                        android:src="@drawable/ic_delete_noti"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
 

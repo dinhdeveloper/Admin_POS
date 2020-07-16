@@ -89,11 +89,11 @@ public class FragmentDoanhThuTheoKhachHang extends BaseFragment<FragmentDoanhThu
     }
 
     @Override
-    public void getDataFilterTime(String date_start, String date_end) {
+    public void getDataFilterTime(String date_start, String date_end,String id_customer) {
         showProgress();
         TomTatDoanhSoRequest.ApiParams params = new TomTatDoanhSoRequest.ApiParams();
         params.type_manager = "income_manager";
-
+        params.customer_id = id_customer;
         params.date_start = date_start + "-01";
         params.date_end = date_end + "-31";
 

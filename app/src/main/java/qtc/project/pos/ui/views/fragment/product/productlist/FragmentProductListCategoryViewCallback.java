@@ -6,4 +6,8 @@ public interface FragmentProductListCategoryViewCallback {
     void onBackprogress();
 
     void goToProductListDetail(ProductListModel model);
+
+    void searchProduct(String name);
+
+    void callAllData();
 }

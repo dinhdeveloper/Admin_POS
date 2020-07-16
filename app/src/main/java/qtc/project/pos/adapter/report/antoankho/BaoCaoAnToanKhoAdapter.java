@@ -4,16 +4,20 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
+import b.laixuantam.myaarlibrary.helper.AccentRemove;
 import qtc.project.pos.R;
 import qtc.project.pos.model.AnToanKhoModel;
 
@@ -39,6 +43,7 @@ public class BaoCaoAnToanKhoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public BaoCaoAnToanKhoAdapter(Context context, List<AnToanKhoModel> list) {
         this.context = context;
         this.list = list;
+        filter = new AnToanKhoFilter();
     }
 
     @Override
@@ -149,4 +154,87 @@ public class BaoCaoAnToanKhoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         }
     }
+
+    private String filterString;
+    private ArrayList<AnToanKhoModel> listData = new ArrayList<>();
+    private ArrayList<AnToanKhoModel> listDataBackup = new ArrayList<>();
+    private AnToanKhoFilter filter;
+
+    public AnToanKhoFilter getFilter() {
+        return filter;
+    }
+
+    public ArrayList<AnToanKhoModel> getListData() {
+        return listData;
+    }
+
+    public ArrayList<AnToanKhoModel> getListDataBackup() {
+        return listDataBackup;
+    }
+
+    public class AnToanKhoFilter extends Filter {
+        public AnToanKhoFilter() {
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (!TextUtils.isEmpty(constraint)) {
+                filterString = constraint.toString().toLowerCase();
+                FilterResults results = new FilterResults();
+                if (listData != null && listData.size() > 0) {
+                    int count = listData.size();
+                    List<AnToanKhoModel> tempItems = new ArrayList<AnToanKhoModel>();
+
+                    // search exactly
+                    for (int i = 0; i < count; i++) {
+                        String name = listData.get(i).getProduct_name().toLowerCase();
+                        if (name.contains(filterString)) {
+                            tempItems.add(listData.get(i));
+                        }
+                    }
+                    // search for no accent if no exactly result
+                    filterString = AccentRemove.removeAccent(filterString);
+                    if (tempItems.size() == 0) {
+                        for (int i = 0; i < count; i++) {
+                            String name = AccentRemove.removeAccent(listData.get(i).getProduct_name().toLowerCase());
+                            if (name.contains(filterString)) {
+                                tempItems.add(listData.get(i));
+                            }
+                        }
+                    }
+                    results.values = tempItems;
+                    results.count = tempItems.size();
+                    return results;
+                } else {
+                    return null;
+                }
+            } else {
+                filterString = "";
+                return null;
+            }
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            listData.clear();
+            if (results != null) {
+                List<AnToanKhoModel> listProductResult = (List<AnToanKhoModel>) results.values;
+                if (listProductResult != null && listProductResult.size() > 0) {
+                    listData.addAll(listProductResult);
+                }
+            } else {
+                listData.addAll(listDataBackup);
+            }
+
+            replaceAll(listData);
+        }
+    }
+
+    private void replaceAll(ArrayList<AnToanKhoModel> listData) {
+        list.clear();
+        list.addAll(listData);
+        notifyDataSetChanged();
+    }
+
+
 }

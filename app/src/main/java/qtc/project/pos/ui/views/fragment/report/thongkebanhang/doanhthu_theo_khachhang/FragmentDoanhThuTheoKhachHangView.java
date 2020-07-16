@@ -134,7 +134,7 @@ public class FragmentDoanhThuTheoKhachHangView extends BaseView<FragmentDoanhThu
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.getDataFilterTime(date_start, date_end);
+                    callback.getDataFilterTime(date_start, date_end,customer_id);
                 }
             }
         });

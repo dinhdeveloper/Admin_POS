@@ -75,7 +75,7 @@ public class FragmentSupplierDetailView extends BaseView<FragmentSupplierDetailV
                     Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
 
                     title_text.setText("Cảnh báo");
-                    content_text.setText("Bạn có muốn xóa tài khoản này không?");
+                    content_text.setText("Bạn có muốn xóa nhà cung ứng này không?");
 
                     AlertDialog.Builder alert = new AlertDialog.Builder(activity);
                     alert.setView(popupView);
@@ -95,6 +95,7 @@ public class FragmentSupplierDetailView extends BaseView<FragmentSupplierDetailV
                         public void onClick(View v) {
                             if (callback!=null)
                                 callback.deleteSupplier(infoModel.getId());
+                            dialog.dismiss();
                         }
                     });
                 }
@@ -135,7 +136,7 @@ public class FragmentSupplierDetailView extends BaseView<FragmentSupplierDetailV
         Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
 
         title_text.setText("Xác nhận");
-        content_text.setText("Bạn đã xóa tài khoản thành công!");
+        content_text.setText("Bạn đã xóa nhà cung ứng thành công!");
 
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setView(popupView);

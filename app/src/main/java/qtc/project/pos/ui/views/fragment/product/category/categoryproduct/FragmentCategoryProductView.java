@@ -51,6 +51,7 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
         });
 
         //SEARCH
+        ui.edit_filter.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         ui.edit_filter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -79,7 +80,7 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
     private void searchFilter(String toString) {
         if (callback != null){
             if (toString!=null){
-                callback.callDataToFilter(toString);
+
             }
             else {
                 callback.callAllData();
@@ -131,6 +132,8 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
         @UiElement(R.id.edit_filter)
         public EditText edit_filter;
 
+        @UiElement(R.id.image_close)
+        public ImageView image_close;
 
     }
 }

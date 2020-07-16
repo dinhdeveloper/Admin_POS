@@ -10,5 +10,5 @@ import qtc.project.pos.model.OrderCustomerModel;
 public interface FragmentHistoryOrderCustomerViewInterface extends BaseViewInterface {
     void init(HomeActivity activity,FragmentHistoryOrderCustomerViewCallback callback);
 
-    void sendDataToView(ArrayList<OrderCustomerModel> model);
+    void sendDataToView(ArrayList<OrderCustomerModel> model,String id_customer);
 }

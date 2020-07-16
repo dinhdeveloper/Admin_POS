@@ -3,6 +3,7 @@ package qtc.project.pos.adapter.customer;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import java.util.List;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
+import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.CustomerModel;
 
 public class ListCustomerAdapter extends SuperAdapter<CustomerModel> {
@@ -35,13 +38,14 @@ public class ListCustomerAdapter extends SuperAdapter<CustomerModel> {
         TextView name_customer = holder.findViewById(R.id.name_customer);
         TextView phoneCustomer = holder.findViewById(R.id.phoneCustomer);
         TextView addressCustomer = holder.findViewById(R.id.addressCustomer);
+        ImageView image_level = holder.findViewById(R.id.image_level);
 
         try{
             if (item!=null){
                 name_customer.setText(item.getFull_name());
                 phoneCustomer.setText(item.getPhone_number());
                 addressCustomer.setText(item.getAddress());
-
+                AppProvider.getImageHelper().displayImage(Consts.HOST_API+item.getLevel_image(),image_level,null,R.drawable.imageloading);
                 layout_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

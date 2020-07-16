@@ -3,13 +3,16 @@ package qtc.project.pos.ui.views.fragment.customer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -100,6 +103,47 @@ public class FragmentCustomerView extends BaseView<FragmentCustomerView.UIContai
                     callback.createCustomer();
             }
         });
+
+        //search customer
+        ui.edit_filter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (ui.edit_filter.getText().toString()!=null){
+                        searchCustomer(ui.edit_filter.getText().toString());
+                        return true;
+                    }
+                }
+                Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        ui.ic_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ui.edit_filter.getText().toString() != null) {
+                    searchCustomer(ui.edit_filter.getText().toString());
+                } else {
+                    Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //xos search
+        ui.ic_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ui.edit_filter.setText(null);
+                callData();
+            }
+        });
+    }
+
+    private void searchCustomer(String name) {
+        if (name!=null){
+            callback.callDataSearchCus(name);
+        }
     }
 
     @Override
@@ -125,6 +169,9 @@ public class FragmentCustomerView extends BaseView<FragmentCustomerView.UIContai
 
         @UiElement(R.id.ic_search)
         public ImageView ic_search;
+
+        @UiElement(R.id.ic_close)
+        public ImageView ic_close;
 
         @UiElement(R.id.edit_filter)
         public EditText edit_filter;

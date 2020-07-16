@@ -16,6 +16,7 @@ import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.ProductCategoryModel;
 
 public class FragmentCategoryProductDetailView extends BaseView<FragmentCategoryProductDetailView.UIContainer> implements FragmentCategoryProductDetailViewInterface {
@@ -34,9 +35,11 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
 
     @Override
     public void sendDataToView(ProductCategoryModel model) {
+        ui.id_product_category.setText(model.getId_code());
         ui.name_product_category_header.setText(model.getName());
         ui.name_product_category.setText(model.getName());
         ui.description_product.setText(model.getDescription());
+        AppProvider.getImageHelper().displayImage(Consts.HOST_API+model.getImage(),ui.image_product,null,R.drawable.imageloading);
         ui.choose_file_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/dp10"
     android:background="@drawable/border_shape_white_layout_search_contact"
     android:elevation="@dimen/dp5"
@@ -72,9 +73,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Switch
-        android:id="@+id/status_employee"
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/status_employee_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/thumb_selector"
+        app:track="@drawable/track_selector" />
 
 </LinearLayout>

@@ -7,7 +7,7 @@ public interface FragmentDoanhThuTheoKhachHangViewCallback {
 
     void goToFragmentFilter(int status);
 
-    void getDataFilterTime(String date_start, String date_end);
+    void getDataFilterTime(String date_start, String date_end,String id_customer);
 
     void chooseYear();
 

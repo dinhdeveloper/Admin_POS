@@ -33,6 +33,18 @@ public class FragmentFilterXuatNhapKho extends BaseFragment<FragmentFilterXuatNh
 
     @Override
     public void filterDataTheoThang(String thang, String nam) {
-        activity.replaceFragment(new FragmentBaoCaoXuatNhapKho().newIntance(thang,nam),false,null);
+
+        if (activity != null) {
+            activity.checkBack();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    activity.setDataDateSP_BChay(nam, thang);
+                }
+            }, 100);
+        }
+
+
+        //activity.replaceFragment(new FragmentBaoCaoXuatNhapKho().newIntance(thang,nam),true,null);
     }
 }

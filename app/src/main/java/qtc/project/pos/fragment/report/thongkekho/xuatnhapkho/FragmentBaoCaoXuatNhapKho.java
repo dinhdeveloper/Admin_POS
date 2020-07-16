@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
@@ -24,21 +25,24 @@ public class FragmentBaoCaoXuatNhapKho extends BaseFragment<FragmentBaoCaoXuatNh
 
     HomeActivity activity;
 
-    public static FragmentBaoCaoXuatNhapKho newIntance(String thang, String nam) {
-        FragmentBaoCaoXuatNhapKho frag = new FragmentBaoCaoXuatNhapKho();
-        Bundle bundle = new Bundle();
-        bundle.putString("thang", thang);
-        bundle.putString("nam", nam);
-        frag.setArguments(bundle);
-        return frag;
-    }
+//    public static FragmentBaoCaoXuatNhapKho newIntance(String thang, String nam) {
+//        FragmentBaoCaoXuatNhapKho frag = new FragmentBaoCaoXuatNhapKho();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("thang", thang);
+//        bundle.putString("nam", nam);
+//        frag.setArguments(bundle);
+//        return frag;
+//    }
+
+    String nam;
+    String thang;
 
     @Override
     protected void initialize() {
-        activity  = (HomeActivity)getActivity();
-        view.init(activity,this);
+        activity = (HomeActivity) getActivity();
+        view.init(activity, this);
 
-        getDataToBundle();
+        //getDataToBundle();
     }
 
     private void getDataToBundle() {
@@ -50,8 +54,8 @@ public class FragmentBaoCaoXuatNhapKho extends BaseFragment<FragmentBaoCaoXuatNh
             showProgress();
             BaoCaoXuatNhapKhoRequest.ApiParams params = new BaoCaoXuatNhapKhoRequest.ApiParams();
             params.type_manager = "stock_in_out";
-            params.date_start = nam+"-"+thang+"-01";
-            params.date_end = nam+"-"+thang+"-31";
+            params.date_start = nam + "-" + thang + "-01";
+            params.date_end = nam + "-" + thang + "-31";
 
             AppProvider.getApiManagement().call(BaoCaoXuatNhapKhoRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ReportXuatNhapKhoModel>>() {
                 @Override
@@ -89,17 +93,88 @@ public class FragmentBaoCaoXuatNhapKho extends BaseFragment<FragmentBaoCaoXuatNh
 
     @Override
     public void onBackProgress() {
-        if (activity!=null)
+        if (activity != null)
             activity.checkBack();
     }
 
     @Override
     public void filterData() {
-        activity.replaceFragment(new FragmentFilterXuatNhapKho(),true,null);
+        activity.replaceFragment(new FragmentFilterXuatNhapKho(), true, null);
     }
 
     @Override
     public void goToDetailXuatNhapKho(ReportXuatNhapKhoModel model) {
-        activity.addFragment(new FragmentDetailXuatNhapKho().newIntance(model),true,null);
+        activity.addFragment(new FragmentDetailXuatNhapKho().newIntance(model), true, null);
+    }
+
+    @Override
+    public void getAllData() {
+        showProgress();
+        BaoCaoXuatNhapKhoRequest.ApiParams params = new BaoCaoXuatNhapKhoRequest.ApiParams();
+        params.type_manager = "stock_in_out";
+
+        Calendar calendar = Calendar.getInstance();
+        String nam = String.valueOf(calendar.get(Calendar.YEAR));
+        String thang = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+
+        params.date_start = nam + "-" + thang + "-01";
+        params.date_end = nam + "-" + thang + "-31";
+
+        AppProvider.getApiManagement().call(BaoCaoXuatNhapKhoRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ReportXuatNhapKhoModel>>() {
+            @Override
+            public void onSuccess(BaseResponseModel<ReportXuatNhapKhoModel> body) {
+                dismissProgress();
+                ArrayList<ReportXuatNhapKhoModel> list = new ArrayList<>();
+                list.addAll(Arrays.asList(body.getData()));
+                view.sendDataToView(list);
+            }
+
+            @Override
+            public void onError(ErrorApiResponse error) {
+                dismissProgress();
+                Log.e("onError", error.message);
+            }
+
+            @Override
+            public void onFail(ApiRequest.RequestError error) {
+                dismissProgress();
+                Log.e("onFail", error.name());
+            }
+        });
+    }
+
+    @Override
+    public void goToSearch(String search) {
+
+    }
+
+    public void filterDataDate(String nam, String thang) {
+        showProgress();
+        BaoCaoXuatNhapKhoRequest.ApiParams params = new BaoCaoXuatNhapKhoRequest.ApiParams();
+        params.type_manager = "stock_in_out";
+        params.date_start = nam + "-" + thang + "-01";
+        params.date_end = nam + "-" + thang + "-31";
+
+        AppProvider.getApiManagement().call(BaoCaoXuatNhapKhoRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ReportXuatNhapKhoModel>>() {
+            @Override
+            public void onSuccess(BaseResponseModel<ReportXuatNhapKhoModel> body) {
+                dismissProgress();
+                ArrayList<ReportXuatNhapKhoModel> list = new ArrayList<>();
+                list.addAll(Arrays.asList(body.getData()));
+                view.sendDataToView(list);
+            }
+
+            @Override
+            public void onError(ErrorApiResponse error) {
+                dismissProgress();
+                Log.e("onError", error.message);
+            }
+
+            @Override
+            public void onFail(ApiRequest.RequestError error) {
+                dismissProgress();
+                Log.e("onFail", error.name());
+            }
+        });
     }
 }

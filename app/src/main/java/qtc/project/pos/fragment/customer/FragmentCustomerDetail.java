@@ -101,12 +101,11 @@ public class FragmentCustomerDetail extends BaseFragment<FragmentCustomerDetailV
 
     @Override
     public void updateCustomerDetail(CustomerModel model) {
-
         showProgress();
         if (model != null) {
             CustomerRequest.ApiParams params = new CustomerRequest.ApiParams();
             params.type_manager = "update_customer";
-            params.id_customer = AppProvider.getPreferences().getUserModel().getId();
+            params.id_customer = model.getId();
             params.customer_code = model.getId_code();
             params.employee_id = AppProvider.getPreferences().getUserModel().getId();
             params.full_name = model.getFull_name();

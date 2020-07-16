@@ -40,6 +40,7 @@ public class PackageProductRequest  extends ApiRequest<PackageProductRequest.Ser
         public String detect;
         public String type_manager;
         public String product_id;
+        public String id_code;
         public String id_package;
         public String manufacturing_date;
         public String expiry_date;

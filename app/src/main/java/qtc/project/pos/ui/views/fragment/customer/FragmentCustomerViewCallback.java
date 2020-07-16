@@ -12,4 +12,6 @@ public interface FragmentCustomerViewCallback {
     void getHistoryOrderCustomer(CustomerModel model);
 
     void createCustomer();
+
+    void callDataSearchCus(String name);
 }

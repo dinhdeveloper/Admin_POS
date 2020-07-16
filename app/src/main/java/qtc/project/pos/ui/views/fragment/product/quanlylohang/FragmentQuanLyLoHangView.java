@@ -19,6 +19,7 @@ import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.product.lohang.ProductListItemQLLHAdapter;
 import qtc.project.pos.adapter.product.lohang.ProductListQLLHAdapter;
+import qtc.project.pos.fragment.product.quanlylohang.FragmentCreateLoHang;
 import qtc.project.pos.model.PackageInfoModel;
 import qtc.project.pos.model.ProductListModel;
 
@@ -84,10 +85,13 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
         ui.edit_filter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchQLLH(ui.edit_filter.getText().toString());
-                    return true;
+                if (ui.edit_filter.getText().toString() != null && !ui.edit_filter.getText().toString().isEmpty()){
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        searchQLLH(ui.edit_filter.getText().toString());
+                        return true;
+                    }
                 }
+
                 Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -96,7 +100,7 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
         ui.image_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ui.edit_filter.getText().toString() != null) {
+                if (ui.edit_filter.getText().toString() != null && !ui.edit_filter.getText().toString().isEmpty()) {
                     searchQLLH(ui.edit_filter.getText().toString());
                 } else {
                     Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
@@ -110,6 +114,16 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
                 ui.edit_filter.setText(null);
                 ui.layout_qldh_data.setVisibility(View.GONE);
                 ui.layout_qldh_nodata.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //them lo hamg
+        ui.addLoHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (activity!=null){
+                    activity.replaceFragment(new FragmentCreateLoHang(),true,null);
+                }
             }
         });
     }

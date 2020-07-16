@@ -8,4 +8,8 @@ public interface FragmentBaoCaoXuatNhapKhoViewCallback {
     void filterData();
 
     void goToDetailXuatNhapKho(ReportXuatNhapKhoModel model);
+
+    void getAllData();
+
+    void goToSearch(String search);
 }

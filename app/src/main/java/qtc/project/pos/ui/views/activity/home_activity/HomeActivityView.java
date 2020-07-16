@@ -175,7 +175,7 @@ public class HomeActivityView extends BaseView<HomeActivityView.UIContainer> imp
             @Override
             public void onClick(View v) {
                 if (activity!=null)
-                    activity.addFragment(new FragmentThongTinUser(),true,null);
+                    activity.replaceFragment(new FragmentThongTinUser(),true,null);
                 if (isDrawerOpen()) {
                     ui.drawer_layout.closeDrawer(GravityCompat.START);
                 }

@@ -4,15 +4,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import b.laixuantam.myaarlibrary.helper.AccentRemove;
 import qtc.project.pos.R;
 import qtc.project.pos.model.ReportXuatNhapKhoModel;
 
@@ -39,6 +43,7 @@ public class BaoCaoXuatNhapKhoAdapter extends RecyclerView.Adapter<RecyclerView.
     public BaoCaoXuatNhapKhoAdapter(Context context, List<ReportXuatNhapKhoModel> list) {
         this.context = context;
         this.list = list;
+        filter = new BaoCaoXuatNhapKhoFilter();
     }
 
     @Override
@@ -155,4 +160,86 @@ public class BaoCaoXuatNhapKhoAdapter extends RecyclerView.Adapter<RecyclerView.
             });
         }
     }
+
+    private String filterString;
+    private ArrayList<ReportXuatNhapKhoModel> listData = new ArrayList<>();
+    private ArrayList<ReportXuatNhapKhoModel> listDataBackup = new ArrayList<>();
+    private BaoCaoXuatNhapKhoFilter filter;
+
+    public BaoCaoXuatNhapKhoFilter getFilter() {
+        return filter;
+    }
+
+    public ArrayList<ReportXuatNhapKhoModel> getListData() {
+        return listData;
+    }
+
+    public ArrayList<ReportXuatNhapKhoModel> getListDataBackup() {
+        return listDataBackup;
+    }
+
+    public class BaoCaoXuatNhapKhoFilter extends Filter {
+        public BaoCaoXuatNhapKhoFilter() {
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (!TextUtils.isEmpty(constraint)) {
+                filterString = constraint.toString().toLowerCase();
+                FilterResults results = new FilterResults();
+                if (listData != null && listData.size() > 0) {
+                    int count = listData.size();
+                    List<ReportXuatNhapKhoModel> tempItems = new ArrayList<ReportXuatNhapKhoModel>();
+
+                    // search exactly
+                    for (int i = 0; i < count; i++) {
+                        String name = listData.get(i).getProduct_name().toLowerCase();
+                        if (name.contains(filterString)) {
+                            tempItems.add(listData.get(i));
+                        }
+                    }
+                    // search for no accent if no exactly result
+                    filterString = AccentRemove.removeAccent(filterString);
+                    if (tempItems.size() == 0) {
+                        for (int i = 0; i < count; i++) {
+                            String name = AccentRemove.removeAccent(listData.get(i).getProduct_name().toLowerCase());
+                            if (name.contains(filterString)) {
+                                tempItems.add(listData.get(i));
+                            }
+                        }
+                    }
+                    results.values = tempItems;
+                    results.count = tempItems.size();
+                    return results;
+                } else {
+                    return null;
+                }
+            } else {
+                filterString = "";
+                return null;
+            }
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            listData.clear();
+            if (results != null) {
+                List<ReportXuatNhapKhoModel> listProductResult = (List<ReportXuatNhapKhoModel>) results.values;
+                if (listProductResult != null && listProductResult.size() > 0) {
+                    listData.addAll(listProductResult);
+                }
+            } else {
+                listData.addAll(listDataBackup);
+            }
+
+            replaceAll(listData);
+        }
+    }
+
+    private void replaceAll(ArrayList<ReportXuatNhapKhoModel> listData) {
+        list.clear();
+        list.addAll(listData);
+        notifyDataSetChanged();
+    }
+
 }

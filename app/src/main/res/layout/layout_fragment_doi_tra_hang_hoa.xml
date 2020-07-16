@@ -91,12 +91,21 @@
 
                         <EditText
                             android:id="@+id/edit_filter"
+                            android:imeOptions="actionSearch"
+                            android:inputType="text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="5dp"
                             android:layout_weight="1"
                             android:background="@color/white"
-                            android:hint="Mã trả hàng..." />
+                            android:hint="Mã trả hàng,mã nhà..." />
+
+                        <ImageView
+                            android:id="@+id/image_close"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_delete_noti" />
                     </LinearLayout>
 
                     <LinearLayout

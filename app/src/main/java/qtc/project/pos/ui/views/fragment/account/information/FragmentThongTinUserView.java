@@ -1,5 +1,7 @@
 package qtc.project.pos.ui.views.fragment.account.information;
 
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
@@ -19,6 +21,17 @@ public class FragmentThongTinUserView extends BaseView<FragmentThongTinUserView.
         this.activity = activity;
         this.callback = callback;
         getDataUser();
+        onClick();
+    }
+
+    private void onClick() {
+        ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callback!=null)
+                    callback.onBackProgress();
+            }
+        });
     }
 
     private void getDataUser() {
@@ -53,6 +66,9 @@ public class FragmentThongTinUserView extends BaseView<FragmentThongTinUserView.
 
         @UiElement(R.id.level)
         public TextView level;
+
+        @UiElement(R.id.imageNavLeft)
+        public ImageView imageNavLeft;
 
 
     }

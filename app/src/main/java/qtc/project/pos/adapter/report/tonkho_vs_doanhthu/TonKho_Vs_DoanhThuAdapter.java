@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import b.laixuantam.myaarlibrary.helper.NumericFormater;
 import b.laixuantam.myaarlibrary.helper.map.location.LocationHelper;
 import qtc.project.pos.R;
 import qtc.project.pos.model.Stock_Income_Model;
+
+import static b.laixuantam.myaarlibrary.helper.NumericFormater.SHORT_PRICE;
 
 public class TonKho_Vs_DoanhThuAdapter extends RecyclerView.Adapter<TonKho_Vs_DoanhThuAdapter.ViewHolder> {
 
@@ -50,8 +53,16 @@ public class TonKho_Vs_DoanhThuAdapter extends RecyclerView.Adapter<TonKho_Vs_Do
                     Integer.parseInt(list.get(position).getHeightIncome())
             );
             holder.layout_two.setLayoutParams(paramIncome);
-            holder.id_one.setText(list.get(position).getValueStock());
-            holder.id_two.setText(list.get(position).getValueIncome());
+
+
+            long valueStock = Long.valueOf(list.get(position).getValueStock());
+            long valueIncome = Long.valueOf(list.get(position).getValueIncome());
+
+            String valueStockF = NumericFormater.getStringPrice(valueStock, NumericFormater.SHORT_PRICE);
+            String valueIncomeF = NumericFormater.getStringPrice(valueIncome, NumericFormater.SHORT_PRICE);
+
+            holder.id_one.setText(valueStockF);
+            holder.id_two.setText(valueIncomeF);
         } catch (Exception e) {
             Log.e("Ex", e.getMessage());
         }

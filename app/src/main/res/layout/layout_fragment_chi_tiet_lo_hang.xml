@@ -431,7 +431,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="10. Số lượng nhập vào(cái)"
+                        android:text="10. Số lượng nhập vào"
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>

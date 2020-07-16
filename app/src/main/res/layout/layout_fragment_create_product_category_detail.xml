@@ -34,7 +34,7 @@
                     android:src="@drawable/ic_icon_back" />
 
                 <TextView
-                    android:id="@+id/name_product_category_header"
+                    android:text="Thêm danh mục"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -68,13 +68,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/dp20"
-                android:text="2. Mã danh mục: "
+                android:text="1. Mã danh mục: "
                 android:textColor="@color/colorAAA"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <EditText
             android:textColor="@color/black"
+            android:textSize="14dp"
             android:id="@+id/id_product_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,6 +107,7 @@
 
         <EditText
             android:textColor="@color/black"
+            android:textSize="14dp"
             android:id="@+id/name_product_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,6 +139,7 @@
 
         <EditText
             android:id="@+id/description_product"
+            android:textSize="14dp"
             android:layout_marginTop="@dimen/dp10"
             android:textColor="@color/black"
             android:layout_width="match_parent"

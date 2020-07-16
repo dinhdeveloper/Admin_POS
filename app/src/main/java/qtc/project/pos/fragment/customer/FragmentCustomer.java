@@ -86,6 +86,39 @@ public class FragmentCustomer extends BaseFragment<FragmentCustomerViewInterface
     }
 
     @Override
+    public void callDataSearchCus(String name) {
+        if (name!=null){
+            showProgress();
+            CustomerRequest.ApiParams params = new CustomerRequest.ApiParams();
+            params.type_manager = "list_customer";
+            params.customer_filter = name;
+            AppProvider.getApiManagement().call(CustomerRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<CustomerModel>>() {
+                @Override
+                public void onSuccess(BaseResponseModel<CustomerModel> body) {
+                    if (body != null) {
+                        dismissProgress();
+                        ArrayList<CustomerModel> list = new ArrayList<>();
+                        list.addAll(Arrays.asList(body.getData()));
+                        view.mappingRecyclerView(list);
+                    }
+                }
+
+                @Override
+                public void onError(ErrorApiResponse error) {
+                    dismissProgress();
+                    Log.e("onError", error.message);
+                }
+
+                @Override
+                public void onFail(ApiRequest.RequestError error) {
+                    dismissProgress();
+                    Log.e("onFail", error.name());
+                }
+            });
+        }
+    }
+
+    @Override
     public void getCustomerDetail(CustomerModel model) {
         activity.replaceFragment(new FragmentCustomerDetail().newIntance(model),true,null);
     }

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
@@ -71,11 +72,35 @@ public class FragmentCreateSupplierView extends BaseView<FragmentCreateSupplierV
             @Override
             public void onClick(View v) {
                 SupplierModel supplierModel = new SupplierModel();
-                supplierModel.setId_code(ui.id_supplier.getText().toString());
-                supplierModel.setPhone_number(ui.phone_supplier.getText().toString());
-                supplierModel.setEmail(ui.email_supplier.getText().toString());
-                supplierModel.setName(ui.name_sipplier.getText().toString());
-                supplierModel.setAddress(ui.address_supplier.getText().toString());
+                if (ui.id_supplier.getText().toString() !=null && !ui.id_supplier.getText().toString().isEmpty()){
+                    supplierModel.setId_code(ui.id_supplier.getText().toString());
+                }else {
+                    Toast.makeText(activity, "Nhập mã nhà cung ứng.", Toast.LENGTH_SHORT).show();
+                }
+
+                if (ui.phone_supplier.getText().toString() !=null && !ui.phone_supplier.getText().toString().isEmpty()){
+                    supplierModel.setPhone_number(ui.phone_supplier.getText().toString());
+                }else {
+                    Toast.makeText(activity, "Nhập số điện thoại.", Toast.LENGTH_SHORT).show();
+                }
+
+                if (ui.email_supplier.getText().toString() !=null && !ui.email_supplier.getText().toString().isEmpty()){
+                    supplierModel.setEmail(ui.email_supplier.getText().toString());
+                }else {
+                    Toast.makeText(activity, "Nhập email.", Toast.LENGTH_SHORT).show();
+                }
+
+                if (ui.name_sipplier.getText().toString() !=null && !ui.name_sipplier.getText().toString().isEmpty()){
+                    supplierModel.setName(ui.name_sipplier.getText().toString());
+                }else {
+                    Toast.makeText(activity, "Nhập tên nhà cung ứng.", Toast.LENGTH_SHORT).show();
+                }
+
+                if (ui.address_supplier.getText().toString() !=null && !ui.address_supplier.getText().toString().isEmpty()){
+                    supplierModel.setAddress(ui.address_supplier.getText().toString());
+                }else {
+                    Toast.makeText(activity, "Nhập địa chỉ.", Toast.LENGTH_SHORT).show();
+                }
 
                 if (callback!=null)
                     callback.createSupplier(supplierModel);

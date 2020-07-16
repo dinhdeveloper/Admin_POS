@@ -58,5 +58,7 @@ public class PackageReturnRequest  extends ApiRequest<PackageReturnRequest.Servi
         public String filter_product_return ;
         public String status ;
         public String id_product_return ;
+        public String date_start;
+        public String date_end;
     }
 }

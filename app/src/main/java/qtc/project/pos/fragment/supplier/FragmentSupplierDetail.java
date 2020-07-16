@@ -114,7 +114,7 @@ public class FragmentSupplierDetail extends BaseFragment<FragmentSupplierDetailV
                     dismissProgress();
                     if (body.getSuccess().equals("true")){
                         view.showDialogSucc();
-                    } else if (body.getSuccess().equals("true")){
+                    } else if (body.getSuccess().equals("false")){
                         Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }

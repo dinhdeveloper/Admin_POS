@@ -110,4 +110,5 @@ public class EmployeeModel extends BaseResponseModel {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

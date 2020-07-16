@@ -106,21 +106,23 @@
                 android:paddingHorizontal="10dp">
 
                 <ImageView
+                    android:id="@+id/image_search"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_search" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/edit_filter"
+                    android:imeOptions="actionSearch"
+                    android:inputType="none"
+                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_weight="1"
-                    android:hint="Tên sản phẩm, giá bán, giá..." />
+                    android:hint="Tên cấp độ, mô tả..." />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_camera_24" />
             </LinearLayout>
 
             <ImageView

@@ -35,6 +35,16 @@ public class FragmentFilterOrder extends BaseFragment<FragmentFilterOrderViewInt
 
     @Override
     public void filterOnDay(String dateStartSelected, String dateEndSelected) {
-        activity.replaceFragment(new FragmentOrderManager().newIntance(dateStartSelected,dateEndSelected),false,null);
+        if (activity != null) {
+            activity.checkBack();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    activity.setDataDateOrder(dateStartSelected, dateEndSelected);
+                }
+            }, 100);
+        }
+
+        //activity.replaceFragment(new FragmentOrderManager().newIntance(dateStartSelected,dateEndSelected),true,null);
     }
 }

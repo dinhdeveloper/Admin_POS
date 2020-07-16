@@ -21,6 +21,7 @@ import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.levelcustomer.LevelCustomerChooseAdapter;
 import qtc.project.pos.adapter.product.category.ProductItemCategoryAdapter;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.LevelCustomerModel;
 import qtc.project.pos.model.ProductCategoryModel;
 import qtc.project.pos.model.ProductListModel;
@@ -42,7 +43,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
     @Override
     public void sendDataToView(ProductListModel model) {
         if (model!=null){
-            AppProvider.getImageHelper().displayImage(model.getImage(),ui.image_product,null,R.drawable.imageloading);
+            AppProvider.getImageHelper().displayImage(Consts.HOST_API+model.getImage(),ui.image_product,null,R.drawable.imageloading);
             ui.name_product.setText(model.getName());
             ui.id_product.setText(model.getId_code());
             ui.description_product.setText(model.getDescription());

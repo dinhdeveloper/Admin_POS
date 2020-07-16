@@ -40,7 +40,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Chi tiết khách hàng"
+                    android:text="Chi tiết nhà cung ứng"
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -112,6 +112,7 @@
 
             <EditText
                 android:id="@+id/name_sipplier"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp20"

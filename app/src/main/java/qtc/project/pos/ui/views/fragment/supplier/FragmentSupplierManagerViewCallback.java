@@ -8,4 +8,8 @@ public interface FragmentSupplierManagerViewCallback {
     void goToDetail(SupplierModel model);
 
     void createSupplier();
+
+    void searchSupplier(String filter);
+
+    void getAllData();
 }

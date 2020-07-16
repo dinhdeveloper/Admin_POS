@@ -96,6 +96,7 @@ public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCusto
         ui.name_level_customer.setText(model.getName());
         ui.discount_level.setText(model.getDiscount());
         ui.description_level.setText(model.getDescription());
+        ui.so_nguoi_nhan_duoc_cap_do.setText("6. Số người nhận được cấp độ "+model.getName());
         AppProvider.getImageHelper().displayImage(Consts.HOST_API + model.getImage(), ui.image_level, null, R.drawable.imageloading);
         ui.tongkhachhang.setText("Có tất cả " + model.getTotal_customer() + " khách hàng.");
 
@@ -235,6 +236,11 @@ public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCusto
 
         @UiElement(R.id.id_level_customer)
         public TextView id_level_customer;
+
+        @UiElement(R.id.so_nguoi_nhan_duoc_cap_do)
+        public TextView so_nguoi_nhan_duoc_cap_do;
+
+
 
         @UiElement(R.id.name_level_customer)
         public EditText name_level_customer;

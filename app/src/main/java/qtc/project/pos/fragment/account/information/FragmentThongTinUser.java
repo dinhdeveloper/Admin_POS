@@ -26,4 +26,10 @@ public class FragmentThongTinUser extends BaseFragment<FragmentThongTinUserViewI
     protected BaseParameters getParametersContainer() {
         return null;
     }
+
+    @Override
+    public void onBackProgress() {
+        if (activity!=null)
+            activity.checkBack();
+    }
 }

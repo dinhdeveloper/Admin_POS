@@ -166,6 +166,7 @@
             <EditText
                 android:id="@+id/name_employee"
                 android:textColor="@color/black"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp20"
@@ -222,7 +223,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="@dimen/dp20"
-                    android:text="5. Số điên thoại: "
+                    android:text="5. Số điện thoại: "
                     android:textColor="@color/colorAAA"
                     android:textStyle="bold" />
             </LinearLayout>

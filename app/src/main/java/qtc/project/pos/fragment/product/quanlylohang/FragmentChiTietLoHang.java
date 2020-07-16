@@ -102,6 +102,7 @@ public class FragmentChiTietLoHang extends BaseFragment<FragmentChiTietLoHangVie
             AppProvider.getApiManagement().call(PackageProductRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<ProductListModel> body) {
+                    dismissProgress();
                     if (body.getSuccess().equals("true")) {
                         Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
                         onBack();
@@ -112,12 +113,14 @@ public class FragmentChiTietLoHang extends BaseFragment<FragmentChiTietLoHangVie
 
                 @Override
                 public void onError(ErrorApiResponse error) {
-
+                    dismissProgress();
+                    Log.e("onError", error.message);
                 }
 
                 @Override
                 public void onFail(ApiRequest.RequestError error) {
-
+                    dismissProgress();
+                    Log.e("onFail", error.name());
                 }
             });
         }

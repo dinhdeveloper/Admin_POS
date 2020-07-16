@@ -10,4 +10,6 @@ public interface FragmentProductListCategoryViewInterface extends BaseViewInterf
     void init(HomeActivity activity, FragmentProductListCategoryViewCallback callback);
 
     void mappingRecyclerView(ArrayList<ProductListModel> list);
+
+    void mappingDataFilterProduct(ArrayList<ProductListModel> list,String name,String id);
 }

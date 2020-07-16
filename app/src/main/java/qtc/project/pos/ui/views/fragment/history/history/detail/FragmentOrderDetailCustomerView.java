@@ -44,22 +44,27 @@ public class FragmentOrderDetailCustomerView extends BaseView<FragmentOrderDetai
     public void sentDataToView(OrderCustomerModel model) {
         try {
             if (model != null) {
-                ui.id_order.setText(model.getId_order());
+                ui.id_order.setText(model.getOrder_id_code());
                 ui.name_customer.setText(model.getCustomer_fullname());
                 ui.date_create.setText(model.getOrder_created_date());
-                if (model.getOrder_status().equals("Y")){
+                if (model.getOrder_status().equals("Y")) {
                     ui.status_order.setText("Hoàn thành");
-                }else if (model.getOrder_status().equals("N")){
+                } else if (model.getOrder_status().equals("N")) {
                     ui.status_order.setText("Đã hủy");
                 }
 
                 String pattern = "###,###.###";
                 DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
-                ui.priceGiam.setText(decimalFormat.format(Integer.parseInt(model.getCustomer_level_discount())) + " VNĐ");
-                ui.priceTotal.setText(decimalFormat.format(Integer.parseInt(model.getOrder_total())) + " VNĐ");
-                int tientemp = Integer.parseInt(model.getOrder_total()) + Integer.parseInt(model.getCustomer_level_discount());
-                ui.priceTemp.setText(decimalFormat.format(tientemp) + " VNĐ");
+                int tongtien = Integer.parseInt(model.getOrder_total());
+                int tamtinh = 0;
+                for (int i = 0; i < model.getListDataProduct().size(); i++) {
+                    int tien_mot_sp = Integer.parseInt(model.getListDataProduct().get(i).getPrice()) * Integer.parseInt(model.getListDataProduct().get(i).getQuantity());
+                    tamtinh += tien_mot_sp;
+                }
+                ui.priceTemp.setText(decimalFormat.format(tamtinh) + " VNĐ");
+                ui.priceTotal.setText(decimalFormat.format(tongtien) + " VNĐ");
+                ui.priceGiam.setText(decimalFormat.format((tamtinh - tongtien)) + " VNĐ");
 
                 ListOrderDetailAdapter adapter = new ListOrderDetailAdapter(activity, model.getListDataProduct());
                 ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -92,7 +97,6 @@ public class FragmentOrderDetailCustomerView extends BaseView<FragmentOrderDetai
 
         @UiElement(R.id.status_order)
         public TextView status_order;
-
 
 
         @UiElement(R.id.recycler_view_list)

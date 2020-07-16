@@ -1,12 +1,20 @@
 package qtc.project.pos.adapter.employee;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -15,75 +23,117 @@ import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
 import qtc.project.pos.model.EmployeeModel;
 
-public class EmployeeListAdapter extends SuperAdapter<EmployeeModel> {
+public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapter.ViewHolder> {
 
+    Context context;
+    List<EmployeeModel> lists;
     EmployeeListAdapterListener listener;
+    boolean isTouched = false;
+    private ClickInterface click;
+
+    public EmployeeListAdapter(Context context, List<EmployeeModel> lists) {
+        this.context = context;
+        this.lists = lists;
+    }
+
+
 
     public interface EmployeeListAdapterListener {
         void onClickItem(EmployeeModel model);
-
-        void setStatusSwich(EmployeeModel item, boolean isCheked, int position);
+        void setStatusSwich(int position, boolean isCheked);
     }
+    interface ClickInterface{void posClicked(short p);}
 
     public void setListener(EmployeeListAdapterListener listener) {
         this.listener = listener;
     }
 
-    public EmployeeListAdapter(Context context, List<EmployeeModel> items) {
-        super(context, items, R.layout.custom_item_employee_list);
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_item_employee_list, viewGroup, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, EmployeeModel item) {
-        LinearLayout layout_item = holder.findViewById(R.id.layout_item);
-        TextView name_employee = holder.findViewById(R.id.name_employee);
-        TextView level_employee = holder.findViewById(R.id.level_employee);
-        TextView phone_employee = holder.findViewById(R.id.phone_employee);
-        Switch status_employee = holder.findViewById(R.id.status_employee);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
+        EmployeeModel item = lists.get(i);
+            try{
 
-        try {
-            if (item != null) {
-                name_employee.setText(item.getFull_name());
-                phone_employee.setText(item.getPhone_number());
+                holder.name_employee.setText(item.getFull_name());
+                holder.phone_employee.setText(item.getPhone_number());
                 if (item.getLevel().equals("2")) {
-                    level_employee.setText("Admin");
+                    holder.level_employee.setText("Admin");
                 } else if (item.getLevel().equals("1")) {
-                    level_employee.setText("Nhân Viên");
+                    holder.level_employee.setText("Nhân Viên");
                 }
 
                 if (item.getStatus().equals("Y")) {
-                    status_employee.setChecked(true);
+                    holder.status_employee.setChecked(true);
                 } else if (item.getStatus().equals("N")) {
-                    status_employee.setChecked(false);
+                    holder.status_employee.setChecked(false);
                 }
 
-                layout_item.setOnClickListener(new View.OnClickListener() {
+                //on click
+                holder.layout_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (listener != null)
                             listener.onClickItem(item);
                     }
                 });
+                //set trang thai
 
-                status_employee.setOnClickListener(new View.OnClickListener() {
+                holder.status_employee.setOnTouchListener(new View.OnTouchListener() {
                     @Override
-                    public void onClick(View v) {
-
-//                        if (listener != null)
-//                            listener.setStatusSwich(item,layoutPosition);
-
-//                        status_employee.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                            @Override
-//                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                                if (listener != null)
-//                                    listener.setStatusSwich(item, isChecked,layoutPosition);
-//                            }
-//                        });
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        isTouched = true;
+                        return false;
                     }
                 });
+
+                holder.status_employee.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isTouched) {
+                            isTouched = false;
+
+                            if (isChecked) {
+                                click.posClicked((short) holder.getAdapterPosition());
+                                Toast.makeText(context, ""+isChecked, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, ""+isChecked, Toast.LENGTH_SHORT).show();
+                                // Do something on un-checking the SwitchCompat
+                            }
+                        }
+                    }
+                });
+
+            }catch (Exception e){
+                Log.e("Ex",e.getMessage());
             }
-        } catch (Exception e) {
-            Log.e("Exception", e.getMessage());
+    }
+
+    @Override
+    public int getItemCount() {
+        return lists.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout layout_item;
+        TextView name_employee;
+        TextView level_employee;
+        TextView phone_employee;
+        SwitchCompat status_employee;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            layout_item = itemView.findViewById(R.id.layout_item);
+            name_employee = itemView.findViewById(R.id.name_employee);
+            level_employee = itemView.findViewById(R.id.level_employee);
+            phone_employee = itemView.findViewById(R.id.phone_employee);
+            status_employee = itemView.findViewById(R.id.status_employee_list);
         }
     }
 }
+

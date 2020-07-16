@@ -3,6 +3,7 @@ package qtc.project.pos.ui.views.fragment.order.detail;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,8 @@ import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.history.ListOrderDetailAdapter;
+import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.OrderCustomerModel;
 
 public class FragmentOrderDetailView extends BaseView<FragmentOrderDetailView.UIContainer> implements FragmentOrderDetailViewInterface {
@@ -33,7 +36,7 @@ public class FragmentOrderDetailView extends BaseView<FragmentOrderDetailView.UI
         ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback!=null)
+                if (callback != null)
                     callback.onBackProgress();
             }
         });
@@ -41,38 +44,51 @@ public class FragmentOrderDetailView extends BaseView<FragmentOrderDetailView.UI
 
     @Override
     public void sentDataToView(OrderCustomerModel model) {
-        if (model!=null){
-            ui.name_customer.setText(model.getCustomer_fullname());
-            ui.id_order.setText(model.getOrder_id_code());
-            ui.id_customer.setText(model.getCustomer_id_code());
-            ui.id_employee.setText(model.getEmployee_code());
-            ui.date_order.setText(model.getOrder_created_date());
-            ui.phone_customer.setText(model.getCustomer_phone_number());
+        try {
+            if (model != null) {
+                ui.name_customer.setText(model.getCustomer_fullname());
+                ui.id_order.setText(model.getOrder_id_code());
+                ui.id_customer.setText(model.getCustomer_id_code());
+                ui.id_employee.setText(model.getEmployee_code());
+                ui.date_order.setText(model.getOrder_created_date());
+                ui.phone_customer.setText(model.getCustomer_phone_number());
+                AppProvider.getImageHelper().displayImage(Consts.HOST_API + model.getCustomer_level_image(), ui.image_level, null, R.drawable.imageloading);
 
-            if (model.getOrder_status().equals("N")){
-                ui.status.setText("Đã hủy");
-                ui.status.setTextColor(ContextCompat.getColor(getContext(),R.color.colorYellow));
-                ui.layout_status.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_border_button_item_ordel));
+                if (model.getOrder_status().equals("N")) {
+                    ui.status.setText("Đã hủy");
+                    ui.status.setTextColor(ContextCompat.getColor(getContext(), R.color.colorYellow));
+                    ui.layout_status.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.custom_border_button_item_ordel));
 
-            }else if (model.getOrder_status().equals("Y")){
-                ui.status.setText("Hoàn thành");
-                ui.status.setTextColor(ContextCompat.getColor(getContext(),R.color.color_success));
-                ui.layout_status.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_border_button_item_success_order));
+                } else if (model.getOrder_status().equals("Y")) {
+                    ui.status.setText("Hoàn thành");
+                    ui.status.setTextColor(ContextCompat.getColor(getContext(), R.color.color_success));
+                    ui.layout_status.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.custom_border_button_item_success_order));
+                }
             }
+
+            ListOrderDetailAdapter adapter = new ListOrderDetailAdapter(activity, model.getListDataProduct());
+            ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            ui.recycler_view_list.setAdapter(adapter);
+
+            String pattern = "###,###.###";
+            DecimalFormat decimalFormat = new DecimalFormat(pattern);
+
+            int tongtien = Integer.parseInt(model.getOrder_total());
+            int tamtinh = 0;
+            for (int i = 0; i < model.getListDataProduct().size(); i++) {
+                int tien_one_item = Integer.parseInt(model.getListDataProduct().get(i).getPrice()) * Integer.parseInt(model.getListDataProduct().get(i).getQuantity());
+                tamtinh += tien_one_item;
+            }
+
+            ui.priceGiam.setText(decimalFormat.format(tamtinh - tongtien) + " VNĐ");
+            ui.priceTotal.setText(decimalFormat.format(Integer.parseInt(model.getOrder_total())) + " VNĐ");
+            //int tientemp = Integer.parseInt(model.getOrder_total()) + Integer.parseInt(model.getCustomer_level_discount());
+            ui.priceTemp.setText(decimalFormat.format(tamtinh) + " VNĐ");
+
+        } catch (Exception e) {
+            Log.e("Ex", e.getMessage());
+
         }
-
-        ListOrderDetailAdapter adapter = new ListOrderDetailAdapter(activity,model.getListDataProduct());
-        ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        ui.recycler_view_list.setAdapter(adapter);
-
-        String pattern = "###,###.###";
-        DecimalFormat decimalFormat = new DecimalFormat(pattern);
-
-        ui.priceGiam.setText(decimalFormat.format(Integer.parseInt(model.getCustomer_level_discount())) + " VNĐ");
-        ui.priceTotal.setText(decimalFormat.format(Integer.parseInt(model.getOrder_total())) + " VNĐ");
-        int tientemp = Integer.parseInt(model.getOrder_total()) + Integer.parseInt(model.getCustomer_level_discount());
-        ui.priceTemp.setText(decimalFormat.format(tientemp) + " VNĐ");
-
     }
 
     @Override
@@ -84,7 +100,6 @@ public class FragmentOrderDetailView extends BaseView<FragmentOrderDetailView.UI
     public int getViewId() {
         return R.layout.layout_fragment_order_detail;
     }
-
 
 
     public class UIContainer extends BaseUiContainer {
@@ -108,6 +123,10 @@ public class FragmentOrderDetailView extends BaseView<FragmentOrderDetailView.UI
 
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
+
+        @UiElement(R.id.image_level)
+        public ImageView image_level;
+
 
         @UiElement(R.id.layout_status)
         public LinearLayout layout_status;

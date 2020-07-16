@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
@@ -32,13 +35,15 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
     FragmentEmployeeDetailViewCallback callback;
 
     DatePickerDialog picker;
-    String id_level=null;
+    String id_level = null;
+    String id_employee;
+    boolean status;
 
     @Override
     public void init(HomeActivity activity, FragmentEmployeeDetailViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-        
+
         onClick();
     }
 
@@ -53,7 +58,7 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
         ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback!=null)
+                if (callback != null)
                     callback.onBackProgress();
             }
         });
@@ -69,6 +74,7 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
                             }
                         }, year, month, day);
                 picker.show();
+                picker.getDatePicker().setMaxDate(new Date().getTime());
             }
         });
 
@@ -76,7 +82,7 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
         ui.choose_level.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback!=null){
+                if (callback != null) {
                     callback.callLevelEmployee();
                 }
             }
@@ -85,8 +91,9 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
 
     @Override
     public void sentDataToView(EmployeeModel model) {
-        try{
+        try {
             if (model != null) {
+                id_employee = model.getId();
                 ui.user_name.setText(model.getId_code());
                 ui.name_employee.setText(model.getFull_name());
                 ui.full_name_header.setText(model.getFull_name());
@@ -94,15 +101,17 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
                 ui.phone_employee.setText(model.getPhone_number());
                 ui.address_employee.setText(model.getAddress());
                 ui.birthday_employee.setText(model.getBirthday());
-                if (model.getLevel().equals("1")){
+                if (model.getLevel().equals("1")) {
                     ui.name_level_employee.setText("Nhân Viên");
-                }else if (model.getLevel().equals("2")){
+                } else if (model.getLevel().equals("2")) {
                     ui.name_level_employee.setText("Admin");
                 }
-                if (model.getStatus().equals("Y")){
+                if (model.getStatus().equals("Y")) {
                     ui.status_employee.setChecked(true);
-                }else if (model.getStatus().equals("N")){
+                    status = true;
+                } else if (model.getStatus().equals("N")) {
                     ui.status_employee.setChecked(false);
+                    status = false;
                 }
 
                 //update
@@ -118,13 +127,15 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
                         employeeModel.setAddress(ui.address_employee.getText().toString());
                         employeeModel.setBirthday(ui.birthday_employee.getText().toString());
                         employeeModel.setLevel(id_level);
-                        if (ui.status_employee.isChecked() ==true){
+                        if (ui.status_employee.isChecked() == true) {
                             employeeModel.setStatus("Y");
-                        }else if (ui.status_employee.isChecked() ==false){
+                            status = true;
+                        } else if (ui.status_employee.isChecked() == false) {
                             employeeModel.setStatus("N");
+                            status = false;
                         }
 
-                        if (callback!=null)
+                        if (callback != null)
                             callback.updateEmployee(employeeModel);
                     }
                 });
@@ -133,37 +144,64 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
                 ui.layout_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        LayoutInflater layoutInflater = activity.getLayoutInflater();
-                        View popupView = layoutInflater.inflate(R.layout.alert_dialog_waiting, null);
-                        TextView title_text = popupView.findViewById(R.id.title_text);
-                        TextView content_text = popupView.findViewById(R.id.content_text);
-                        Button cancel_button = popupView.findViewById(R.id.cancel_button);
-                        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+                        if (status == true) {
+                            LayoutInflater layoutInflater = activity.getLayoutInflater();
+                            View popupView = layoutInflater.inflate(R.layout.alert_dialog_canhbao, null);
+                            TextView title_text = popupView.findViewById(R.id.title_text);
+                            TextView content_text = popupView.findViewById(R.id.content_text);
+                            Button cancel_button = popupView.findViewById(R.id.cancel_button);
+                            Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
 
-                        title_text.setText("Cảnh báo");
-                        content_text.setText("Bạn có muốn xóa khách hàng này không?");
+                            title_text.setVisibility(View.GONE);
+                            content_text.setText("Hãy tắt nhân viên trước khi xóa.");
+                            //title_text.setText("Cảnh báo");
+                            //content_text.setText("Bạn có muốn xóa khách hàng này không?");
 
-                        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                        alert.setView(popupView);
-                        AlertDialog dialog = alert.create();
-                        dialog.setCanceledOnTouchOutside(false);
-                        dialog.show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                            alert.setView(popupView);
+                            AlertDialog dialog = alert.create();
+                            dialog.setCanceledOnTouchOutside(false);
+                            dialog.show();
 
 
-                        cancel_button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
-                        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (callback != null)
-                                    callback.deleteEmployee(model);
-                                dialog.dismiss();
-                            }
-                        });
+                            custom_confirm_button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                        } else if (status == false){
+                            LayoutInflater layoutInflater = activity.getLayoutInflater();
+                            View popupView = layoutInflater.inflate(R.layout.alert_dialog_waiting, null);
+                            TextView title_text = popupView.findViewById(R.id.title_text);
+                            TextView content_text = popupView.findViewById(R.id.content_text);
+                            Button cancel_button = popupView.findViewById(R.id.cancel_button);
+                            Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+
+                            title_text.setText("Cảnh báo");
+                            content_text.setText("Bạn có muốn xóa khách hàng này không?");
+
+                            AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                            alert.setView(popupView);
+                            AlertDialog dialog = alert.create();
+                            dialog.setCanceledOnTouchOutside(false);
+                            dialog.show();
+                            
+                            cancel_button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            custom_confirm_button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (callback != null)
+                                        callback.deleteEmployee(model);
+                                    dialog.dismiss();
+                                }
+                            });
+                        }
                     }
                 });
 
@@ -175,6 +213,7 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
                         View popupView = layoutInflater.inflate(R.layout.custom_popup_change_password_employee, null);
                         EditText new_pass = popupView.findViewById(R.id.new_pass);
                         EditText re_new_pass = popupView.findViewById(R.id.re_new_pass);
+                        ImageView image_close = popupView.findViewById(R.id.image_close);
                         LinearLayout layout_update = popupView.findViewById(R.id.layout_update);
 
                         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
@@ -186,20 +225,27 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
                         layout_update.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (new_pass.getText().toString() == re_new_pass.getText().toString()){
-                                    if (callback!=null){
-                                        callback.reSetPass(model.getId() ,re_new_pass.getText().toString());
+                                if (new_pass.getText().toString().equals(re_new_pass.getText().toString())) {
+                                    if (callback != null) {
+                                        callback.reSetPass(model.getId_code(), re_new_pass.getText().toString(), id_employee);
                                     }
-                                }else {
+                                } else {
                                     Toast.makeText(activity, "Mật khẩu không khớp.", Toast.LENGTH_SHORT).show();
                                 }
+                            }
+                        });
+
+                        image_close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
                             }
                         });
                     }
                 });
             }
-        }catch (Exception e){
-            Log.e("Exception",e.getMessage());
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
         }
     }
 
@@ -217,8 +263,8 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
         //dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
-        LevelEmployeeChooseAdapter chooseAdapter = new LevelEmployeeChooseAdapter(activity,arrayList);
-        recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        LevelEmployeeChooseAdapter chooseAdapter = new LevelEmployeeChooseAdapter(activity, arrayList);
+        recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler_view_list.setAdapter(chooseAdapter);
 
         chooseAdapter.setOnItemClickListener(new LevelEmployeeChooseAdapter.onRecyclerViewItemClickListener() {
@@ -262,6 +308,8 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
         custom_confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //cap nhat lai
+                //callback.onBackProgress();
                 dialog.dismiss();
             }
         });
@@ -276,7 +324,7 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
         Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
 
         title_text.setText("Xác nhận");
-        content_text.setText("Bạn đã xóa sản phẩm thành công!");
+        content_text.setText("Bạn đã xóa nhân viên thành công!");
 
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setView(popupView);
@@ -286,7 +334,7 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
         custom_confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback!=null){
+                if (callback != null) {
                     callback.onBackProgress();
                     dialog.dismiss();
                 }

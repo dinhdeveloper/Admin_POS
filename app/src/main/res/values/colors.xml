@@ -109,4 +109,7 @@
     <color name="text_filter">#2BB5D1</color>
     <color name="bg_filter">#F2F2F2</color>
     <color name="tien">#FFC32D</color>
+    <color name="xacnhan">#709FB0</color>
+    <color name="item_one_chart">#DBFE74</color>
+    <color name="item_two_chart">#FF85B5</color>
 </resources>

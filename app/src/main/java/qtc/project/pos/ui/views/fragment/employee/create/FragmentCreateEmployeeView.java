@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
@@ -66,6 +67,8 @@ public class FragmentCreateEmployeeView extends BaseView<FragmentCreateEmployeeV
                             }
                         }, year, month, day);
                 picker.show();
+                //set time khong duoc lon hon ngay hien tai
+                picker.getDatePicker().setMaxDate(new Date().getTime());
             }
         });
 

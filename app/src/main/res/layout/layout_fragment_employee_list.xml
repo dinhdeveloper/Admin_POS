@@ -84,7 +84,7 @@
                     android:background="@color/white"
                     android:layout_marginHorizontal="5dp"
                     android:layout_weight="1"
-                    android:hint="Tên danh mục, số thứ tự..."
+                    android:hint="Tên nhân viên, số điện..."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

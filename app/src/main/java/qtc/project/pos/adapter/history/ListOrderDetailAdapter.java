@@ -33,14 +33,14 @@ public class ListOrderDetailAdapter extends SuperAdapter<OrderDetailModel> {
 
         try {
             if (item != null) {
-                name_product.setText(item.getName());
+                name_product.setText((layoutPosition+1)+". "+item.getName());
                 Glide.with(getContext()).load(Consts.HOST_API +item.getImage()).error(R.drawable.imageloading).into(image_product);
 
                 String pattern = "###,###.###";
                 DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
                 price_buy.setText(decimalFormat.format(Integer.parseInt(item.getPrice())));
-                quantity_product.setText(item.getQuantity());
+                quantity_product.setText("x"+item.getQuantity());
                 int total = Integer.parseInt(item.getQuantity()) * Integer.parseInt(item.getPrice());
                 total_price.setText(decimalFormat.format(total));
             }

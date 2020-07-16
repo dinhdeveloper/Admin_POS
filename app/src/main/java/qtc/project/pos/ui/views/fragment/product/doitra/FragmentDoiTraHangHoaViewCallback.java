@@ -8,4 +8,8 @@ public interface FragmentDoiTraHangHoaViewCallback {
     void getDataDoiTraHangHoa();
 
     void sentDataToDetailDTHH(PackageReturnModel model);
+
+    void getAllData();
+
+    void searchData(String search);
 }

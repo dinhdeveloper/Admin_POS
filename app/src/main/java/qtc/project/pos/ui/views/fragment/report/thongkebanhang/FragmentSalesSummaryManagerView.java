@@ -39,14 +39,14 @@ public class FragmentSalesSummaryManagerView extends BaseView<FragmentSalesSumma
         ui.layoutTTDT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.addFragment(new FragmentTomTatDoanhThu(), true, null);
+                activity.replaceFragment(new FragmentTomTatDoanhThu(), true, null);
             }
         });
         //san pham ban chay
         ui.layoutSP_BC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.addFragment(new FragmentSanPhamBanChay(),true,null);
+                activity.replaceFragment(new FragmentSanPhamBanChay(),true,null);
             }
         });
 
@@ -54,7 +54,7 @@ public class FragmentSalesSummaryManagerView extends BaseView<FragmentSalesSumma
         ui.layoutDT_KH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.addFragment(new FragmentDoanhThuTheoKhachHang(),true,null);
+                activity.replaceFragment(new FragmentDoanhThuTheoKhachHang(),true,null);
             }
         });
 
@@ -62,7 +62,7 @@ public class FragmentSalesSummaryManagerView extends BaseView<FragmentSalesSumma
         ui.layoutDT_SP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.addFragment(new FragmentDoanhThuTheoSp(),true,null);
+                activity.replaceFragment(new FragmentDoanhThuTheoSp(),true,null);
             }
         });
     }

@@ -23,6 +23,7 @@ import qtc.project.pos.model.OrderCustomerModel;
 public class FragmentHistoryOrderCustomerView extends BaseView<FragmentHistoryOrderCustomerView.UIContainer> implements FragmentHistoryOrderCustomerViewInterface {
     HomeActivity activity;
     FragmentHistoryOrderCustomerViewCallback callback;
+    String customer_id;
 
     @Override
     public void init(HomeActivity activity, FragmentHistoryOrderCustomerViewCallback callback) {
@@ -44,8 +45,10 @@ public class FragmentHistoryOrderCustomerView extends BaseView<FragmentHistoryOr
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchHistoryOrder(ui.edit_filter.getText().toString());
-                    return true;
+                    if (ui.edit_filter.getText().toString()!=null){
+                        searchHistoryOrder(ui.edit_filter.getText().toString());
+                        return true;
+                    }
                 }
                 Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
                 return false;
@@ -62,17 +65,26 @@ public class FragmentHistoryOrderCustomerView extends BaseView<FragmentHistoryOr
                 }
             }
         });
+
+        //close
+        ui.image_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ui.edit_filter.setText(null);
+            }
+        });
     }
 
-    private void searchHistoryOrder(String toString) {
+    private void searchHistoryOrder(String order_id) {
         if (callback!=null){
-            //callback.searchHistoryOrderCustomer(toString);
+            callback.searchHistoryOrderCustomer(order_id,customer_id);
         }
     }
 
     @Override
-    public void sendDataToView(ArrayList<OrderCustomerModel> model) {
+    public void sendDataToView(ArrayList<OrderCustomerModel> model,String id_customer) {
         if (model != null) {
+            customer_id = id_customer;
             HistoryOderCustomerAdapter adapter = new HistoryOderCustomerAdapter(activity, model);
             ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             ui.recycler_view_list.setAdapter(adapter);
@@ -108,6 +120,10 @@ public class FragmentHistoryOrderCustomerView extends BaseView<FragmentHistoryOr
 
         @UiElement(R.id.image_search)
         public ImageView image_search;
+
+        @UiElement(R.id.image_close)
+        public ImageView image_close;
+
 
         @UiElement(R.id.edit_filter)
         public EditText edit_filter;

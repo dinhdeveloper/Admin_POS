@@ -78,40 +78,45 @@ public class FragmentCreateCustomer extends BaseFragment<FragmentCreateCustomerV
 
     @Override
     public void createCustomer(CustomerModel customerModel) {
-        showProgress();
-        CustomerRequest.ApiParams params = new CustomerRequest.ApiParams();
-        params.type_manager = "create_customer";
-        params.employee_id = AppProvider.getPreferences().getUserModel().getId();
-        params.full_name = customerModel.getFull_name();
-        params.customer_code = customerModel.getId_code();
-        params.email = customerModel.getEmail();
-        params.phone_number = customerModel.getPhone_number();
-        params.address = customerModel.getAddress();
+        if (customerModel!=null){
+            showProgress();
+            CustomerRequest.ApiParams params = new CustomerRequest.ApiParams();
+            params.type_manager = "create_customer";
+            params.employee_id = AppProvider.getPreferences().getUserModel().getId();
+            params.full_name = customerModel.getFull_name();
+            params.customer_code = customerModel.getId_code();
+            params.email = customerModel.getEmail();
+            params.phone_number = customerModel.getPhone_number();
+            params.address = customerModel.getAddress();
 
-        AppProvider.getApiManagement().call(CustomerRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<CustomerModel>>() {
-            @Override
-            public void onSuccess(BaseResponseModel<CustomerModel> body) {
-                if (body != null) {
-                    dismissProgress();
-                    if (body.getSuccess().equals("true")){
-                        view.showAlert();
-                    }else if (body.getSuccess().equals("false")){
-                        Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
+            AppProvider.getApiManagement().call(CustomerRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<CustomerModel>>() {
+                @Override
+                public void onSuccess(BaseResponseModel<CustomerModel> body) {
+                    if (body != null) {
+                        dismissProgress();
+                        if (body.getSuccess().equals("true")){
+                            view.showAlert();
+                        }else if (body.getSuccess().equals("false")){
+                            Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onError(ErrorApiResponse error) {
-                dismissProgress();
-                Log.e("onError", error.message);
-            }
+                @Override
+                public void onError(ErrorApiResponse error) {
+                    dismissProgress();
+                    Log.e("onError", error.message);
+                }
 
-            @Override
-            public void onFail(ApiRequest.RequestError error) {
-                dismissProgress();
-                Log.e("onFail", error.name());
-            }
-        });
+                @Override
+                public void onFail(ApiRequest.RequestError error) {
+                    dismissProgress();
+                    Log.e("onFail", error.name());
+                }
+            });
+        }
+        else {
+            Toast.makeText(activity, "Vui lòng nhập trước khi tạo.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

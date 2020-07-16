@@ -43,5 +43,7 @@ public class HistoryOrderCustomerRequest  extends ApiRequest<HistoryOrderCustome
         public String employee_id;
         public String date_begin;
         public String date_end;
+        public String customer_id;
+        public String order_code;
     }
 }

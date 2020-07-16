@@ -71,7 +71,7 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
                         try {
                             CustomerModel customerModel = new CustomerModel();
                             customerModel.setId(model.getId());
-                            customerModel.setId_code(model.getId_code());
+                            customerModel.setId_code(ui.id_customer.getText().toString());
                             customerModel.setFull_name(ui.name_customer.getText().toString());
                             customerModel.setPhone_number(ui.phone_customer.getText().toString());
                             customerModel.setAddress(ui.address_customer.getText().toString());

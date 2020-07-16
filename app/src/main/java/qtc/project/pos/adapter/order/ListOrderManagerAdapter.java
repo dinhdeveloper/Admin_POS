@@ -3,6 +3,7 @@ package qtc.project.pos.adapter.order;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,6 +12,8 @@ import java.util.List;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
+import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.OrderCustomerModel;
 
 public class ListOrderManagerAdapter extends SuperAdapter<OrderCustomerModel> {
@@ -36,6 +39,7 @@ public class ListOrderManagerAdapter extends SuperAdapter<OrderCustomerModel> {
         TextView addressCustomer = holder.findViewById(R.id.address_customer);
         TextView createDay = holder.findViewById(R.id.date_order);
         TextView status = holder.findViewById(R.id.status);
+        ImageView image_level = holder.findViewById(R.id.image_level);
         LinearLayout btnSubmit = holder.findViewById(R.id.layout_status);
         LinearLayout layoutItemOrder = holder.findViewById(R.id.layoutItemOrder);
 
@@ -45,6 +49,8 @@ public class ListOrderManagerAdapter extends SuperAdapter<OrderCustomerModel> {
         phoneCustomer.setText(item.getCustomer_phone_number());
         addressCustomer.setText(item.getEmployee_address());
         createDay.setText(item.getOrder_created_date());
+        AppProvider.getImageHelper().displayImage(Consts.HOST_API+item.getCustomer_level_image(),image_level,null,R.drawable.imageloading);
+
         if (item.getOrder_status().equals("N")){
             status.setText("Đã hủy");
             status.setTextColor(ContextCompat.getColor(getContext(),R.color.colorYellow));

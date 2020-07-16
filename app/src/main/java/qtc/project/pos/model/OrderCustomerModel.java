@@ -30,6 +30,7 @@ public class OrderCustomerModel extends BaseResponseModel{
     private String customer_level_id;
     private String customer_level_code;
     private String customer_level_name;
+    private String customer_level_image;
     private String customer_level_discount;
     private String customer_level_description;
     private OrderDetailModel[] order_detail;
@@ -240,6 +241,14 @@ public class OrderCustomerModel extends BaseResponseModel{
 
     public void setCustomer_level_description(String customer_level_description) {
         this.customer_level_description = customer_level_description;
+    }
+
+    public String getCustomer_level_image() {
+        return customer_level_image;
+    }
+
+    public void setCustomer_level_image(String customer_level_image) {
+        this.customer_level_image = customer_level_image;
     }
 
     public OrderDetailModel[] getOrder_detail() {

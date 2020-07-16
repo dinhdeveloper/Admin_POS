@@ -2,9 +2,13 @@ package qtc.project.pos.ui.views.fragment.supplier;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,6 +22,7 @@ import qtc.project.pos.model.SupplierModel;
 public class FragmentSupplierManagerView extends BaseView<FragmentSupplierManagerView.UIContainer> implements FragmentSupplierManagerViewInterface{
     HomeActivity activity;
     FragmentSupplierManagerViewCallback callback;
+    ArrayList<SupplierModel> listAll = new ArrayList<>();
     @Override
     public void init(HomeActivity activity, FragmentSupplierManagerViewCallback callback) {
         this.activity = activity;
@@ -27,6 +32,11 @@ public class FragmentSupplierManagerView extends BaseView<FragmentSupplierManage
 
     @Override
     public void mappingRecyclerView(ArrayList<SupplierModel> list) {
+        listAll = list;
+        getData(listAll);
+    }
+
+    private void getData(ArrayList<SupplierModel> list) {
         SupplierAdapter supplierAdapter = new SupplierAdapter(activity, list);
         ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         ui.recycler_view_list.setAdapter(supplierAdapter);
@@ -58,6 +68,49 @@ public class FragmentSupplierManagerView extends BaseView<FragmentSupplierManage
                     callback.createSupplier();
             }
         });
+
+        //search
+        //search customer
+        ui.edit_filter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (ui.edit_filter.getText().toString()!=null){
+                        searchSuplier(ui.edit_filter.getText().toString());
+                        return true;
+                    }
+                }
+                Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        ui.ic_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ui.edit_filter.getText().toString() != null) {
+                    searchSuplier(ui.edit_filter.getText().toString());
+                } else {
+                    Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //xos search
+        ui.image_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ui.edit_filter.setText(null);
+                if (callback!=null)
+                    callback.getAllData();
+            }
+        });
+    }
+
+    private void searchSuplier(String filter) {
+        if (filter!=null){
+            callback.searchSupplier(filter);
+        }
     }
 
     @Override
@@ -88,6 +141,8 @@ public class FragmentSupplierManagerView extends BaseView<FragmentSupplierManage
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
 
+        @UiElement(R.id.image_close)
+        public ImageView image_close;
 
     }
 }

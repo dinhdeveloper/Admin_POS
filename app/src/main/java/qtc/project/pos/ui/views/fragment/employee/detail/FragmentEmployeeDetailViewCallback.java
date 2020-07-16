@@ -11,5 +11,5 @@ public interface FragmentEmployeeDetailViewCallback {
 
     void deleteEmployee(EmployeeModel model);
 
-    void reSetPass(String id,String newPass);
+    void reSetPass(String id_code,String newPass,String id_employee);
 }

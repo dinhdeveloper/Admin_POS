@@ -47,14 +47,14 @@ public class FragmentHistoryOrderCustomer extends BaseFragment<FragmentHistoryOr
             CustomerModel model = (CustomerModel) extras.get("model");
             showProgress();
             HistoryOrderCustomerRequest.ApiParams params = new HistoryOrderCustomerRequest.ApiParams();
-            params.filter = model.getId_code();
+            params.customer_id = model.getId();
             AppProvider.getApiManagement().call(HistoryOrderCustomerRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<OrderCustomerModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<OrderCustomerModel> body) {
                     dismissProgress();
                     ArrayList<OrderCustomerModel> list = new ArrayList<>();
                     list.addAll(Arrays.asList(body.getData()));
-                    view.sendDataToView(list);
+                    view.sendDataToView(list,model.getId());
                 }
 
                 @Override
@@ -91,5 +91,34 @@ public class FragmentHistoryOrderCustomer extends BaseFragment<FragmentHistoryOr
     @Override
     public void sentDataToDetail(OrderCustomerModel model) {
         activity.addFragment(new FragmentOrderDetailCustomer().newIntance(model),true,null);
+    }
+
+    @Override
+    public void searchHistoryOrderCustomer(String order_id, String customer_id) {
+        showProgress();
+        HistoryOrderCustomerRequest.ApiParams params = new HistoryOrderCustomerRequest.ApiParams();
+        params.customer_id = customer_id;
+        params.order_code = order_id;
+        AppProvider.getApiManagement().call(HistoryOrderCustomerRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<OrderCustomerModel>>() {
+            @Override
+            public void onSuccess(BaseResponseModel<OrderCustomerModel> body) {
+                dismissProgress();
+                ArrayList<OrderCustomerModel> list = new ArrayList<>();
+                list.addAll(Arrays.asList(body.getData()));
+                view.sendDataToView(list,customer_id);
+            }
+
+            @Override
+            public void onError(ErrorApiResponse error) {
+                dismissProgress();
+                Log.e("onError", error.message);
+            }
+
+            @Override
+            public void onFail(ApiRequest.RequestError error) {
+                dismissProgress();
+                Log.e("onFail", error.name());
+            }
+        });
     }
 }

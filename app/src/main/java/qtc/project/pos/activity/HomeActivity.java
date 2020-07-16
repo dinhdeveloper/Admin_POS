@@ -52,20 +52,30 @@ import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.fragment.home.FragmentHome;
 import qtc.project.pos.fragment.levelcustomer.FragmentCreateLevelCustomer;
 import qtc.project.pos.fragment.levelcustomer.FragmentLevelCustomerDetail;
+import qtc.project.pos.fragment.order.FragmentOrderManager;
+import qtc.project.pos.fragment.product.doitra.FragmentDoiTraHangHoa;
 import qtc.project.pos.fragment.product.productcategory.FragmentCategoryProductDetail;
 import qtc.project.pos.fragment.product.productcategory.FragmentCreateProductCategory;
+import qtc.project.pos.fragment.product.productlist.FragmentProductList;
 import qtc.project.pos.fragment.product.productlist.FragmentProductListDetail;
+import qtc.project.pos.fragment.product.productlist.create.FragmentCreateProduct;
+import qtc.project.pos.fragment.product.productlist.filter.FragmentFilterSanPham;
 import qtc.project.pos.fragment.product.quanlylohang.FragmentChiTietLoHang;
+import qtc.project.pos.fragment.product.quanlylohang.FragmentCreateLoHang;
 import qtc.project.pos.fragment.product.quanlylohang.FragmentDonTraHang;
 import qtc.project.pos.fragment.report.thongkebanhang.doanhthu_theo_khachhang.FragmentDoanhThuTheoKhachHang;
 import qtc.project.pos.fragment.report.thongkebanhang.doanhthu_theo_sanpham.FragmentDoanhThuTheoSp;
+import qtc.project.pos.fragment.report.thongkebanhang.sanpham_banchay.FragmentFilterSanPhamBanChay;
+import qtc.project.pos.fragment.report.thongkebanhang.sanpham_banchay.FragmentSanPhamBanChay;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.FragmentFilterTomTatDoanhSo;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.FragmentTomTatDoanhThu;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.thongke.FragmentThongKe;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.tongdoanhthu.FragmentTongDoanhThu;
 import qtc.project.pos.fragment.report.thongkekho.tonkho_vs_doanhthu.FragmentTK_TonKho_VS_DoanhThu;
+import qtc.project.pos.fragment.report.thongkekho.xuatnhapkho.FragmentBaoCaoXuatNhapKho;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.EmployeeModel;
+import qtc.project.pos.model.ProductListModel;
 import qtc.project.pos.model.SupplierModel;
 import qtc.project.pos.ui.views.action_bar.base_main_actionbar.BaseMainActionbarViewInterface;
 import qtc.project.pos.ui.views.activity.home_activity.HomeActivityView;
@@ -161,12 +171,28 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
 
     @Override
     public void onBackPressed() {
-//        BaseFragment baseFragment = getCurrentFragment();
-//        if (baseFragment instanceof ){
-//            super.onBackPressed();
-//        }else if(){
-//            checkBack();
-//        }
+        BaseFragment baseFragment = getCurrentFragment();
+        if (baseFragment instanceof FragmentHome) {
+            super.onBackPressed();
+        } else if (baseFragment instanceof FragmentSanPhamBanChay) {
+            checkBack();
+        } else if (baseFragment instanceof FragmentOrderManager) {
+            checkBack();
+        } else if (baseFragment instanceof FragmentBaoCaoXuatNhapKho) {
+            checkBack();
+        }else if (baseFragment instanceof FragmentDoiTraHangHoa) {
+            checkBack();
+        }
+    }
+
+    public void setDataSearchProduct(ArrayList<ProductListModel> list, String name, String id) {
+        BaseFragment baseFragment = getCurrentFragment();
+        if (baseFragment instanceof FragmentProductList) {
+            ((FragmentProductList) baseFragment).setDataSearchProduct(list, name, id);
+        }
+        if (baseFragment instanceof FragmentFilterSanPham) {
+            ((FragmentFilterSanPham) baseFragment).setOnBack();
+        }
     }
 
     public void setDataNhaCungUng(SupplierModel model) {
@@ -174,9 +200,24 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
         if (baseFragment instanceof FragmentChiTietLoHang) {
             ((FragmentChiTietLoHang) baseFragment).setDataNhaCungUng(model);
         }
+
+        if (baseFragment instanceof FragmentCreateLoHang) {
+            ((FragmentCreateLoHang) baseFragment).setDataNhaCungUng(model);
+        }
+
         if (baseFragment instanceof FragmentDonTraHang) {
             ((FragmentDonTraHang) baseFragment).setOnBack();
         }
+    }
+
+    public void setDataProduct(ProductListModel model) {
+        BaseFragment baseFragment = getCurrentFragment();
+        if (baseFragment instanceof FragmentCreateLoHang) {
+            ((FragmentCreateLoHang) baseFragment).setDataProduct(model);
+        }
+//        if (baseFragment instanceof FragmentCreateLoHang) {
+//            ((FragmentCreateLoHang) baseFragment).setOnBack();
+//        }
     }
 
     public void setDataDate(String nam, String thang, int ngay) {
@@ -219,6 +260,31 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
         if (baseFragment instanceof FragmentTomTatDoanhThu) {
             ((FragmentTomTatDoanhThu) baseFragment).onBackProgress();
         }
+    }
+
+    public void setDataDateSP_BChay(String nam, String thang) {
+        BaseFragment baseFragment = getCurrentFragment();
+        if (baseFragment instanceof FragmentSanPhamBanChay) {
+            ((FragmentSanPhamBanChay) baseFragment).filterDataTheoThang(nam, thang);
+        }
+
+        if (baseFragment instanceof FragmentBaoCaoXuatNhapKho) {
+            ((FragmentBaoCaoXuatNhapKho) baseFragment).filterDataDate(nam, thang);
+        }
+
+//        if (baseFragment instanceof FragmentSanPhamBanChay) {
+//            ((FragmentSanPhamBanChay) baseFragment).onBackProgress();
+//        }
+    }
+
+    public void setDataDateOrder(String dateStartSelected, String dateEndSelected) {
+        BaseFragment baseFragment = getCurrentFragment();
+        if (baseFragment instanceof FragmentOrderManager) {
+            ((FragmentOrderManager) baseFragment).filterDataDate(dateStartSelected, dateEndSelected);
+        }
+//        if (baseFragment instanceof FragmentOrderManager) {
+//            ((FragmentOrderManager) baseFragment).onBackProgress();
+//        }
     }
 
     private int isShowContainer = 0;
@@ -278,7 +344,7 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
     }
 
     @Override
-    public void onClickLogin(String oldPass, String newPass,String employee_id) {
+    public void onClickLogin(String oldPass, String newPass, String employee_id) {
         showProgress();
         if (oldPass != null && newPass != null) {
             UpdatePassEmployeeRequest.ApiParams params = new UpdatePassEmployeeRequest.ApiParams();
@@ -290,10 +356,10 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
                 @Override
                 public void onSuccess(BaseResponseModel<EmployeeModel> body) {
                     dismissProgress();
-                    if (body.getSuccess().equals("true")){
+                    if (body.getSuccess().equals("true")) {
                         view.updatePopup();
-                    }else if (body.getSuccess().equals("false")){
-                        Toast.makeText(getApplicationContext(), ""+body.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else if (body.getSuccess().equals("false")) {
+                        Toast.makeText(getApplicationContext(), "" + body.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -661,6 +727,9 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
                     if (fragment instanceof FragmentProductListDetail) {
                         ((FragmentProductListDetail) fragment).setImageSelected(selectionResult.get(0));
                     }
+                    if (fragment instanceof FragmentCreateProduct) {
+                        ((FragmentCreateProduct) fragment).setImageSelected(selectionResult.get(0));
+                    }
                 }
             }
         } else if (requestCode == CAMERA_REQUEST) {
@@ -696,6 +765,13 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
 //                    ((FragmentStatictisReportDetail) fragment).deleteTempMedia();
 //                }
             }
+        }
+    }
+
+    public void setDataSearch(String thang, String nam) {
+        BaseFragment baseFragment = getCurrentFragment();
+        if (baseFragment instanceof FragmentDoiTraHangHoa) {
+            ((FragmentDoiTraHangHoa) baseFragment).filterDataDate(thang, nam);
         }
     }
 }

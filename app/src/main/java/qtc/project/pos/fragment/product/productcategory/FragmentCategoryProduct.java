@@ -85,8 +85,4 @@ public class FragmentCategoryProduct extends BaseFragment<FragmentCategoryProduc
         requestDataProductCategory();
     }
 
-    @Override
-    public void callDataToFilter(String toString) {
-
-    }
 }

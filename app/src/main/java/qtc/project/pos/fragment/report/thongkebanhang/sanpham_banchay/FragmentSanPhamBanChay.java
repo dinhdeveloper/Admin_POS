@@ -45,7 +45,7 @@ public class FragmentSanPhamBanChay extends BaseFragment<FragmentSanPhamBanChayV
         view.init(activity, this);
 
         getTopSanPhamBanChay();
-        getDataBundle();
+        //getDataBundle();
     }
 
     private void getDataBundle() {
@@ -144,6 +144,39 @@ public class FragmentSanPhamBanChay extends BaseFragment<FragmentSanPhamBanChayV
 
     @Override
     public void goToChooseDate() {
-        activity.addFragment(new FragmentFilterSanPhamBanChay(), true, null);
+        activity.replaceFragment(new FragmentFilterSanPhamBanChay(), true, null);
+    }
+
+    public void filterDataTheoThang(String nam, String thang) {
+        showProgress();
+        TopProductRequest.ApiParams params = new TopProductRequest.ApiParams();
+        params.type_manager = "report_top_product";
+        params.date_start = nam + "-" + thang + "-01";
+        params.date_end = nam + "-" + thang + "-31";
+
+        AppProvider.getApiManagement().call(TopProductRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<TopProductModel>>() {
+            @Override
+            public void onSuccess(BaseResponseModel<TopProductModel> body) {
+                if (body != null) {
+                    dismissProgress();
+                    ArrayList<TopProductModel> list = new ArrayList<>();
+                    list.addAll(Arrays.asList(body.getData()));
+                    view.mappingRecyclerView(list);
+                }
+            }
+
+            @Override
+            public void onError(ErrorApiResponse error) {
+                dismissProgress();
+                Log.e("onError", error.message);
+            }
+
+            @Override
+            public void onFail(ApiRequest.RequestError error) {
+                dismissProgress();
+                Log.e("onFail", error.name());
+            }
+        });
+
     }
 }

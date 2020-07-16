@@ -74,18 +74,26 @@
                 android:layout_height="40dp">
                 <ImageView
                     android:id="@+id/image_filter"
+                    android:layout_gravity="center"
                     android:src="@drawable/ic_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <EditText
                     android:id="@+id/edit_filter"
+                    android:imeActionLabel="Search"
+                    android:inputType="text"
                     android:imeOptions="actionSearch"
-                    android:inputType="none"
                     android:background="@color/white"
                     android:layout_marginHorizontal="5dp"
                     android:layout_weight="1"
                     android:hint="Tên, mã danh mục..."
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/image_close"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_delete_noti"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 

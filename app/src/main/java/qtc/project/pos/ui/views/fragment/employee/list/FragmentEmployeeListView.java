@@ -27,6 +27,8 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
     HomeActivity activity;
     FragmentEmployeeListViewCallback callback;
 
+    ArrayList<EmployeeModel> listAll = new ArrayList<>();
+
     @Override
     public void init(HomeActivity activity, FragmentEmployeeListViewCallback callback) {
         this.activity = activity;
@@ -38,8 +40,8 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
 
     @Override
     public void mappingRecyclerView(ArrayList<EmployeeModel> list) {
-        //listAll.addAll(list);
-        EmployeeListAdapter adapter = new EmployeeListAdapter(activity, list);
+        listAll.addAll(list);
+        EmployeeListAdapter adapter = new EmployeeListAdapter(activity, listAll);
         ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         ui.recycler_view_list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -82,20 +84,15 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
             }
 
             @Override
-            public void setStatusSwich(EmployeeModel item, boolean isCheked, int position) {
-
-                EmployeeModel employeeModel = new EmployeeModel();
-                employeeModel.setId(item.getId());
-
-                if (isCheked == true) {
-                    employeeModel.setStatus("Y");
-                    Toast.makeText(activity, "" + item.getId() + "po: " + position, Toast.LENGTH_SHORT).show();
-
-                } else {
-                    employeeModel.setStatus("N");
-                    Toast.makeText(activity, "" + item.getId() + "po: " + position, Toast.LENGTH_SHORT).show();
+            public void setStatusSwich(int position, boolean isCheked) {
+                for (int i = 0; i < listAll.size(); i++){
+                    if (listAll.get(i).getId().equalsIgnoreCase(list.get(position).getId())){
+                        Toast.makeText(activity, ""+isCheked, Toast.LENGTH_SHORT).show();
+                    }adapter.notifyDataSetChanged();
+                    break;
                 }
-                adapter.notifyDataSetChanged();
+
+              //  Toast.makeText(activity, ""+item.getFull_name()+ "Status: "+isCheked, Toast.LENGTH_SHORT).show();
 
 //                if (callback != null)
 //                    callback.updateEmployee(employeeModel);

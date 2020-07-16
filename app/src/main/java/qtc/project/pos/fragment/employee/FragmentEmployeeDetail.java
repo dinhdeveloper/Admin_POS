@@ -1,15 +1,22 @@
 package qtc.project.pos.fragment.employee;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
+import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.employee.EmployeeRequest;
 import qtc.project.pos.dependency.AppProvider;
@@ -87,7 +94,7 @@ public class FragmentEmployeeDetail extends BaseFragment<FragmentEmployeeDetailV
             EmployeeRequest.ApiParams params = new EmployeeRequest.ApiParams();
             params.type_manager = "update_employee";
             params.id_code = employeeModel.getId_code();
-            params.id_employee = AppProvider.getPreferences().getUserModel().getId();
+            params.id_employee = employeeModel.getId();
             params.full_name = employeeModel.getFull_name();
             params.email = employeeModel.getEmail();
             params.phone_number = employeeModel.getPhone_number();
@@ -100,13 +107,10 @@ public class FragmentEmployeeDetail extends BaseFragment<FragmentEmployeeDetailV
                 @Override
                 public void onSuccess(BaseResponseModel<EmployeeModel> body) {
                     dismissProgress();
-                    ;
                     if (body.getSuccess().equals("true")) {
                         view.showDiaLogUpdate();
-                        Log.e("AAAAA",body.getMessage());
                     } else if (body.getSuccess().equals("false")) {
                         Toast.makeText(activity, "" + body.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("AAAAA",body.getMessage());
                     }
                 }
 
@@ -131,13 +135,13 @@ public class FragmentEmployeeDetail extends BaseFragment<FragmentEmployeeDetailV
             showProgress();
             EmployeeRequest.ApiParams params = new EmployeeRequest.ApiParams();
             params.type_manager = "delete_employee";
-            params.id_employee = AppProvider.getPreferences().getUserModel().getId();
+            // xoa tai khoan dang muon xoa.
+            params.id_employee = employeeModel.getId();
 
             AppProvider.getApiManagement().call(EmployeeRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<EmployeeModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<EmployeeModel> body) {
                     dismissProgress();
-                    ;
                     if (body.getSuccess().equals("true")) {
                         view.showDiaLogDelete();
                     } else if (body.getSuccess().equals("false")) {
@@ -161,19 +165,19 @@ public class FragmentEmployeeDetail extends BaseFragment<FragmentEmployeeDetailV
     }
 
     @Override
-    public void reSetPass(String id,String newPass) {
-        if (id!=null){
+    public void reSetPass(String id_code,String newPass,String id_employee) {
+        if (id_code!=null){
             showProgress();
             EmployeeRequest.ApiParams params = new EmployeeRequest.ApiParams();
             params.type_manager = "update_employee";
-            params.id_code = id;
+            params.id_code = id_code;
+            params.id_employee = id_employee;
             params.password_reset = newPass;
 
             AppProvider.getApiManagement().call(EmployeeRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<EmployeeModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<EmployeeModel> body) {
                     dismissProgress();
-                    ;
                     if (body.getSuccess().equals("true")) {
                         view.showDiaLogUpdate();
                     } else if (body.getSuccess().equals("false")) {

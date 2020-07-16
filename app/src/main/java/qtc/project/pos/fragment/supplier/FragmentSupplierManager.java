@@ -81,4 +81,40 @@ public class FragmentSupplierManager extends BaseFragment<FragmentSupplierManage
     public void createSupplier() {
         activity.replaceFragment(new FragmentCreateSupplier(),true,null);
     }
+
+    @Override
+    public void searchSupplier(String filter) {
+        showProgress();
+        SupplierRequest.ApiParams params = new SupplierRequest.ApiParams();
+        params.type_manager = "list_supplier";
+        params.filter = filter;
+        AppProvider.getApiManagement().call(SupplierRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<SupplierModel>>() {
+            @Override
+            public void onSuccess(BaseResponseModel<SupplierModel> body) {
+                dismissProgress();
+                if (body != null) {
+                    ArrayList<SupplierModel> list = new ArrayList<>();
+                    list.addAll(Arrays.asList(body.getData()));
+                    view.mappingRecyclerView(list);
+                }
+            }
+
+            @Override
+            public void onError(ErrorApiResponse error) {
+                dismissProgress();
+                Log.e("onError", error.message);
+            }
+
+            @Override
+            public void onFail(ApiRequest.RequestError error) {
+                dismissProgress();
+                Log.e("onFail", error.name());
+            }
+        });
+    }
+
+    @Override
+    public void getAllData() {
+        callApiDataSupp();
+    }
 }

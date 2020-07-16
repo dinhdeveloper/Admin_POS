@@ -45,6 +45,9 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:id="@+id/image_create"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_add_while_24"
                     android:layout_width="24dp"
                     android:layout_height="24dp" />
             </LinearLayout>
@@ -74,11 +77,18 @@
                 android:paddingHorizontal="10dp">
 
                 <ImageView
+                    android:id="@+id/image_search"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_search_24" />
+                    android:src="@drawable/ic_search" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/edit_filter"
+                    android:imeActionLabel="Search"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch"
+                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
@@ -86,9 +96,11 @@
                     android:hint="Tên mã sản phẩm..." />
 
                 <ImageView
+                    android:id="@+id/image_close"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_camera_24" />
+                    android:src="@drawable/ic_delete_noti" />
             </LinearLayout>
 
             <ImageView
@@ -101,21 +113,42 @@
                 android:src="@drawable/ic_filter" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="50dp"
+        <RelativeLayout
+            android:id="@+id/layout_filter"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/dp20"
+            android:layout_width="200dp"
             android:background="@color/bg_filter"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="60dp">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_filter" />
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/dp10"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/name_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_filter" />
+                <TextView
+                    android:id="@+id/id_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_filter" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/close_layout"
+                android:layout_margin="@dimen/dp5"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_delete_noti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
 
         <!--layout-->
 

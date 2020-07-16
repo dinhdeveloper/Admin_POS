@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
@@ -83,6 +84,7 @@ public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangVie
                             }
                         }, year, month, day);
                 picker.show();
+                picker.getDatePicker().setMaxDate(new Date().getTime());
             }
         });
 

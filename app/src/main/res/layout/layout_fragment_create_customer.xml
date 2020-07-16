@@ -104,7 +104,6 @@
                 android:layout_marginHorizontal="@dimen/dp20"
                 android:layout_marginVertical="@dimen/dp15"
                 android:background="@color/hinhnen"
-                android:hint="changkho"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
@@ -133,6 +132,7 @@
 
             <EditText
                 android:id="@+id/id_customer"
+                android:textSize="14dp"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
