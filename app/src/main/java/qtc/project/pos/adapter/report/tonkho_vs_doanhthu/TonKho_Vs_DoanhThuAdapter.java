@@ -70,7 +70,7 @@ public class TonKho_Vs_DoanhThuAdapter extends RecyclerView.Adapter<TonKho_Vs_Do
 
     @Override
     public int getItemCount() {
-        return 12;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

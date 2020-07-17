@@ -155,6 +155,8 @@ public class BaoCaoAnToanKhoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
+    //filter
+
     private String filterString;
     private ArrayList<AnToanKhoModel> listData = new ArrayList<>();
     private ArrayList<AnToanKhoModel> listDataBackup = new ArrayList<>();

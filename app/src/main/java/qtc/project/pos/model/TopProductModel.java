@@ -2,7 +2,7 @@ package qtc.project.pos.model;
 
 public class TopProductModel extends BaseResponseModel {
 
-
+    private String top;
     private String product_id;
     private String product_name;
     private String total_payment_item_order;
@@ -38,5 +38,13 @@ public class TopProductModel extends BaseResponseModel {
 
     public void setTotal_quantity_item_order(String total_quantity_item_order) {
         this.total_quantity_item_order = total_quantity_item_order;
+    }
+
+    public String getTop() {
+        return top;
+    }
+
+    public void setTop(String top) {
+        this.top = top;
     }
 }

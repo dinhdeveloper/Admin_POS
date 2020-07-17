@@ -10,4 +10,6 @@ public interface FragmentDonTraHangViewInterface extends BaseViewInterface {
     void sendDataToView(PackageInfoModel infoModel,String name,String id);
 
     void setOnBack();
+
+    void showSuccess();
 }

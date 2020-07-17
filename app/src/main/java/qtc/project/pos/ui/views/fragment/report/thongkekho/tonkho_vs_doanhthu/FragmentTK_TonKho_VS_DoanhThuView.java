@@ -27,6 +27,8 @@ public class FragmentTK_TonKho_VS_DoanhThuView extends BaseView<FragmentTK_TonKh
 
     String date_start;
     String date_end;
+    int thangLocalStart;
+    int thangLocalEnd;
 
     @Override
     public void init(HomeActivity activity, FragmentTK_TonKho_VS_DoanhThuViewCallback callback) {
@@ -40,7 +42,9 @@ public class FragmentTK_TonKho_VS_DoanhThuView extends BaseView<FragmentTK_TonKh
     public void sentDateToView(String thang, String nam, int ngay) {
         if (ngay == 0) {
             date_start = nam + "-" + thang;
+            thangLocalStart = Integer.parseInt(thang);
         } else if (ngay == 1) {
+            thangLocalEnd = Integer.parseInt(thang);
             date_end = nam + "-" + thang;
         }
 
@@ -63,7 +67,9 @@ public class FragmentTK_TonKho_VS_DoanhThuView extends BaseView<FragmentTK_TonKh
 
         List<Stock_Income_Model> model = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        Log.e("DDAA",thangLocalStart+ "  "+thangLocalEnd);
+
+        for (int i = (thangLocalStart-1); i < thangLocalEnd; i++) {
             Stock_Income_Model stock_income_model = new Stock_Income_Model();
             stock_income_model.setTitle(list.get(0).getListIncomeModel().get(i).getTitle());
             stock_income_model.setValueIncome(list.get(0).getListIncomeModel().get(i).getValue());

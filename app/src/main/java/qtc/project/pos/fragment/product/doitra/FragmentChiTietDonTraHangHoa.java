@@ -15,8 +15,6 @@ import qtc.project.pos.fragment.product.quanlylohang.FragmentChiTietLoHang;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.PackageInfoModel;
 import qtc.project.pos.model.PackageReturnModel;
-import qtc.project.pos.ui.views.fragment.product.doitra.FragmentDoiTraHangHoaViewCallback;
-import qtc.project.pos.ui.views.fragment.product.doitra.FragmentDoiTraHangHoaViewInterface;
 import qtc.project.pos.ui.views.fragment.product.doitra.detail.FragmentChiTietDonTraHangHoaView;
 import qtc.project.pos.ui.views.fragment.product.doitra.detail.FragmentChiTietDonTraHangHoaViewCallback;
 import qtc.project.pos.ui.views.fragment.product.doitra.detail.FragmentChiTietDonTraHangHoaViewInterface;

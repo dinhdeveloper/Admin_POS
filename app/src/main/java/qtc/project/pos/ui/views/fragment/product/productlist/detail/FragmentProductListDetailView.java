@@ -48,6 +48,8 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
             ui.id_product.setText(model.getId_code());
             ui.description_product.setText(model.getDescription());
             ui.tonkho.setText(model.getQuantity_safetystock());
+            ui.qrcode.setText(model.getQr_code());
+            ui.barcode.setText(model.getBarcode());
             ui.name_product_category.setText(model.getCategory_name());
         }
         //cap nhat

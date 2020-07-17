@@ -15,9 +15,6 @@ import qtc.project.pos.api.report.thongke_tonkho_vs_doanhthu.TonKho_Vs_DoanhThuR
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.FragmentFilterTomTatDoanhSo;
 import qtc.project.pos.model.BaseResponseModel;
-import qtc.project.pos.model.DataChartModel;
-import qtc.project.pos.model.LevelCustomerModel;
-import qtc.project.pos.model.Stock_Income_Model;
 import qtc.project.pos.model.TonKho_Vs_DoanhThuModel;
 import qtc.project.pos.ui.views.fragment.report.thongkekho.tonkho_vs_doanhthu.FragmentTK_TonKho_VS_DoanhThuView;
 import qtc.project.pos.ui.views.fragment.report.thongkekho.tonkho_vs_doanhthu.FragmentTK_TonKho_VS_DoanhThuViewCallback;
@@ -26,6 +23,8 @@ import qtc.project.pos.ui.views.fragment.report.thongkekho.tonkho_vs_doanhthu.Fr
 public class FragmentTK_TonKho_VS_DoanhThu extends BaseFragment<FragmentTK_TonKho_VS_DoanhThuViewInterface, BaseParameters> implements FragmentTK_TonKho_VS_DoanhThuViewCallback {
 
     HomeActivity activity;
+    String dateStart;
+    String dateEnd;
 
     @Override
     protected void initialize() {
@@ -57,6 +56,8 @@ public class FragmentTK_TonKho_VS_DoanhThu extends BaseFragment<FragmentTK_TonKh
 
     @Override
     public void searchDataToDate(String date_start, String date_end) {
+        dateStart = date_start;
+        dateEnd = date_end;
         showProgress();
         if (date_start != null && date_end != null) {
             TonKho_Vs_DoanhThuRequest.ApiParams params = new TonKho_Vs_DoanhThuRequest.ApiParams();

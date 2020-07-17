@@ -4,4 +4,6 @@ public interface FragmentSanPhamBanChayViewCallback {
     void onBackProgress();
 
     void goToChooseDate();
+
+    void getAllData();
 }

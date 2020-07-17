@@ -5,22 +5,25 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
-import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
+import b.laixuantam.myaarlibrary.helper.AccentRemove;
 import qtc.project.pos.R;
+import qtc.project.pos.adapter.report.antoankho.BaoCaoAnToanKhoAdapter;
 import qtc.project.pos.model.EmployeeModel;
 
 public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapter.ViewHolder> {
@@ -28,22 +31,18 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
     Context context;
     List<EmployeeModel> lists;
     EmployeeListAdapterListener listener;
-    boolean isTouched = false;
-    private ClickInterface click;
-
     public EmployeeListAdapter(Context context, List<EmployeeModel> lists) {
         this.context = context;
         this.lists = lists;
+        filter = new EmployeeFilter();
     }
 
 
 
     public interface EmployeeListAdapterListener {
         void onClickItem(EmployeeModel model);
-        void setStatusSwich(int position, boolean isCheked);
+        void onItemCheckedChanged(int position, boolean isChecked);
     }
-    interface ClickInterface{void posClicked(short p);}
-
     public void setListener(EmployeeListAdapterListener listener) {
         this.listener = listener;
     }
@@ -59,7 +58,6 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         EmployeeModel item = lists.get(i);
             try{
-
                 holder.name_employee.setText(item.getFull_name());
                 holder.phone_employee.setText(item.getPhone_number());
                 if (item.getLevel().equals("2")) {
@@ -83,28 +81,16 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
                     }
                 });
                 //set trang thai
-
-                holder.status_employee.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        isTouched = true;
-                        return false;
-                    }
-                });
-
                 holder.status_employee.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isTouched) {
-                            isTouched = false;
+                        int adapterPosition = holder.getAdapterPosition();
 
-                            if (isChecked) {
-                                click.posClicked((short) holder.getAdapterPosition());
-                                Toast.makeText(context, ""+isChecked, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(context, ""+isChecked, Toast.LENGTH_SHORT).show();
-                                // Do something on un-checking the SwitchCompat
-                            }
+                        EmployeeModel tapped = lists.get(adapterPosition);
+                        tapped.setStatus(String.valueOf(isChecked));
+
+                        if (listener != null) {
+                            listener.onItemCheckedChanged(adapterPosition, isChecked);
                         }
                     }
                 });
@@ -112,6 +98,13 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
             }catch (Exception e){
                 Log.e("Ex",e.getMessage());
             }
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull ViewHolder holder) {
+        super.onViewRecycled(holder);
+
+        holder.status_employee.setOnCheckedChangeListener(null);
     }
 
     @Override
@@ -135,5 +128,89 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
             status_employee = itemView.findViewById(R.id.status_employee_list);
         }
     }
+
+    //filter
+
+    private String filterString;
+    private ArrayList<EmployeeModel> listData = new ArrayList<>();
+    private ArrayList<EmployeeModel> listDataBackup = new ArrayList<>();
+    private EmployeeFilter filter;
+
+    public EmployeeFilter getFilter() {
+        return filter;
+    }
+
+    public ArrayList<EmployeeModel> getListData() {
+        return listData;
+    }
+
+    public ArrayList<EmployeeModel> getListDataBackup() {
+        return listDataBackup;
+    }
+
+    public class EmployeeFilter extends Filter {
+        public EmployeeFilter() {
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (!TextUtils.isEmpty(constraint)) {
+                filterString = constraint.toString().toLowerCase();
+                FilterResults results = new FilterResults();
+                if (listData != null && listData.size() > 0) {
+                    int count = listData.size();
+                    List<EmployeeModel> tempItems = new ArrayList<EmployeeModel>();
+
+                    // search exactly
+                    for (int i = 0; i < count; i++) {
+                        String name = listData.get(i).getFull_name().toLowerCase();
+                        if (name.contains(filterString)) {
+                            tempItems.add(listData.get(i));
+                        }
+                    }
+                    // search for no accent if no exactly result
+                    filterString = AccentRemove.removeAccent(filterString);
+                    if (tempItems.size() == 0) {
+                        for (int i = 0; i < count; i++) {
+                            String name = AccentRemove.removeAccent(listData.get(i).getFull_name().toLowerCase());
+                            if (name.contains(filterString)) {
+                                tempItems.add(listData.get(i));
+                            }
+                        }
+                    }
+                    results.values = tempItems;
+                    results.count = tempItems.size();
+                    return results;
+                } else {
+                    return null;
+                }
+            } else {
+                filterString = "";
+                return null;
+            }
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            listData.clear();
+            if (results != null) {
+                List<EmployeeModel> listProductResult = (List<EmployeeModel>) results.values;
+                if (listProductResult != null && listProductResult.size() > 0) {
+                    listData.addAll(listProductResult);
+                }
+            } else {
+                listData.addAll(listDataBackup);
+            }
+
+            replaceAll(listData);
+        }
+    }
+
+    private void replaceAll(ArrayList<EmployeeModel> listData) {
+        lists.clear();
+        lists.addAll(listData);
+        notifyDataSetChanged();
+    }
+
 }
 

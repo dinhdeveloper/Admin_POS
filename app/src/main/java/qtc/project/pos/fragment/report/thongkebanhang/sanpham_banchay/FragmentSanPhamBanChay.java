@@ -147,6 +147,11 @@ public class FragmentSanPhamBanChay extends BaseFragment<FragmentSanPhamBanChayV
         activity.replaceFragment(new FragmentFilterSanPhamBanChay(), true, null);
     }
 
+    @Override
+    public void getAllData() {
+        getTopSanPhamBanChay();
+    }
+
     public void filterDataTheoThang(String nam, String thang) {
         showProgress();
         TopProductRequest.ApiParams params = new TopProductRequest.ApiParams();

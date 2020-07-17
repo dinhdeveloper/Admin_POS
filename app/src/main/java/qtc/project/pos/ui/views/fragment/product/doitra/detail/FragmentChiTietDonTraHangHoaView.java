@@ -73,7 +73,7 @@ public class FragmentChiTietDonTraHangHoaView extends BaseView<FragmentChiTietDo
                         Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
 
                         title_text.setText("Cảnh báo");
-                        content_text.setText("Bạn có muốn xóa sản phẩm này không?");
+                        content_text.setText("Bạn có muốn xóa đơn trả hàng này không?");
 
                         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
                         alert.setView(popupView);
@@ -111,7 +111,7 @@ public class FragmentChiTietDonTraHangHoaView extends BaseView<FragmentChiTietDo
         Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
 
         title_text.setText("Xác nhận");
-        content_text.setText("Bạn đã xóa sản phẩm thành công!");
+        content_text.setText("Bạn đã xóa đơn trả hàng thành công!");
 
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setView(popupView);

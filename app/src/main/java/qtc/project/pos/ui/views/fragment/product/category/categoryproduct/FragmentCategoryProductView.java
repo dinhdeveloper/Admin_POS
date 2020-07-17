@@ -2,6 +2,8 @@ package qtc.project.pos.ui.views.fragment.product.category.categoryproduct;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.product.category.ProductCategoryAdapter;
@@ -24,12 +27,13 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
 
     HomeActivity activity;
     FragmentCategoryProductViewCallback callback;
+    ProductCategoryAdapter categoryAdapter;
 
     @Override
     public void init(HomeActivity activity, FragmentCategoryProductViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-
+        KeyboardUtils.setupUI(getView(),activity);
         onClickBack();
 
     }
@@ -50,47 +54,32 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
             }
         });
 
-        //SEARCH
-        ui.edit_filter.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        ui.edit_filter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchFilter(ui.edit_filter.getText().toString());
-                    return true;
-                }
-                Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
 
-        ui.image_filter.setOnClickListener(new View.OnClickListener() {
+        ui.edit_filter.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                if (ui.edit_filter.getText().toString()!=null){
-                    searchFilter(ui.edit_filter.getText().toString());
-                }
-                else {
-                    Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
-                }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (categoryAdapter!= null)
+                    categoryAdapter.getFilter().filter(s);
             }
         });
     }
 
-    private void searchFilter(String toString) {
-        if (callback != null){
-            if (toString!=null){
-
-            }
-            else {
-                callback.callAllData();
-            }
-        }
-    }
 
     @Override
     public void initGetListCategoryProduct(ArrayList<ProductCategoryModel> list) {
-        ProductCategoryAdapter categoryAdapter = new ProductCategoryAdapter(activity,list);
+        categoryAdapter = new ProductCategoryAdapter(activity,list);
+        categoryAdapter.getListData().addAll(list);
+        categoryAdapter.getListDataBackup().addAll(list);
         ui.recycler_view_category_product.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
         ui.recycler_view_category_product.setAdapter(categoryAdapter);
         categoryAdapter.notifyDataSetChanged();

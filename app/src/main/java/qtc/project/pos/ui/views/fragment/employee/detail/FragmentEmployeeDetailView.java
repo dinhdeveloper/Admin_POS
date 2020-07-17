@@ -179,7 +179,7 @@ public class FragmentEmployeeDetailView extends BaseView<FragmentEmployeeDetailV
                             Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
 
                             title_text.setText("Cảnh báo");
-                            content_text.setText("Bạn có muốn xóa khách hàng này không?");
+                            content_text.setText("Bạn có muốn xóa nhân viên này không?");
 
                             AlertDialog.Builder alert = new AlertDialog.Builder(activity);
                             alert.setView(popupView);

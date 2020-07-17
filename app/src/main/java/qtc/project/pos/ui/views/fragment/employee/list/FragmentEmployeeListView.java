@@ -3,6 +3,8 @@ package qtc.project.pos.ui.views.fragment.employee.list;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.employee.EmployeeListAdapter;
@@ -26,13 +29,34 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
 
     HomeActivity activity;
     FragmentEmployeeListViewCallback callback;
+    EmployeeListAdapter adapter;
 
-    ArrayList<EmployeeModel> listAll = new ArrayList<>();
+    ArrayList<EmployeeModel> listAll;
 
     @Override
     public void init(HomeActivity activity, FragmentEmployeeListViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
+
+        KeyboardUtils.setupUI(getView(),activity);
+
+        ui.edit_filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (adapter!= null)
+                    adapter.getFilter().filter(s);
+            }
+        });
 
         onClick();
         getDataEmployee();
@@ -40,8 +64,12 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
 
     @Override
     public void mappingRecyclerView(ArrayList<EmployeeModel> list) {
+        listAll = new ArrayList<>();
+        listAll.clear();
         listAll.addAll(list);
-        EmployeeListAdapter adapter = new EmployeeListAdapter(activity, listAll);
+        adapter = new EmployeeListAdapter(activity, listAll);
+        adapter.getListData().addAll(listAll);
+        adapter.getListDataBackup().addAll(listAll);
         ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         ui.recycler_view_list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -49,8 +77,6 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
         adapter.setListener(new EmployeeListAdapter.EmployeeListAdapterListener() {
             @Override
             public void onClickItem(EmployeeModel model) {
-
-
                 LayoutInflater layoutInflater = activity.getLayoutInflater();
                 View popupView = layoutInflater.inflate(R.layout.custom_popup_choose_employee, null);
                 LinearLayout item_history_order = popupView.findViewById(R.id.item_history_order);
@@ -84,42 +110,20 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
             }
 
             @Override
-            public void setStatusSwich(int position, boolean isCheked) {
-                for (int i = 0; i < listAll.size(); i++){
-                    if (listAll.get(i).getId().equalsIgnoreCase(list.get(position).getId())){
-                        Toast.makeText(activity, ""+isCheked, Toast.LENGTH_SHORT).show();
-                    }adapter.notifyDataSetChanged();
-                    break;
+            public void onItemCheckedChanged(int position, boolean isChecked) {
+                if (isChecked==true) {
+                    listAll.get(position).setStatus("Y");
+                    callback.updateEmployee(listAll.get(position));
+                    //Toast.makeText(activity, "AAA"+isChecked, Toast.LENGTH_SHORT).show();
                 }
-
-              //  Toast.makeText(activity, ""+item.getFull_name()+ "Status: "+isCheked, Toast.LENGTH_SHORT).show();
-
-//                if (callback != null)
-//                    callback.updateEmployee(employeeModel);
-
-
-//                EmployeeModel employeeModel = new EmployeeModel();
-//                employeeModel.setId(item.getId());
-//
-//                for (int i = 0; i < listAll.size(); i++) {
-//                    if (listAll.get(i).getId().equalsIgnoreCase(item.getId())) {
-//                        if (isCheked == true) {
-//                            listAll.get(i).setStatus("Y");
-//                            employeeModel.setStatus("Y");
-//                        } else {
-//                            listAll.get(i).setStatus("N");
-//                            employeeModel.setStatus("N");
-//                        }
-//                        adapter.notifyDataSetChanged();
-//                        break;
-//
-//                    }
-//                }
-
-//                if (callback != null)
-//                    callback.updateEmployee(employeeModel);
+                else {
+                    listAll.get(position).setStatus("N");
+                    callback.updateEmployee(listAll.get(position));
+                    //Toast.makeText(activity, "BBB"+isChecked, Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
     }
 
     @Override
@@ -141,7 +145,11 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
         custom_confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (callback != null) {
+                    callback.getAllDataEmployee();
+                    adapter.notifyDataSetChanged();
+                    dialog.dismiss();
+                }
             }
         });
     }
@@ -161,6 +169,18 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
             public void onClick(View v) {
                 if (callback != null)
                     callback.createEmployee();
+            }
+        });
+
+        //close
+        ui.image_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ui.edit_filter.setText(null);
+                if (callback!=null){
+                    callback.getAllDataEmployee();
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -191,6 +211,9 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
 
         @UiElement(R.id.image_create)
         public ImageView image_create;
+
+        @UiElement(R.id.image_close)
+        public ImageView image_close;
 
         @UiElement(R.id.edit_filter)
         public EditText edit_filter;

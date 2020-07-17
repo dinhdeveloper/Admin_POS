@@ -84,7 +84,7 @@ public class FragmentDonTraHang extends BaseFragment<FragmentDonTraHangViewInter
                 @Override
                 public void onSuccess(BaseResponseModel<PackageReturnModel> body) {
                     if (body.getSuccess().equals("true")){
-                        Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
+                        view.showSuccess();
                     } else if (body.getSuccess().equals("false")){
                         Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
                     }

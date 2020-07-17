@@ -131,7 +131,7 @@ public class FragmentDoiTraHangHoa extends BaseFragment<FragmentDoiTraHangHoaVie
 
     @Override
     public void sentDataToDetailDTHH(PackageReturnModel model) {
-        activity.replaceFragment(FragmentChiTietDonTraHangHoa.newIntance(model), false, null);
+        activity.replaceFragment(FragmentChiTietDonTraHangHoa.newIntance(model), true, null);
     }
 
     @Override

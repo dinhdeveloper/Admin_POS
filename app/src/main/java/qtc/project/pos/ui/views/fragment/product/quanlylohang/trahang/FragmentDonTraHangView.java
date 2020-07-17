@@ -1,8 +1,11 @@
 package qtc.project.pos.ui.views.fragment.product.quanlylohang.trahang;
 
 import android.app.DatePickerDialog;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -119,6 +122,34 @@ public class FragmentDonTraHangView extends BaseView<FragmentDonTraHangView.UICo
     @Override
     public void setOnBack() {
         callback.onBackProgress();
+    }
+
+    @Override
+    public void showSuccess() {
+        LayoutInflater layoutInflater = activity.getLayoutInflater();
+        View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
+        TextView title_text = popupView.findViewById(R.id.title_text);
+        TextView content_text = popupView.findViewById(R.id.content_text);
+        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+
+        title_text.setText("Xác nhận");
+        content_text.setText("Tạo đơn trả hàng thành công!");
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(popupView);
+        AlertDialog dialog = alert.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ui.ngay_tra.setText(null);
+                ui.ma_tra_hang.setText(null);
+                ui.soluong_tra.setText(null);
+                ui.lydo_tra.setText(null);
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override

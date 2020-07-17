@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp20"
-                android:layout_marginVertical="@dimen/dp10"
+                android:layout_marginVertical="@dimen/dp15"
                 android:background="@color/hinhnen" />
 
             <View

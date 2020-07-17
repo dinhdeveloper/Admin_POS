@@ -75,7 +75,7 @@
                     android:textSize="14dp"
                     android:textStyle="bold"
                     android:text="1. Ngày nhập hàng: "
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -99,7 +99,7 @@
                     android:textSize="14dp"
                     android:textStyle="bold"
                     android:text="2. Nhà cung ứng: "
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
