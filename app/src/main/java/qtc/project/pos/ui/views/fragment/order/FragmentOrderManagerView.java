@@ -56,6 +56,8 @@ public class FragmentOrderManagerView extends BaseView<FragmentOrderManagerView.
             @Override
             public void onClick(View v) {
                 ui.edit_filter.setText(null);
+                if (callback!=null)
+                    callback.getAllData();
             }
         });
 
@@ -87,7 +89,8 @@ public class FragmentOrderManagerView extends BaseView<FragmentOrderManagerView.
     }
 
     private void searchOrder(String search) {
-
+        if (callback!=null)
+            callback.searchOrder(search);
     }
 
     @Override

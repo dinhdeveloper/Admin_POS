@@ -44,7 +44,7 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
         this.activity = activity;
         this.callback = callback;
 
-        KeyboardUtils.setupUI(getView(),activity);
+        KeyboardUtils.setupUI(getView(), activity);
 
         ui.edit_filter.addTextChangedListener(new TextWatcher() {
             @Override
@@ -59,7 +59,7 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (adapter!= null)
+                if (adapter != null)
                     adapter.getFilter().filter(s);
             }
         });
@@ -117,15 +117,36 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
 
             @Override
             public void onItemCheckedChanged(int position, boolean isChecked) {
-                if (isChecked==true) {
-                    listAll.get(position).setStatus("Y");
-                    callback.updateEmployee(listAll.get(position));
-                }
-                else {
-                    employee_id = listAll.get(position).getId();
-                    listAll.get(position).setStatus("N");
-                    callback.updateEmployee(listAll.get(position));
-                }
+
+                LayoutInflater layoutInflater = activity.getLayoutInflater();
+                View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
+                TextView title_text = popupView.findViewById(R.id.title_text);
+                TextView content_text = popupView.findViewById(R.id.content_text);
+                Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+
+                title_text.setText("Xác nhận");
+                content_text.setText("Bạn đã cập nhật thành công!");
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                alert.setView(popupView);
+                AlertDialog dialog = alert.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+                custom_confirm_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isChecked == true) {
+                            listAll.get(position).setStatus("Y");
+                            callback.updateEmployee(listAll.get(position));
+                        } else {
+                            employee_id = listAll.get(position).getId();
+                            listAll.get(position).setStatus("N");
+                            callback.updateEmployee(listAll.get(position));
+                        }
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
 
@@ -133,30 +154,10 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
 
     @Override
     public void showPopup() {
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
-        TextView title_text = popupView.findViewById(R.id.title_text);
-        TextView content_text = popupView.findViewById(R.id.content_text);
-        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
-
-        title_text.setText("Xác nhận");
-        content_text.setText("Bạn đã cập nhật thành công!");
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-        alert.setView(popupView);
-        AlertDialog dialog = alert.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (callback != null) {
-                    callback.getAllDataEmployee();
-                    adapter.notifyDataSetChanged();
-                    dialog.dismiss();
-                }
-            }
-        });
+        if (callback != null) {
+            callback.getAllDataEmployee();
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void onClick() {
@@ -182,7 +183,7 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
             @Override
             public void onClick(View v) {
                 ui.edit_filter.setText(null);
-                if (callback!=null){
+                if (callback != null) {
                     callback.getAllDataEmployee();
                     adapter.notifyDataSetChanged();
                 }

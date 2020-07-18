@@ -49,6 +49,7 @@ public class FragmentChiTietDonTraHangHoaView extends BaseView<FragmentChiTietDo
             ui.ngay_tra.setText(infoModel.getProduct_return_return_date());
             ui.nguoi_tao_don.setText(infoModel.getEmployee_fullname());
             ui.lydo_tra.setText(infoModel.getProduct_return_description());
+            ui.id_lo_hang.setText(infoModel.getPack_id_code());
             if (infoModel.getProduct_return_status().equals("Y")) {
                 ui.layout_button.setVisibility(View.GONE);
             } else if (infoModel.getProduct_return_status().equals("N")) {
@@ -170,6 +171,9 @@ public class FragmentChiTietDonTraHangHoaView extends BaseView<FragmentChiTietDo
 
         @UiElement(R.id.lydo_tra)
         public TextView lydo_tra;
+
+        @UiElement(R.id.id_lo_hang)
+        public TextView id_lo_hang;
 
         @UiElement(R.id.layout_button)
         public LinearLayout layout_button;

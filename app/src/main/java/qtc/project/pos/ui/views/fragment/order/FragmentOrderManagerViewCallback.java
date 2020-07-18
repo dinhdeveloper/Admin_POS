@@ -12,4 +12,6 @@ public interface FragmentOrderManagerViewCallback {
     void goToFilter();
 
     void getAllData();
+
+    void searchOrder(String search);
 }

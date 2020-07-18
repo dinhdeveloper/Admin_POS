@@ -226,6 +226,14 @@ public class PackageReturnModel extends BaseResponseModel{
         this.product_name = product_name;
     }
 
+    public String getPack_id_code() {
+        return pack_id_code;
+    }
+
+    public void setPack_id_code(String pack_id_code) {
+        this.pack_id_code = pack_id_code;
+    }
+
     private String product_return_id;
     private String product_return_id_code;
     private String product_return_return_date;
@@ -242,6 +250,7 @@ public class PackageReturnModel extends BaseResponseModel{
     private String employee_image;
     private String employee_level;
     private String pack_id;
+    private String pack_id_code;
     private String manufacturer_id;
     private String manufacturing_date;
     private String import_date;

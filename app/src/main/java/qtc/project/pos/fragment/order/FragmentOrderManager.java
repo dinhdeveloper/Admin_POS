@@ -131,6 +131,37 @@ public class FragmentOrderManager extends BaseFragment<FragmentOrderManagerViewI
         });
     }
 
+    @Override
+    public void searchOrder(String search) {
+        showProgress();
+        HistoryOrderCustomerRequest.ApiParams params = new HistoryOrderCustomerRequest.ApiParams();
+        params.filter = search;
+
+        AppProvider.getApiManagement().call(HistoryOrderCustomerRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<OrderCustomerModel>>() {
+            @Override
+            public void onSuccess(BaseResponseModel<OrderCustomerModel> body) {
+                if (body != null) {
+                    dismissProgress();
+                    ArrayList<OrderCustomerModel> list = new ArrayList<>();
+                    list.addAll(Arrays.asList(body.getData()));
+                    view.initRecyclerViewOrder(list, null, null);
+                }
+            }
+
+            @Override
+            public void onError(ErrorApiResponse error) {
+                dismissProgress();
+                Log.e("onError", error.message);
+            }
+
+            @Override
+            public void onFail(ApiRequest.RequestError error) {
+                dismissProgress();
+                Log.e("onFail", error.name());
+            }
+        });
+    }
+
     public void filterDataDate(String dateStartSelected, String dateEndSelected) {
         showProgress();
         HistoryOrderCustomerRequest.ApiParams params = new HistoryOrderCustomerRequest.ApiParams();
