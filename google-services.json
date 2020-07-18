@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "632627330059",
+    "firebase_url": "https://apppos-81b49.firebaseio.com",
+    "project_id": "apppos-81b49",
+    "storage_bucket": "apppos-81b49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632627330059:android:bf050bf81bca81b2bf1b0e",
+        "android_client_info": {
+          "package_name": "qtc.project.pos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632627330059-dnepsr5r6dr6n5jdvsj74a34h2k24s86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuhGI5kaUg2ecB6ya7SEwt1hRyXTp5cnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632627330059-dnepsr5r6dr6n5jdvsj74a34h2k24s86.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "632627330059-o0qrj3piqhvn6o506l8ribhkb1ci2uku.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "QTC.appPOS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

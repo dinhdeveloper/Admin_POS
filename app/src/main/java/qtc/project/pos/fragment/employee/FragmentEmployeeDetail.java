@@ -169,8 +169,8 @@ public class FragmentEmployeeDetail extends BaseFragment<FragmentEmployeeDetailV
         if (id_code!=null){
             showProgress();
             EmployeeRequest.ApiParams params = new EmployeeRequest.ApiParams();
-            params.type_manager = "update_employee";
-            params.id_code = id_code;
+            params.type_manager = "resset_password_employee";
+           // params.id_code = id_code;
             params.id_employee = id_employee;
             params.password_reset = newPass;
 

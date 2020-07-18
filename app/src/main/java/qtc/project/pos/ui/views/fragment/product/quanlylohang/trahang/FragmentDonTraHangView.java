@@ -19,6 +19,7 @@ import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
+import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.model.PackageInfoModel;
 import qtc.project.pos.model.PackageReturnModel;
 import qtc.project.pos.ui.views.fragment.product.quanlylohang.FragmentQuanLyLoHangView;
@@ -54,7 +55,7 @@ public class FragmentDonTraHangView extends BaseView<FragmentDonTraHangView.UICo
             ui.ngay_nhap.setText(infoModel.getImport_date());
             ui.ma_nha_cung_ung.setText(infoModel.getManufacturer_id());
             ui.nhacungung.setText(infoModel.getManufacturer_name());
-            ui.nguoi_tao_don.setText(infoModel.getEmployee_fullname());
+            ui.nguoi_tao_don.setText(AppProvider.getPreferences().getUserModel().getFull_name());
         }
 
         final Calendar cldr = Calendar.getInstance();

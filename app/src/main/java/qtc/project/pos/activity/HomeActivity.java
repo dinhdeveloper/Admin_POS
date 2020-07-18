@@ -2,6 +2,9 @@ package qtc.project.pos.activity;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -21,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -29,11 +33,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
@@ -47,8 +62,10 @@ import b.laixuantam.myaarlibrary.widgets.multiple_media_picker.Gallery;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import qtc.project.pos.R;
 //import qtc.project.pos.fragment.account.profile_manager.FragmentProfileManager;
+import qtc.project.pos.api.employee.EmployeeRequest;
 import qtc.project.pos.api.employee.UpdatePassEmployeeRequest;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.event.StatusEmployeeEvent;
 import qtc.project.pos.fragment.home.FragmentHome;
 import qtc.project.pos.fragment.levelcustomer.FragmentCreateLevelCustomer;
 import qtc.project.pos.fragment.levelcustomer.FragmentLevelCustomerDetail;
@@ -95,7 +112,118 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
     @Override
     protected void initialize(Bundle savedInstanceState) {
         view.init(this, this);
+
+        // [END subscribe_topics]
+
         setLayoutMain();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EmployeeRequest.ApiParams params = new EmployeeRequest.ApiParams();
+        params.type_manager = "check_status";
+        params.id_employee = AppProvider.getPreferences().getUserModel().getId();
+
+        AppProvider.getApiManagement().call(EmployeeRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<EmployeeModel>>() {
+            @Override
+            public void onSuccess(BaseResponseModel<EmployeeModel> body) {
+                if (body!=null){
+                    List<EmployeeModel> modelList = new ArrayList<>();
+                    modelList.addAll(Arrays.asList(body.getData()));
+                    if (modelList.get(0).getStatus().equals("N")){
+
+                        LayoutInflater layoutInflater = getLayoutInflater();
+                        View popupView = layoutInflater.inflate(R.layout.alert_dialog_canhbao, null);
+                        TextView title_text = popupView.findViewById(R.id.title_text);
+                        TextView content_text = popupView.findViewById(R.id.content_text);
+                        Button cancel_button = popupView.findViewById(R.id.cancel_button);
+                        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+
+                        title_text.setVisibility(View.GONE);
+                        content_text.setText("Tài khoản đã bị khóa.");
+                        //title_text.setText("Cảnh báo");
+                        //content_text.setText("Bạn có muốn xóa khách hàng này không?");
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+                        alert.setView(popupView);
+                        AlertDialog dialog = alert.create();
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.show();
+
+                        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                EmployeeModel employeeModel = AppProvider.getPreferences().getUserModel();
+                                if (employeeModel!=null){
+                                    FirebaseMessaging.getInstance().unsubscribeFromTopic("pos_notifycation_employee_" + employeeModel.getId());
+                                }
+                                AppProvider.getPreferences().saveUserModel(null);
+                                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                                dialog.dismiss();
+                                finish();
+
+                            }
+                        });
+
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ErrorApiResponse error) {
+
+            }
+
+            @Override
+            public void onFail(ApiRequest.RequestError error) {
+
+            }
+        });
+    }
+
+    @SuppressWarnings("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onKeyboardDissmiss(StatusEmployeeEvent event)
+    {
+        if (view != null)
+        {
+            LayoutInflater layoutInflater = getLayoutInflater();
+            View popupView = layoutInflater.inflate(R.layout.alert_dialog_canhbao, null);
+            TextView title_text = popupView.findViewById(R.id.title_text);
+            TextView content_text = popupView.findViewById(R.id.content_text);
+            Button cancel_button = popupView.findViewById(R.id.cancel_button);
+            Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+
+            title_text.setVisibility(View.GONE);
+            content_text.setText("Tài khoản đã bị khóa.");
+            //title_text.setText("Cảnh báo");
+            //content_text.setText("Bạn có muốn xóa khách hàng này không?");
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+            alert.setView(popupView);
+            AlertDialog dialog = alert.create();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+
+
+            custom_confirm_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EmployeeModel employeeModel = AppProvider.getPreferences().getUserModel();
+                    if (employeeModel!=null){
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic("pos_notifycation_employee_" + employeeModel.getId());
+                    }
+                    AppProvider.getPreferences().saveUserModel(null);
+                    startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                    dialog.dismiss();
+                    finish();
+
+                }
+            });
+        }
     }
 
     public void alerUpdate() {
@@ -165,9 +293,30 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
 
 
     private void setLayoutMain() {
+
+//        FirebaseInstanceId.getInstance().getInstanceId()
+//                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                        if (!task.isSuccessful()) {
+//                            Log.w("AAAAA", "getInstanceId failed", task.getException());
+//                            return;
+//                        }
+//
+//                        // Get new Instance ID token
+//                        String token = task.getResult().getToken();
+//
+//                        //Log.e("AAAAA",token);
+//
+//                        // Log and toast
+//                        @SuppressLint({"StringFormatInvalid", "LocalSuppress"}) String msg = getString(R.string.msg_token_fmt, token);
+//                    }
+//                });
+
         FullScreencall();
         replaceFragment(new FragmentHome(), true, Animation.SLIDE_IN_OUT);
     }
+
 
     @Override
     public void onBackPressed() {

@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.Objects;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
@@ -46,10 +49,11 @@ public class LoginActivity extends BaseFragmentActivity<ActivityLoginViewInterfa
 
     @Override
     protected void initialize(Bundle savedInstanceState) {
-        view.initialize(this);
         activity = LoginActivity.this;
-        if (AppProvider.getPreferences().getUserModel()!=null){
-            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+        view.initialize(activity,this);
+
+        if (AppProvider.getPreferences().getUserModel() != null) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         }
     }
@@ -98,16 +102,18 @@ public class LoginActivity extends BaseFragmentActivity<ActivityLoginViewInterfa
                 if (!TextUtils.isEmpty(result.getSuccess()) && Objects.requireNonNull(result.getSuccess()).equalsIgnoreCase("true")) {
 
                     EmployeeModel userModel = result.getData()[0];
-                    if (userModel.getLevel().equals("2")){
+                    if (userModel.getLevel().equals("2")) {
                         //luu trang thai login.
                         AppProvider.getPreferences().saveStatusLogin(true);
+                        //goi firebase
+                        FirebaseMessaging.getInstance().subscribeToTopic("pos_notifycation_employee_" + userModel.getId());
                         if (result.getData() != null && result.getData().length > 0) {
                             AppProvider.getPreferences().saveUserModel(userModel);
                         }
                         if (activity != null) {
                             activity.goToHome();
                         }
-                    }else {
+                    } else {
                         Toast.makeText(activity, "Bạn không có quyền!!!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -131,6 +137,7 @@ public class LoginActivity extends BaseFragmentActivity<ActivityLoginViewInterfa
             }
         });
     }
+
     private void goToHome() {
         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         finish();

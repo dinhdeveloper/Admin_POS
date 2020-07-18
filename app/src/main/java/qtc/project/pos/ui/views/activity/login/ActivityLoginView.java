@@ -18,8 +18,12 @@ public class ActivityLoginView extends BaseView<ActivityLoginView.UiContainer> i
     ActivityLoginViewCallback callback;
 
     @Override
-    public void initialize(ActivityLoginViewCallback callback) {
+    public void initialize(LoginActivity activity,ActivityLoginViewCallback callback) {
         this.callback = callback;
+        this.activity = activity;
+
+        KeyboardUtils.setupUI(getView(),activity);
+
         ui.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

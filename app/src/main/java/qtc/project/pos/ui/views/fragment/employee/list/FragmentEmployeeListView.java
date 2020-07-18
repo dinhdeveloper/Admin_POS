@@ -1,5 +1,6 @@
 package qtc.project.pos.ui.views.fragment.employee.list;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -32,6 +37,7 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
     EmployeeListAdapter adapter;
 
     ArrayList<EmployeeModel> listAll;
+    String employee_id;
 
     @Override
     public void init(HomeActivity activity, FragmentEmployeeListViewCallback callback) {
@@ -114,12 +120,11 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
                 if (isChecked==true) {
                     listAll.get(position).setStatus("Y");
                     callback.updateEmployee(listAll.get(position));
-                    //Toast.makeText(activity, "AAA"+isChecked, Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    employee_id = listAll.get(position).getId();
                     listAll.get(position).setStatus("N");
                     callback.updateEmployee(listAll.get(position));
-                    //Toast.makeText(activity, "BBB"+isChecked, Toast.LENGTH_SHORT).show();
                 }
             }
         });

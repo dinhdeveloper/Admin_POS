@@ -224,7 +224,7 @@
                     android:textColor="@color/colorAAA"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="5. Số lượng trả hàng(cái): "
+                    android:text="5. Số lượng trả hàng: "
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

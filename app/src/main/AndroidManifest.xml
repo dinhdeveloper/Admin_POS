@@ -14,6 +14,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_ic_notification" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
         <activity android:name=".activity.HomeActivity"></activity>
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
@@ -23,6 +35,12 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="check_auth" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="employee_status_disable" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -61,7 +79,7 @@
                 <action android:name="check_notify" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+        </intent-filter>
         </activity>
 
         <meta-data

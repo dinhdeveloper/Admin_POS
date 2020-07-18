@@ -39,7 +39,7 @@ public class FragmentChiTietDonTraHangHoaView extends BaseView<FragmentChiTietDo
     @Override
     public void sendDataToView(PackageReturnModel infoModel) {
         if (infoModel != null) {
-            ui.ma_tra_hang.setText(infoModel.getProduct_return_id());
+            ui.ma_tra_hang.setText(infoModel.getProduct_return_id_code());
             ui.ten_sp.setText(infoModel.getProduct_name());
             ui.nhacungung.setText(infoModel.getManufacturer_name());
             ui.ma_nha_cung_ung.setText(infoModel.getManufacturer_id());

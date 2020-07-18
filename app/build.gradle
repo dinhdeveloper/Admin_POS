@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -180,6 +181,6 @@ repositories {
     }
 
     maven {
-        url  "https://dl.bintray.com/tamlx/BaseProject"
+        url "https://dl.bintray.com/tamlx/BaseProject"
     }
 }

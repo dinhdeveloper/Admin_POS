@@ -129,7 +129,7 @@ public class FragmentDoanhThuTheoSpView extends BaseView<FragmentDoanhThuTheoSpV
     }
 
     @Override
-    public void mappingDateToView(String nam, String thang, int ngay) {
+    public void mappingDateToView(String thang, String nam, int ngay) {
         if (ngay == 0) {
             date_start = nam + "-" + thang;
         } else if (ngay == 1) {

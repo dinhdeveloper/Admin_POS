@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import b.laixuantam.myaarlibrary.helper.MyLifecycleHandler;
 import b.laixuantam.myaarlibrary.helper.MyLog;
 import b.laixuantam.myaarlibrary.widgets.ACRA.ACRA;
@@ -13,6 +15,7 @@ import qtc.project.pos.dependency.AppObjectProvider;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.dependency.ObjectProviderInterface;
 import qtc.project.pos.helper.Consts;
+import qtc.project.pos.model.EmployeeModel;
 
 @ReportsCrashes(
 
@@ -52,7 +55,10 @@ public class MyApplication extends Application {
         ObjectProviderInterface objectProviderInterface = new AppObjectProvider(this);
         AppProvider.init(objectProviderInterface);
 
-
+        EmployeeModel employeeModel = AppProvider.getPreferences().getUserModel();
+        if (employeeModel!=null){
+            FirebaseMessaging.getInstance().subscribeToTopic("pos_notifycation_employee_" + employeeModel.getId());
+        }
         ACRA.init(this);
 
     }
