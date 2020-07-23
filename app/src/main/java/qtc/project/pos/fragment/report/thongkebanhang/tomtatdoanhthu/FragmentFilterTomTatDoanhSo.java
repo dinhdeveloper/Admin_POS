@@ -77,7 +77,6 @@ public class FragmentFilterTomTatDoanhSo extends BaseFragment<FragmentFilterTomT
                     activity.setDataYear(nam);
                 }
             }, 100);
-
         }
     }
 

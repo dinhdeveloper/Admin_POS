@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "qtc.project.pos"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        minSdkVersion 23
-        targetSdkVersion 27
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -167,6 +167,11 @@ dependencies {
 
     //alertdialog
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
+
+    //barcode
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    implementation 'com.google.zxing:core:3.2.1'
 }
 repositories {
     mavenCentral()

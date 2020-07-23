@@ -1,5 +1,10 @@
 package qtc.project.pos.ui.views.fragment.product.productlist.detail;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,20 +14,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.adapter.levelcustomer.LevelCustomerChooseAdapter;
+import qtc.project.pos.activity.Qr_BarcodeActivity;
 import qtc.project.pos.adapter.product.category.ProductItemCategoryAdapter;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.helper.Consts;
-import qtc.project.pos.model.LevelCustomerModel;
 import qtc.project.pos.model.ProductCategoryModel;
 import qtc.project.pos.model.ProductListModel;
 
@@ -32,18 +36,20 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
     FragmentProductListDetailViewCallback callback;
     String image_pro;
     String id_category = null;
+    ZXingScannerView scannerView;
+
     @Override
     public void init(HomeActivity activity, FragmentProductListDetailViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-        
+
         onClick();
     }
 
     @Override
     public void sendDataToView(ProductListModel model) {
-        if (model!=null){
-            AppProvider.getImageHelper().displayImage(Consts.HOST_API+model.getImage(),ui.image_product,null,R.drawable.imageloading);
+        if (model != null) {
+            AppProvider.getImageHelper().displayImage(Consts.HOST_API + model.getImage(), ui.image_product, null, R.drawable.imageloading);
             ui.name_product.setText(model.getName());
             ui.id_product.setText(model.getId_code());
             ui.description_product.setText(model.getDescription());
@@ -66,7 +72,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
                 listModel.setImage(image_pro);
                 listModel.setBarcode(ui.barcode.getText().toString());
                 listModel.setQr_code(ui.qrcode.getText().toString());
-                if (callback !=null){
+                if (callback != null) {
                     callback.undateData(listModel);
                 }
             }
@@ -131,8 +137,8 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         //dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
-        ProductItemCategoryAdapter chooseAdapter = new ProductItemCategoryAdapter(activity,list);
-        recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        ProductItemCategoryAdapter chooseAdapter = new ProductItemCategoryAdapter(activity, list);
+        recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler_view_list.setAdapter(chooseAdapter);
 
         chooseAdapter.setOnItemClickListener(new ProductItemCategoryAdapter.onRecyclerViewItemClickListener() {
@@ -199,7 +205,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         custom_confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback!=null){
+                if (callback != null) {
                     callback.onBackprogress();
                     dialog.dismiss();
                 }
@@ -209,10 +215,24 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
     }
 
     private void onClick() {
+        //quet barcode
+        ui.image_barcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA},
+                            200);
+                }
+                if (activity != null)
+                    activity.startActivity(new Intent(activity, Qr_BarcodeActivity.class));
+            }
+        });
         ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (callback !=null)
+                if (callback != null)
                     callback.onBackprogress();
             }
         });
@@ -231,7 +251,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         ui.choose_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback!=null)
+                if (callback != null)
                     callback.getAllProductCategory();
             }
         });
@@ -248,8 +268,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
     }
 
 
-
-    public static class UIContainer extends BaseUiContainer{
+    public static class UIContainer extends BaseUiContainer {
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
 
@@ -277,6 +296,13 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         @UiElement(R.id.image_product)
         public ImageView image_product;
 
+        @UiElement(R.id.image_barcode)
+        public ImageView image_barcode;
+
+        @UiElement(R.id.image_qrcode)
+        public ImageView image_qrcode;
+
+
         @UiElement(R.id.layout_update)
         public LinearLayout layout_update;
 
@@ -288,7 +314,6 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
 
         @UiElement(R.id.name_product_category)
         public TextView name_product_category;
-
 
     }
 }
