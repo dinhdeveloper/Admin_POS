@@ -29,8 +29,10 @@ import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.oned.Code128Writer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
+import b.laixuantam.myaarlibrary.helper.map.location.PermissionUtils;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import qtc.project.pos.R;
 
@@ -47,14 +49,49 @@ public class Qr_BarcodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr__barcode);
 
-        if (checkPermission()){
-            Toast.makeText(this, "thanh cong", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            requestPermission();
-        }
+        checkpermission2();
+//        if (checkpermission2()){
+//            Toast.makeText(this, "thanh cong", Toast.LENGTH_SHORT).show();
+//        }
+//        else {
+//            requestPermission();
+//        }
 
         initView();
+    }
+
+    private void checkpermission2() {
+        ArrayList<String> permissions = new ArrayList<>();
+        PermissionUtils permissionUtils = new PermissionUtils(Qr_BarcodeActivity.this, new PermissionUtils.PermissionResultCallback() {
+            @Override
+            public void PermissionGranted(int request_code) {
+                if (request_code == 2002){
+                    Toast.makeText(Qr_BarcodeActivity.this, "Đồng ý", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void PartialPermissionGranted(int request_code, ArrayList<String> granted_permissions) {
+
+            }
+
+            @Override
+            public void PermissionDenied(int request_code) {
+
+            }
+
+            @Override
+            public void NeverAskAgain(int request_code) {
+
+            }
+        });
+
+        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        permissions.add(Manifest.permission.CAMERA);
+
+        permissionUtils.check_permission(permissions, "Quyền truy cập camera", 2002);
     }
 
     private boolean checkPermission() {
