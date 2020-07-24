@@ -3,6 +3,7 @@ package qtc.project.pos.ui.views.fragment.product.productlist.detail;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
@@ -220,13 +222,22 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
             @Override
             public void onClick(View v) {
 
-                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) !=
-                        PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA},
-                            200);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(activity), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, activity.MY_BARCODE_PERMISSION_CODE);
+                    } else {
+                        if (activity != null)
+                            activity.startActivity(new Intent(activity, Qr_BarcodeActivity.class));
+
+                    }
+
+                } else {
+                    if (activity != null)
+                        activity.startActivity(new Intent(activity, Qr_BarcodeActivity.class));
                 }
-                if (activity != null)
-                    activity.startActivity(new Intent(activity, Qr_BarcodeActivity.class));
+
             }
         });
         ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {

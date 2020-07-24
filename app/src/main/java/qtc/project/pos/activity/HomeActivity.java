@@ -106,6 +106,7 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
     private static final int CAMERA_REQUEST = 10103;
     public static final int EMAIL_SEND = 10104;
     private final int MY_CAMERA_PERMISSION_CODE = 10104;
+    public static final int MY_BARCODE_PERMISSION_CODE = 10105;
     private ArrayList<String> permissions = new ArrayList<>();
     private PermissionUtils permissionUtils;
 
@@ -130,10 +131,10 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
         AppProvider.getApiManagement().call(EmployeeRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<EmployeeModel>>() {
             @Override
             public void onSuccess(BaseResponseModel<EmployeeModel> body) {
-                if (body!=null){
+                if (body != null) {
                     List<EmployeeModel> modelList = new ArrayList<>();
                     modelList.addAll(Arrays.asList(body.getData()));
-                    if (modelList.get(0).getStatus().equals("N")){
+                    if (modelList.get(0).getStatus().equals("N")) {
 
                         LayoutInflater layoutInflater = getLayoutInflater();
                         View popupView = layoutInflater.inflate(R.layout.alert_dialog_canhbao, null);
@@ -157,11 +158,11 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
                             @Override
                             public void onClick(View v) {
                                 EmployeeModel employeeModel = AppProvider.getPreferences().getUserModel();
-                                if (employeeModel!=null){
+                                if (employeeModel != null) {
                                     FirebaseMessaging.getInstance().unsubscribeFromTopic("pos_notifycation_employee_" + employeeModel.getId());
                                 }
                                 AppProvider.getPreferences().saveUserModel(null);
-                                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                                 dialog.dismiss();
                                 finish();
 
@@ -186,10 +187,8 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
 
     @SuppressWarnings("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onKeyboardDissmiss(StatusEmployeeEvent event)
-    {
-        if (view != null)
-        {
+    public void onKeyboardDissmiss(StatusEmployeeEvent event) {
+        if (view != null) {
             LayoutInflater layoutInflater = getLayoutInflater();
             View popupView = layoutInflater.inflate(R.layout.alert_dialog_canhbao, null);
             TextView title_text = popupView.findViewById(R.id.title_text);
@@ -213,11 +212,11 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
                 @Override
                 public void onClick(View v) {
                     EmployeeModel employeeModel = AppProvider.getPreferences().getUserModel();
-                    if (employeeModel!=null){
+                    if (employeeModel != null) {
                         FirebaseMessaging.getInstance().unsubscribeFromTopic("pos_notifycation_employee_" + employeeModel.getId());
                     }
                     AppProvider.getPreferences().saveUserModel(null);
-                    startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                     dialog.dismiss();
                     finish();
 
@@ -329,7 +328,7 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
             checkBack();
         } else if (baseFragment instanceof FragmentBaoCaoXuatNhapKho) {
             checkBack();
-        }else if (baseFragment instanceof FragmentDoiTraHangHoa) {
+        } else if (baseFragment instanceof FragmentDoiTraHangHoa) {
             checkBack();
         }
     }
@@ -744,6 +743,10 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
                 // Continue only if the File was successfully created
 
             }
+        } else if (requestCode == MY_BARCODE_PERMISSION_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            BaseFragment baseFragment = getCurrentFragment();
+            if (baseFragment instanceof FragmentProductListDetail)
+                ((FragmentProductListDetail) baseFragment).gotoQr_BarcodeActivity();
         }
     }
 
@@ -823,7 +826,7 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
         File mediaFile = null;
 
         String rootPath = Environment.getExternalStorageDirectory()
-                .getAbsolutePath() + "/529FTN_Images/";
+                .getAbsolutePath() + "/POS_Images/";
         File root = new File(rootPath);
         if (!root.exists()) {
             root.mkdirs();
@@ -840,7 +843,7 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
 
     public void deleteTempMedia() {
         String rootPath = Environment.getExternalStorageDirectory()
-                .getAbsolutePath() + "/529FTN_Images/";
+                .getAbsolutePath() + "/POS_Images/";
         File root = new File(rootPath);
         if (root.exists()) {
             String[] children = root.list();

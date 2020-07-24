@@ -36,9 +36,15 @@
             />
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageView
         android:id="@+id/imageViewResult"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="335dp" />
 
 </LinearLayout>

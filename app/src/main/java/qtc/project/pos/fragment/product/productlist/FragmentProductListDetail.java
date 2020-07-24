@@ -1,5 +1,6 @@
 package qtc.project.pos.fragment.product.productlist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,6 +19,7 @@ import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
 import id.zelory.compressor.Compressor;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
+import qtc.project.pos.activity.Qr_BarcodeActivity;
 import qtc.project.pos.api.product.productcategory.ProductCategoryRequest;
 import qtc.project.pos.api.product.productlist.ProductListRequest;
 import qtc.project.pos.dependency.AppProvider;
@@ -93,7 +95,11 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
     @Override
     public void showDialogSelecteImage() {
         if (activity != null)
-            activity.changeToActivitySelectImage();
+            activity.captureImageFromCamera();
+    }
+
+    public void gotoQr_BarcodeActivity(){
+        startActivity(new Intent(activity, Qr_BarcodeActivity.class));
     }
 
     @Override
