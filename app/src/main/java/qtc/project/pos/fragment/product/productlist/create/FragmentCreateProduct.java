@@ -143,6 +143,18 @@ public class FragmentCreateProduct extends BaseFragment<FragmentCreateProductVie
     }
 
     @Override
+    public void onClickOptionSelectImageFromCamera() {
+        if (activity!=null)
+            activity.captureImageFromCamera();
+    }
+
+    @Override
+    public void onClickOptionSelectImageFromGallery() {
+        if (activity!=null)
+            activity.changeToActivitySelectImage();
+    }
+
+    @Override
     public void onBackprogress() {
         if (activity != null)
             activity.checkBack();

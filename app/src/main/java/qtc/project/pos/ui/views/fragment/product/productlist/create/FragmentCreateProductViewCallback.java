@@ -10,4 +10,8 @@ public interface FragmentCreateProductViewCallback {
     void getAllProductCategory();
 
     void createProduct(ProductListModel listModel);
+
+    void onClickOptionSelectImageFromCamera();
+
+    void onClickOptionSelectImageFromGallery();
 }

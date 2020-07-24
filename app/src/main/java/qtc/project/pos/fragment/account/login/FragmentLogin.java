@@ -3,13 +3,13 @@ package qtc.project.pos.fragment.account.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
-import com.google.firebase.messaging.FirebaseMessaging;
+//
+//import com.facebook.AccessToken;
+//import com.facebook.CallbackManager;
+//import com.facebook.GraphRequest;
+//import com.facebook.GraphResponse;
+//import com.facebook.login.LoginManager;
+//import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

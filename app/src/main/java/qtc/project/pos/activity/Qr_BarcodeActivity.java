@@ -8,7 +8,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.hardware.Camera;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +57,8 @@ public class Qr_BarcodeActivity extends Activity implements ZXingScannerView.Res
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr__barcode);
-        
+
+        initView();
     }
 
 
@@ -78,8 +82,13 @@ public class Qr_BarcodeActivity extends Activity implements ZXingScannerView.Res
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                buttonScan_onClick(view);
-                mScannerView.startCamera();
+                if (ContextCompat.checkSelfPermission(Qr_BarcodeActivity.this, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(Qr_BarcodeActivity.this,
+                            new String[]{Manifest.permission.CAMERA}, 1101);
+                } else {
+                    mScannerView.startCamera();
+                }
             }
         });
     }
@@ -120,5 +129,26 @@ public class Qr_BarcodeActivity extends Activity implements ZXingScannerView.Res
     public void handleResult(Result rawResult) {
         MyLog.e("Qr_BarcodeActivity", rawResult.getText()); // Prints scan results
         MyLog.e("Qr_BarcodeActivity", rawResult.getBarcodeFormat().toString());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,  String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1101:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mScannerView.startCamera();
+                } else {
+                    Toast.makeText(this, "Please grant camera permission to use the QR Scanner", Toast.LENGTH_SHORT).show();
+                    openAndroidPermissionsMenu();
+                }
+                return;
+        }
+    }
+    private void openAndroidPermissionsMenu() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
+            startActivity(intent);
+        }
     }
 }

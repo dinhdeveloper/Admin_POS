@@ -6,6 +6,9 @@ buildscript {
         google()
         jcenter()
         mavenCentral()
+        maven {
+            url "http://dl.bintray.com/journeyapps/maven"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'

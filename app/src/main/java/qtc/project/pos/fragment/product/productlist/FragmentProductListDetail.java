@@ -210,6 +210,18 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
     }
 
     @Override
+    public void onClickOptionSelectImageFromCamera() {
+        if (activity!=null)
+            activity.captureImageFromCamera();
+    }
+
+    @Override
+    public void onClickOptionSelectImageFromGallery() {
+        if (activity!=null)
+            activity.changeToActivitySelectImage();
+    }
+
+    @Override
     protected FragmentProductListDetailViewInterface getViewInstance() {
         return new FragmentProductListDetailView();
     }

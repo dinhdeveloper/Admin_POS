@@ -13,11 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+//import com.facebook.CallbackManager;
+//import com.facebook.FacebookCallback;
+//import com.facebook.FacebookException;
+//import com.facebook.login.LoginResult;
+//import com.facebook.login.widget.LoginButton;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
@@ -156,7 +156,7 @@ public class LoginView extends BaseView<LoginView.UiContainer> implements LoginV
     }
 
     private void doLoginWithFacebook() {
-        ui.login_button_facebook.performClick();
+        //ui.login_button_facebook.performClick();
     }
 
     private void doLogin() {
@@ -189,32 +189,32 @@ public class LoginView extends BaseView<LoginView.UiContainer> implements LoginV
 //        }, 1000);
     }
 
-    @Override
-    public void setUpFacebookLoginButton(Fragment fragment, CallbackManager callbackManager) {
-        ui.login_button_facebook.setFragment(fragment);
-        ui.login_button_facebook.setReadPermissions("public_profile");
-        ui.login_button_facebook.setReadPermissions("email");
-        ui.login_button_facebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-//                Toast.makeText(getContext(), "login facebook success", Toast.LENGTH_SHORT).show();
-
-                callback.loginFacebookSuccess(loginResult.getAccessToken());
-
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getContext(), "login facebook cancel", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(getContext(), "login facebook error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
+//    @Override
+//    public void setUpFacebookLoginButton(Fragment fragment, CallbackManager callbackManager) {
+//        ui.login_button_facebook.setFragment(fragment);
+//        ui.login_button_facebook.setReadPermissions("public_profile");
+//        ui.login_button_facebook.setReadPermissions("email");
+//        ui.login_button_facebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+////                Toast.makeText(getContext(), "login facebook success", Toast.LENGTH_SHORT).show();
+//
+//                callback.loginFacebookSuccess(loginResult.getAccessToken());
+//
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Toast.makeText(getContext(), "login facebook cancel", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//                Toast.makeText(getContext(), "login facebook error", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//    }
 
     @Override
     public void showRootViewLogin() {
@@ -262,8 +262,8 @@ public class LoginView extends BaseView<LoginView.UiContainer> implements LoginV
         @UiElement(R.id.btnShowRegisterForm)
         public View btnShowRegisterForm;
 
-        @UiElement(R.id.login_button_facebook)
-        public LoginButton login_button_facebook;
+//        @UiElement(R.id.login_button_facebook)
+//        public LoginButton login_button_facebook;
 
         @UiElement(R.id.btnLoginFacebook)
         public View btnLoginWithFacebook;

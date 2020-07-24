@@ -307,11 +307,11 @@
             android:textColor="@color/red"
             android:visibility="visible" />
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/login_button_facebook"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+<!--        <com.facebook.login.widget.LoginButton-->
+<!--            android:id="@+id/login_button_facebook"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:visibility="gone" />-->
 
     </b.laixuantam.myaarlibrary.widgets.roundview.RoundRelativeLayout>
 

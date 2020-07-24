@@ -1,27 +1,51 @@
 package qtc.project.pos.ui.views.fragment.product.productlist.detail;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
+import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.Result;
+import com.google.zxing.Writer;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.oned.Code128Writer;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.google.zxing.qrcode.encoder.QRCode;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Objects;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
+import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
@@ -32,13 +56,16 @@ import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.ProductCategoryModel;
 import qtc.project.pos.model.ProductListModel;
 
-public class FragmentProductListDetailView extends BaseView<FragmentProductListDetailView.UIContainer> implements FragmentProductListDetailViewInterface {
+public class FragmentProductListDetailView extends BaseView<FragmentProductListDetailView.UIContainer> implements FragmentProductListDetailViewInterface, ZXingScannerView.ResultHandler {
 
     HomeActivity activity;
     FragmentProductListDetailViewCallback callback;
     String image_pro;
     String id_category = null;
-    ZXingScannerView scannerView;
+
+    int TYLE_CODE_GEN = 0;
+
+    private ZXingScannerView mScannerView;
 
     @Override
     public void init(HomeActivity activity, FragmentProductListDetailViewCallback callback) {
@@ -46,6 +73,41 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         this.callback = callback;
 
         onClick();
+
+    }
+
+    public void initScanBarcode() {
+        mScannerView = new ZXingScannerView(activity);
+        ui.content_frame.addView(mScannerView);
+        mScannerView.setResultHandler(this);
+        mScannerView.setAutoFocus(true);
+        mScannerView.startCamera();
+    }
+
+    public void genarateScanBarcode(String resultCode){
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix;
+            bitMatrix = multiFormatWriter.encode(resultCode, BarcodeFormat.CODE_128, 300, 150);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            ui.imv_barcode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void genarateScanQrcode(String resultCode){
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix;
+            bitMatrix = multiFormatWriter.encode(resultCode, BarcodeFormat.QR_CODE, 300, 300);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            ui.imv_qrcode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -58,6 +120,12 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
             ui.tonkho.setText(model.getQuantity_safetystock());
             ui.qrcode.setText(model.getQr_code());
             ui.barcode.setText(model.getBarcode());
+            try {
+                genarateScanBarcode(model.getBarcode());
+                genarateScanQrcode(model.getQr_code());
+            }catch (Exception e){
+                Log.e("Ex",e.getMessage());
+            }
             ui.name_product_category.setText(model.getCategory_name());
         }
         //cap nhat
@@ -117,6 +185,32 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
                 });
             }
         });
+    }
+
+    public void generateCode(String resultCode) {
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix;
+            switch (TYLE_CODE_GEN) {
+                case 1:
+                    bitMatrix = multiFormatWriter.encode(resultCode, BarcodeFormat.CODE_128, 300, 150);
+                    BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                    Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                    ui.imv_barcode.setImageBitmap(bitmap);
+                    ui.barcode.setText(resultCode);
+                    break;
+
+                case 2:
+                    bitMatrix = multiFormatWriter.encode(resultCode, BarcodeFormat.QR_CODE, 250, 250);
+                    BarcodeEncoder barcodeQr = new BarcodeEncoder();
+                    Bitmap bitmapQr = barcodeQr.createBitmap(bitMatrix);
+                    ui.imv_qrcode.setImageBitmap(bitmapQr);
+                    ui.qrcode.setText(resultCode);
+                    break;
+            }
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -221,23 +315,28 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         ui.image_barcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(activity), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, activity.MY_BARCODE_PERMISSION_CODE);
-                    } else {
-                        if (activity != null)
-                            activity.startActivity(new Intent(activity, Qr_BarcodeActivity.class));
-
-                    }
-
+                TYLE_CODE_GEN = 1;
+                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(activity,
+                            new String[]{Manifest.permission.CAMERA}, 1101);
                 } else {
-                    if (activity != null)
-                        activity.startActivity(new Intent(activity, Qr_BarcodeActivity.class));
+                    ui.layout_scanbar_code.setVisibility(View.VISIBLE);
+                    initScanBarcode();
                 }
+            }
+        });
 
+        //quet qr code
+        ui.image_qrcode.setOnClickListener(v -> {
+            TYLE_CODE_GEN = 2;
+            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.CAMERA}, 1101);
+            } else {
+                ui.layout_scanbar_code.setVisibility(View.VISIBLE);
+                initScanBarcode();
             }
         });
         ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
@@ -252,9 +351,10 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         ui.choose_file_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback != null) {
-                    callback.showDialogSelecteImage();
-                }
+//                if (callback != null) {
+//                    callback.showDialogSelecteImage();
+//                }
+                showPopupMenu(v);
             }
         });
 
@@ -266,6 +366,42 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
                     callback.getAllProductCategory();
             }
         });
+
+        //dong layout scanbar code
+        ui.image_close_layout_scan.setOnClickListener(v -> {
+            mScannerView.stopCamera();
+            ui.layout_scanbar_code.setVisibility(View.GONE);
+        });
+    }
+
+    private void showPopupMenu(View view) {
+        ActionItem change_password = new ActionItem(1, "Chọn ảnh từ camera", null);
+        ActionItem employee_tracking = new ActionItem(2, "Chọn hình từ thư viện", null);
+//        int backgroundCustom = ContextCompat.getColor(getContext(), R.color.red);
+//        int arrowColorCustom = ContextCompat.getColor(getContext(), R.color.red);
+
+        MyCustomPopupMenu quickAction = new MyCustomPopupMenu(getContext()/*, backgroundCustom, arrowColorCustom*/);
+        quickAction.addActionItem(change_password);
+        quickAction.addActionItem(employee_tracking);
+
+        quickAction.setOnActionItemClickListener(new MyCustomPopupMenu.OnActionItemClickListener() {
+            @Override
+            public void onItemClick(MyCustomPopupMenu source, int pos, int actionId) {
+                switch (actionId) {
+                    case 1:
+                        if (callback != null)
+                            callback.onClickOptionSelectImageFromCamera();
+                        break;
+
+                    case 2:
+                        if (callback != null)
+                            callback.onClickOptionSelectImageFromGallery();
+                        break;
+                }
+            }
+        });
+
+        quickAction.show(view);
     }
 
     @Override
@@ -278,6 +414,18 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         return R.layout.layout_fragment_product_detail;
     }
 
+    @Override
+    public void handleResult(Result rawResult) {
+        if (rawResult != null) {
+            Vibrator v = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+            // SET RUNG 400 MILLISECONDS
+            v.vibrate(400);
+            mScannerView.stopCamera();
+            mScannerView = null;
+            ui.layout_scanbar_code.setVisibility(View.GONE);
+            generateCode(rawResult.getText());
+        }
+    }
 
     public static class UIContainer extends BaseUiContainer {
         @UiElement(R.id.imageNavLeft)
@@ -325,6 +473,22 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
 
         @UiElement(R.id.name_product_category)
         public TextView name_product_category;
+
+        @UiElement(R.id.content_frame)
+        public FrameLayout content_frame;
+
+        @UiElement(R.id.layout_scanbar_code)
+        public RelativeLayout layout_scanbar_code;
+
+        @UiElement(R.id.image_close_layout_scan)
+        public View image_close_layout_scan;
+
+        @UiElement(R.id.imv_qrcode)
+        public ImageView imv_qrcode;
+
+        @UiElement(R.id.imv_barcode)
+        public ImageView imv_barcode;
+
 
     }
 }

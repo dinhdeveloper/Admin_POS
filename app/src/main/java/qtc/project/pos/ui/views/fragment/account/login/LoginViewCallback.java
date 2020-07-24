@@ -1,7 +1,7 @@
 
 package qtc.project.pos.ui.views.fragment.account.login;
 
-import com.facebook.AccessToken;
+//import com.facebook.AccessToken;
 
 public interface LoginViewCallback
 {
@@ -13,7 +13,7 @@ public interface LoginViewCallback
 
     void onClickBackHeader();
 
-    void loginFacebookSuccess(AccessToken accessToken);
+    //void loginFacebookSuccess(AccessToken accessToken);
 
     void onLoginWithGoogle();
 }

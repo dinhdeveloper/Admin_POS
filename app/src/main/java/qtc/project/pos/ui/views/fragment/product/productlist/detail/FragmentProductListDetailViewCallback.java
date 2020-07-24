@@ -12,4 +12,8 @@ public interface FragmentProductListDetailViewCallback {
     void undateData(ProductListModel listModel);
 
     void deleteProduct(ProductListModel model);
+
+    void onClickOptionSelectImageFromCamera();
+
+    void onClickOptionSelectImageFromGallery();
 }
