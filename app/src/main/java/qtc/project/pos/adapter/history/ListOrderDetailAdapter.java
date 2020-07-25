@@ -13,7 +13,6 @@ import java.util.List;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
-import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.OrderDetailModel;
 

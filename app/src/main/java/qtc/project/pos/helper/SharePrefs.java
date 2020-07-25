@@ -12,7 +12,6 @@ import java.util.Locale;
 
 import b.laixuantam.myaarlibrary.helper.LanguageHelper;
 import qtc.project.pos.model.EmployeeModel;
-import qtc.project.pos.model.UserResponseModel;
 
 public class SharePrefs {
 

@@ -1,7 +1,6 @@
 package qtc.project.pos.ui.views.fragment.product.productlist;
 
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,13 +18,9 @@ import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.product.ProductListAdapter;
-import qtc.project.pos.dependency.AppProvider;
-import qtc.project.pos.fragment.product.productcategory.FragmentCreateProductCategory;
 import qtc.project.pos.fragment.product.productlist.create.FragmentCreateProduct;
 import qtc.project.pos.fragment.product.productlist.filter.FragmentFilterSanPham;
 import qtc.project.pos.model.ProductListModel;
-import qtc.project.pos.ui.views.fragment.product.category.categoryproduct.FragmentCategoryProductView;
-import qtc.project.pos.ui.views.fragment.product.category.categoryproduct.FragmentCategoryProductViewInterface;
 
 public class FragmentProductListCategoryView extends BaseView<FragmentProductListCategoryView.UIContainer> implements FragmentProductListCategoryViewInterface {
 

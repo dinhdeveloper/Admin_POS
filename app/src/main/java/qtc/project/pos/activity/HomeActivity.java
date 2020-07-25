@@ -2,9 +2,6 @@ package qtc.project.pos.activity;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,30 +10,19 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -65,6 +51,7 @@ import qtc.project.pos.R;
 import qtc.project.pos.api.employee.EmployeeRequest;
 import qtc.project.pos.api.employee.UpdatePassEmployeeRequest;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.event.FroceSignoutEvent;
 import qtc.project.pos.event.StatusEmployeeEvent;
 import qtc.project.pos.fragment.home.FragmentHome;
 import qtc.project.pos.fragment.levelcustomer.FragmentCreateLevelCustomer;
@@ -82,9 +69,7 @@ import qtc.project.pos.fragment.product.quanlylohang.FragmentCreateLoHang;
 import qtc.project.pos.fragment.product.quanlylohang.FragmentDonTraHang;
 import qtc.project.pos.fragment.report.thongkebanhang.doanhthu_theo_khachhang.FragmentDoanhThuTheoKhachHang;
 import qtc.project.pos.fragment.report.thongkebanhang.doanhthu_theo_sanpham.FragmentDoanhThuTheoSp;
-import qtc.project.pos.fragment.report.thongkebanhang.sanpham_banchay.FragmentFilterSanPhamBanChay;
 import qtc.project.pos.fragment.report.thongkebanhang.sanpham_banchay.FragmentSanPhamBanChay;
-import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.FragmentFilterTomTatDoanhSo;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.FragmentTomTatDoanhThu;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.thongke.FragmentThongKe;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.tongdoanhthu.FragmentTongDoanhThu;
@@ -160,6 +145,7 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
                                 EmployeeModel employeeModel = AppProvider.getPreferences().getUserModel();
                                 if (employeeModel != null) {
                                     FirebaseMessaging.getInstance().unsubscribeFromTopic("pos_notifycation_employee_" + employeeModel.getId());
+                                    FirebaseMessaging.getInstance().unsubscribeFromTopic("pos_notifycation_app_admin");
                                 }
                                 AppProvider.getPreferences().saveUserModel(null);
                                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
@@ -223,6 +209,50 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
                 }
             });
         }
+    }
+
+    @SuppressWarnings("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onKeyboardForcSignout(FroceSignoutEvent event) {
+        if (view != null) {
+            LayoutInflater layoutInflater = getLayoutInflater();
+            View popupView = layoutInflater.inflate(R.layout.alert_dialog_canhbao, null);
+            TextView title_text = popupView.findViewById(R.id.title_text);
+            TextView content_text = popupView.findViewById(R.id.content_text);
+            Button cancel_button = popupView.findViewById(R.id.cancel_button);
+            Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+
+            title_text.setVisibility(View.GONE);
+            content_text.setText("Tài khoản đã bị khóa.");
+            //title_text.setText("Cảnh báo");
+            //content_text.setText("Bạn có muốn xóa khách hàng này không?");
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+            alert.setView(popupView);
+            AlertDialog dialog = alert.create();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+
+
+            custom_confirm_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EmployeeModel employeeModel = AppProvider.getPreferences().getUserModel();
+                    if (employeeModel != null) {
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic("pos_notifycation_app_admin");
+                    }
+                    AppProvider.getPreferences().saveUserModel(null);
+                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                    dialog.dismiss();
+                    finish();
+
+                }
+            });
+        }
+    }
+
+    public void toggleNav(){
+        view.toggleNav();
     }
 
     public void alerUpdate() {

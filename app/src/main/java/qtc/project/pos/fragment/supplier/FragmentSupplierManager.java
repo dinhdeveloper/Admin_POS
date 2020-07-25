@@ -10,7 +10,6 @@ import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.supplier.SupplierRequest;
 import qtc.project.pos.dependency.AppProvider;
-import qtc.project.pos.fragment.product.quanlylohang.FragmentChiTietLoHang;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.SupplierModel;
 import qtc.project.pos.ui.views.fragment.supplier.FragmentSupplierManagerView;

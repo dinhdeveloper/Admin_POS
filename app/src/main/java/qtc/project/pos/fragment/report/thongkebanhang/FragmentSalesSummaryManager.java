@@ -1,7 +1,5 @@
 package qtc.project.pos.fragment.report.thongkebanhang;
 
-import android.view.View;
-
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;

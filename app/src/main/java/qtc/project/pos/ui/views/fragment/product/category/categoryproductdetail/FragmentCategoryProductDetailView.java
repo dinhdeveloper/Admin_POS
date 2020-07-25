@@ -1,6 +1,5 @@
 package qtc.project.pos.ui.views.fragment.product.category.categoryproductdetail;
 
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +12,8 @@ import android.widget.TextView;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
+import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.dependency.AppProvider;
@@ -40,12 +41,11 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
         ui.name_product_category.setText(model.getName());
         ui.description_product.setText(model.getDescription());
         AppProvider.getImageHelper().displayImage(Consts.HOST_API+model.getImage(),ui.image_product,null,R.drawable.imageloading);
+
         ui.choose_file_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (callback != null) {
-                    callback.showDialogSelecteImage();
-                }
+                showPopupMenu(view);
             }
         });
 
@@ -100,6 +100,36 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
             }
         });
 
+    }
+
+    private void showPopupMenu(View view) {
+        ActionItem change_password = new ActionItem(1, "Chọn ảnh từ camera", null);
+        ActionItem employee_tracking = new ActionItem(2, "Chọn hình từ thư viện", null);
+//        int backgroundCustom = ContextCompat.getColor(getContext(), R.color.red);
+//        int arrowColorCustom = ContextCompat.getColor(getContext(), R.color.red);
+
+        MyCustomPopupMenu quickAction = new MyCustomPopupMenu(getContext()/*, backgroundCustom, arrowColorCustom*/);
+        quickAction.addActionItem(change_password);
+        quickAction.addActionItem(employee_tracking);
+
+        quickAction.setOnActionItemClickListener(new MyCustomPopupMenu.OnActionItemClickListener() {
+            @Override
+            public void onItemClick(MyCustomPopupMenu source, int pos, int actionId) {
+                switch (actionId) {
+                    case 1:
+                        if (callback != null)
+                            callback.onClickOptionSelectImageFromCamera();
+                        break;
+
+                    case 2:
+                        if (callback != null)
+                            callback.onClickOptionSelectImageFromGallery();
+                        break;
+                }
+            }
+        });
+
+        quickAction.show(view);
     }
 
     @Override

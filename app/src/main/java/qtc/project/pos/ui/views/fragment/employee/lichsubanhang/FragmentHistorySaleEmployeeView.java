@@ -13,7 +13,6 @@ import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.employee.HistoryOderEmployeeAdapter;
-import qtc.project.pos.adapter.history.HistoryOderCustomerAdapter;
 import qtc.project.pos.model.OrderCustomerModel;
 
 public class FragmentHistorySaleEmployeeView extends BaseView<FragmentHistorySaleEmployeeView.UIContainer> implements FragmentHistorySaleEmployeeViewInterface {

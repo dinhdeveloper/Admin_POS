@@ -79,11 +79,10 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
                             customerModel.setLevel_name(ui.name_level_customer.getText().toString());
                             customerModel.setLevel_id(id_level);
 
-                            if (callback!=null)
+                            if (callback != null)
                                 callback.updateCustomerDetail(customerModel);
-                        }
-                        catch (Exception e){
-                            Log.e("Exception",e.getMessage());
+                        } catch (Exception e) {
+                            Log.e("Exception", e.getMessage());
                         }
                     }
                 });
@@ -146,8 +145,8 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
         //dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
-        LevelCustomerChooseAdapter chooseAdapter = new LevelCustomerChooseAdapter(activity,list);
-        recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        LevelCustomerChooseAdapter chooseAdapter = new LevelCustomerChooseAdapter(activity, list);
+        recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler_view_list.setAdapter(chooseAdapter);
 
         chooseAdapter.setOnItemClickListener(new LevelCustomerChooseAdapter.onRecyclerViewItemClickListener() {
@@ -196,6 +195,36 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
     }
 
     @Override
+    public void showDialogDeleteSuccess() {
+        LayoutInflater layoutInflater = activity.getLayoutInflater();
+        View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
+        TextView title_text = popupView.findViewById(R.id.title_text);
+        TextView content_text = popupView.findViewById(R.id.content_text);
+        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+
+        title_text.setText("Xác nhận");
+        content_text.setText("Bạn đã xóa khách hàng thành công!");
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(popupView);
+        AlertDialog dialog = alert.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callback != null) {
+                    {
+                        callback.onBackProgress();
+                        dialog.dismiss();
+                    }
+                }
+
+            }
+        });
+    }
+
+    @Override
     public BaseUiContainer getUiContainer() {
         return new FragmentCustomerDetailView.UIContainer();
     }
@@ -216,7 +245,7 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
         public EditText id_customer;
 
         @UiElement(R.id.phone_customer)
-        public EditText  phone_customer;
+        public EditText phone_customer;
 
         @UiElement(R.id.address_customer)
         public EditText address_customer;

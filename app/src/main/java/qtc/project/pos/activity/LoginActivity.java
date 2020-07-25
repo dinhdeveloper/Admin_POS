@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
@@ -107,6 +106,7 @@ public class LoginActivity extends BaseFragmentActivity<ActivityLoginViewInterfa
                         AppProvider.getPreferences().saveStatusLogin(true);
                         //goi firebase
                         FirebaseMessaging.getInstance().subscribeToTopic("pos_notifycation_employee_" + userModel.getId());
+                        FirebaseMessaging.getInstance().subscribeToTopic("pos_notifycation_app_admin");
                         if (result.getData() != null && result.getData().length > 0) {
                             AppProvider.getPreferences().saveUserModel(userModel);
                         }

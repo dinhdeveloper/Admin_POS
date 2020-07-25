@@ -12,7 +12,6 @@ import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.levelcustomer.LevelCustomerRequest;
 import qtc.project.pos.dependency.AppProvider;
-import qtc.project.pos.fragment.product.productlist.FragmentProductListDetail;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.LevelCustomerModel;
 import qtc.project.pos.ui.views.fragment.levelcustomer.FragmentLevelCustomerView;

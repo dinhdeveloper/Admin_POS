@@ -58,6 +58,7 @@ public class MyApplication extends Application {
         EmployeeModel employeeModel = AppProvider.getPreferences().getUserModel();
         if (employeeModel!=null){
             FirebaseMessaging.getInstance().subscribeToTopic("pos_notifycation_employee_" + employeeModel.getId());
+            FirebaseMessaging.getInstance().subscribeToTopic("pos_notifycation_app_admin");
         }
         ACRA.init(this);
 

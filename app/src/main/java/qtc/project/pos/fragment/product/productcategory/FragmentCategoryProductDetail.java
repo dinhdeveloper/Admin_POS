@@ -63,7 +63,10 @@ public class FragmentCategoryProductDetail extends BaseFragment<FragmentCategory
     @Override
     public void onBackProgress() {
         if (activity != null)
-            activity.checkBack();
+            {
+                activity.deleteTempMedia();
+                activity.checkBack();
+            }
     }
 
     public void setImageSelected(String filePath) {
@@ -127,7 +130,6 @@ public class FragmentCategoryProductDetail extends BaseFragment<FragmentCategory
                 public void onSuccess(BaseResponseModel<ProductCategoryModel> body) {
                     if (body.getSuccess().equals("true")) {
                         dismissProgress();
-                        Toast.makeText(activity, body.getMessage(), Toast.LENGTH_SHORT).show();
                         view.confirmDialog();
                     }
                 }
@@ -143,6 +145,18 @@ public class FragmentCategoryProductDetail extends BaseFragment<FragmentCategory
                 }
             });
         }
+    }
+
+    @Override
+    public void onClickOptionSelectImageFromCamera() {
+        if (activity!=null)
+            activity.captureImageFromCamera();
+    }
+
+    @Override
+    public void onClickOptionSelectImageFromGallery() {
+        if (activity!=null)
+            activity.changeToActivitySelectImage();
     }
 
     @Override

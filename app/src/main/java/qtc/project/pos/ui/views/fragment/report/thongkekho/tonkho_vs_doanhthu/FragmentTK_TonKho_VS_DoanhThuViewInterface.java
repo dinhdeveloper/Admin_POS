@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseViewInterface;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.model.DataChartModel;
 import qtc.project.pos.model.TonKho_Vs_DoanhThuModel;
 
 public interface FragmentTK_TonKho_VS_DoanhThuViewInterface extends BaseViewInterface {

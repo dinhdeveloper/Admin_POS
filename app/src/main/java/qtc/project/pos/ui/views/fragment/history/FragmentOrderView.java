@@ -4,8 +4,6 @@ import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.ui.views.fragment.product.FragmentProductView;
-import qtc.project.pos.ui.views.fragment.product.FragmentProductViewInterface;
 
 public class FragmentOrderView  extends BaseView<FragmentOrderView.UIContainer> implements FragmentOrderViewInterface {
     @Override

@@ -23,7 +23,6 @@ import qtc.project.pos.activity.Qr_BarcodeActivity;
 import qtc.project.pos.api.product.productcategory.ProductCategoryRequest;
 import qtc.project.pos.api.product.productlist.ProductListRequest;
 import qtc.project.pos.dependency.AppProvider;
-import qtc.project.pos.fragment.product.productcategory.FragmentCategoryProductDetail;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.ProductCategoryModel;
 import qtc.project.pos.model.ProductListModel;
@@ -234,7 +233,10 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
     @Override
     public void onBackprogress() {
         if (activity != null)
-            activity.checkBack();
+            {
+                activity.deleteTempMedia();
+                activity.checkBack();
+            }
     }
 
 }

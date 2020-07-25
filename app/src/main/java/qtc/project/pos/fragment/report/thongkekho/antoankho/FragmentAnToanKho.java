@@ -2,7 +2,6 @@ package qtc.project.pos.fragment.report.thongkekho.antoankho;
 
 import android.util.Log;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,7 +14,6 @@ import qtc.project.pos.api.report.antoankho.BaoCaoAnToanKhoRequest;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.model.AnToanKhoModel;
 import qtc.project.pos.model.BaseResponseModel;
-import qtc.project.pos.model.ReportXuatNhapKhoModel;
 import qtc.project.pos.ui.views.fragment.report.thongkekho.antoankho.FragmentAnToanKhoView;
 import qtc.project.pos.ui.views.fragment.report.thongkekho.antoankho.FragmentAnToanKhoViewCallback;
 import qtc.project.pos.ui.views.fragment.report.thongkekho.antoankho.FragmentAnToanKhoViewInterface;

@@ -14,4 +14,6 @@ public interface HomeActivityViewInterface extends BaseViewInterface {
     boolean isDrawerOpen();
 
     void updatePopup();
+
+    void toggleNav();
 }

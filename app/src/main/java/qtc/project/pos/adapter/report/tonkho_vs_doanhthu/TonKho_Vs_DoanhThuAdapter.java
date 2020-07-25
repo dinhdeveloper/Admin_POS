@@ -13,11 +13,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import b.laixuantam.myaarlibrary.helper.NumericFormater;
-import b.laixuantam.myaarlibrary.helper.map.location.LocationHelper;
 import qtc.project.pos.R;
 import qtc.project.pos.model.Stock_Income_Model;
-
-import static b.laixuantam.myaarlibrary.helper.NumericFormater.SHORT_PRICE;
 
 public class TonKho_Vs_DoanhThuAdapter extends RecyclerView.Adapter<TonKho_Vs_DoanhThuAdapter.ViewHolder> {
 

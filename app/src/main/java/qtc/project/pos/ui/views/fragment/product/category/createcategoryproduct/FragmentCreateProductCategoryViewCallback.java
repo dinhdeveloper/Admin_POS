@@ -9,4 +9,8 @@ public interface FragmentCreateProductCategoryViewCallback {
     void showDialogTakePicture();
 
     void createCategoryProduct(ProductCategoryModel categoryModel);
+
+    void onClickOptionSelectImageFromCamera();
+
+    void onClickOptionSelectImageFromGallery();
 }

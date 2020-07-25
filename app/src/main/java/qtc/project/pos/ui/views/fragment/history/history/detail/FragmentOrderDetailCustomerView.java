@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.j256.ormlite.stmt.query.In;
-
 import java.text.DecimalFormat;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;

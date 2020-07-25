@@ -2,14 +2,10 @@ package qtc.project.pos.ui.views.fragment.order.filter;
 
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.TextView;
-
-import com.google.android.libraries.places.internal.ne;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

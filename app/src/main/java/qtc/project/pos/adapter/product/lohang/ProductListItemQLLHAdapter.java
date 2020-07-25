@@ -2,7 +2,6 @@ package qtc.project.pos.adapter.product.lohang;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,9 +11,7 @@ import java.util.List;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
-import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.model.PackageInfoModel;
-import qtc.project.pos.model.ProductListModel;
 
 public class ProductListItemQLLHAdapter extends SuperAdapter<PackageInfoModel> {
 

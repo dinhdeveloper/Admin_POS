@@ -11,4 +11,8 @@ public interface FragmentCategoryProductDetailViewCallback {
     void updateData(ProductCategoryModel categoryModel);
 
     void deleteProductCategoryModel(String id);
+
+    void onClickOptionSelectImageFromCamera();
+
+    void onClickOptionSelectImageFromGallery();
 }

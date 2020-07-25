@@ -15,4 +15,6 @@ public interface FragmentCustomerDetailViewInterface extends BaseViewInterface {
     void mappingPopup(ArrayList<LevelCustomerModel> list);
 
     void confirmDialog();
+
+    void showDialogDeleteSuccess();
 }

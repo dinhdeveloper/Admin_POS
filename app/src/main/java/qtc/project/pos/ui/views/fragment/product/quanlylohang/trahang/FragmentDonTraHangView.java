@@ -22,8 +22,6 @@ import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.model.PackageInfoModel;
 import qtc.project.pos.model.PackageReturnModel;
-import qtc.project.pos.ui.views.fragment.product.quanlylohang.FragmentQuanLyLoHangView;
-import qtc.project.pos.ui.views.fragment.product.quanlylohang.FragmentQuanLyLoHangViewInterface;
 
 public class FragmentDonTraHangView extends BaseView<FragmentDonTraHangView.UIContainer> implements FragmentDonTraHangViewInterface {
 

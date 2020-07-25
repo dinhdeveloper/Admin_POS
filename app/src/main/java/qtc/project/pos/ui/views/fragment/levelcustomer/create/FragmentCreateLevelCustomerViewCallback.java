@@ -8,4 +8,8 @@ public interface FragmentCreateLevelCustomerViewCallback {
     void showDialogSelecteImage();
 
     void createLevelCustomer(LevelCustomerModel levelCustomerModel);
+
+    void onClickOptionSelectImageFromCamera();
+
+    void onClickOptionSelectImageFromGallery();
 }

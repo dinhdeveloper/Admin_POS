@@ -66,9 +66,24 @@ public class FragmentCreateProductCategory extends BaseFragment<FragmentCreatePr
     }
 
     @Override
+    public void onClickOptionSelectImageFromCamera() {
+        if (activity!=null)
+            activity.captureImageFromCamera();
+    }
+
+    @Override
+    public void onClickOptionSelectImageFromGallery() {
+        if (activity!=null)
+            activity.changeToActivitySelectImage();
+    }
+
+    @Override
     public void onBackProgress() {
         if (activity != null)
+        {
+            activity.deleteTempMedia();
             activity.checkBack();
+        }
     }
 
     @Override
@@ -100,7 +115,6 @@ public class FragmentCreateProductCategory extends BaseFragment<FragmentCreatePr
             public void onSuccess(BaseResponseModel<ProductCategoryModel> body) {
                 dismissProgress();
                 if (body.getSuccess().equals("true")) {
-                    Toast.makeText(activity, "" + body.getMessage(), Toast.LENGTH_SHORT).show();
                     view.confirmDialog();
                 }
                 else if (body.getSuccess().equals("false")){

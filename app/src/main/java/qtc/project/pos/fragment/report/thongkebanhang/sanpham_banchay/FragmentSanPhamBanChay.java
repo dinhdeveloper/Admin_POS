@@ -18,9 +18,7 @@ import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.report.sanpham_banchay.TopProductRequest;
 import qtc.project.pos.dependency.AppProvider;
-import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.FragmentFilterTomTatDoanhSo;
 import qtc.project.pos.model.BaseResponseModel;
-import qtc.project.pos.model.LevelCustomerModel;
 import qtc.project.pos.model.TopProductModel;
 import qtc.project.pos.ui.views.fragment.report.thongkebanhang.sanpham_banchay.FragmentSanPhamBanChayView;
 import qtc.project.pos.ui.views.fragment.report.thongkebanhang.sanpham_banchay.FragmentSanPhamBanChayViewCallback;
@@ -147,6 +145,7 @@ public class FragmentSanPhamBanChay extends BaseFragment<FragmentSanPhamBanChayV
         activity.replaceFragment(new FragmentFilterSanPhamBanChay(), true, null);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void getAllData() {
         getTopSanPhamBanChay();

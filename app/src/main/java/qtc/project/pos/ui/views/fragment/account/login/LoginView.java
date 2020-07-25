@@ -2,7 +2,6 @@ package qtc.project.pos.ui.views.fragment.account.login;
 
 import android.annotation.SuppressLint;
 import android.graphics.Paint;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 //import com.facebook.CallbackManager;
 //import com.facebook.FacebookCallback;

@@ -1,6 +1,5 @@
 package qtc.project.pos.api.account.login;
 
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.util.Objects;
@@ -11,7 +10,6 @@ import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.EmployeeModel;
-import qtc.project.pos.model.UserResponseModel;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;

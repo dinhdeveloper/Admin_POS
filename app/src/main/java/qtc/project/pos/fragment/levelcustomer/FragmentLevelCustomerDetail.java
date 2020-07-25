@@ -21,13 +21,9 @@ import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.customer.CustomerRequest;
 import qtc.project.pos.api.levelcustomer.LevelCustomerRequest;
 import qtc.project.pos.dependency.AppProvider;
-import qtc.project.pos.fragment.product.productlist.FragmentProductListDetail;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.LevelCustomerModel;
-import qtc.project.pos.model.ProductListModel;
-import qtc.project.pos.ui.views.fragment.levelcustomer.FragmentLevelCustomerViewCallback;
-import qtc.project.pos.ui.views.fragment.levelcustomer.FragmentLevelCustomerViewInterface;
 import qtc.project.pos.ui.views.fragment.levelcustomer.detail.FragmentLevelCustomerDetailView;
 import qtc.project.pos.ui.views.fragment.levelcustomer.detail.FragmentLevelCustomerDetailViewCallback;
 import qtc.project.pos.ui.views.fragment.levelcustomer.detail.FragmentLevelCustomerDetailViewInterface;
@@ -96,12 +92,18 @@ public class FragmentLevelCustomerDetail extends BaseFragment<FragmentLevelCusto
     @Override
     public void onBackProgress() {
         if (activity != null)
+        {
+            activity.deleteTempMedia();
             activity.checkBack();
+        }
     }
 
     public void onBack() {
         if (activity != null)
+        {
+            activity.deleteTempMedia();
             activity.checkBack();
+        }
     }
 
     @Override
@@ -279,6 +281,18 @@ public class FragmentLevelCustomerDetail extends BaseFragment<FragmentLevelCusto
                 }
             });
         }
+    }
+
+    @Override
+    public void onClickOptionSelectImageFromCamera() {
+        if (activity!=null)
+            activity.captureImageFromCamera();
+    }
+
+    @Override
+    public void onClickOptionSelectImageFromGallery() {
+        if (activity!=null)
+            activity.changeToActivitySelectImage();
     }
 
     @Override

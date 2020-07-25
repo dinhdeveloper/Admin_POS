@@ -5,7 +5,6 @@ import android.os.Bundle;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.model.EmployeeModel;
 import qtc.project.pos.model.OrderCustomerModel;
 import qtc.project.pos.ui.views.fragment.employee.lichsubanhang.detail.FragmentOrderDetailEmployeeView;
 import qtc.project.pos.ui.views.fragment.employee.lichsubanhang.detail.FragmentOrderDetailEmployeeViewCallback;
@@ -35,7 +34,9 @@ public class FragmentOrderDetailEmployee extends BaseFragment<FragmentOrderDetai
         Bundle extras = getArguments();
         if (extras != null) {
             OrderCustomerModel model = (OrderCustomerModel) extras.get("model");
-            view.sentDataToView(model);
+            if (model!=null){
+                view.sentDataToView(model);
+            }
         }
     }
 

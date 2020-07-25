@@ -21,7 +21,6 @@ import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.model.EmployeeModel;
 import qtc.project.pos.model.PackageInfoModel;
-import qtc.project.pos.model.PackageReturnModel;
 import qtc.project.pos.model.ProductListModel;
 import qtc.project.pos.model.SupplierModel;
 

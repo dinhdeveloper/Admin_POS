@@ -76,6 +76,7 @@
 
         <TextView
             android:textColor="@color/black"
+            android:textSize="14dp"
             android:id="@+id/id_product_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,6 +108,7 @@
 
         <EditText
             android:textColor="@color/black"
+            android:textSize="14dp"
             android:id="@+id/name_product_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,6 +140,7 @@
 
         <EditText
             android:id="@+id/description_product"
+            android:textSize="14dp"
             android:layout_marginTop="@dimen/dp10"
             android:textColor="@color/black"
             android:layout_width="match_parent"

@@ -17,7 +17,6 @@ import qtc.project.pos.api.report.tomtatdoanhso.TomTatDoanhSoRequest;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.FragmentFilterTomTatDoanhSo;
 import qtc.project.pos.model.BaseResponseModel;
-import qtc.project.pos.model.LevelCustomerModel;
 import qtc.project.pos.model.ProductListModel;
 import qtc.project.pos.model.TongDoanhThuModel;
 import qtc.project.pos.ui.views.fragment.report.thongkebanhang.doanhthu_theo_sanpham.FragmentDoanhThuTheoSpView;

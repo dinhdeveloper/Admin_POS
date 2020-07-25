@@ -17,4 +17,8 @@ public interface FragmentLevelCustomerDetailViewCallback {
     void callAllDataCustomer();
 
     void deleteLevelCustomer(String level_id);
+
+    void onClickOptionSelectImageFromCamera();
+
+    void onClickOptionSelectImageFromGallery();
 }

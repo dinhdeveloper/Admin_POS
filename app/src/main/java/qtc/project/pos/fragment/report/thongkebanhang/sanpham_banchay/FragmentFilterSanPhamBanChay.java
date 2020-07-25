@@ -2,10 +2,7 @@ package qtc.project.pos.fragment.report.thongkebanhang.sanpham_banchay;
 
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
-import b.laixuantam.myaarlibrary.base.BaseViewInterface;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.ui.views.fragment.report.thongkebanhang.sanpham_banchay.FragmentSanPhamBanChayViewCallback;
-import qtc.project.pos.ui.views.fragment.report.thongkebanhang.sanpham_banchay.FragmentSanPhamBanChayViewInterface;
 import qtc.project.pos.ui.views.fragment.report.thongkebanhang.sanpham_banchay.filter.FragmentFilterSanPhamBanChayView;
 import qtc.project.pos.ui.views.fragment.report.thongkekho.xuatnhapkho.filter.FragmentFilterXuatNhapKhoViewCallback;
 import qtc.project.pos.ui.views.fragment.report.thongkekho.xuatnhapkho.filter.FragmentFilterXuatNhapKhoViewInterface;

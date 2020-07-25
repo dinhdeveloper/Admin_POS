@@ -9,7 +9,6 @@ import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.product.packageproduct.PackageProductRequest;
-import qtc.project.pos.api.product.productlist.ProductListRequest;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.fragment.product.productlist.FragmentProductList;
 import qtc.project.pos.fragment.supplier.FragmentSupplier;

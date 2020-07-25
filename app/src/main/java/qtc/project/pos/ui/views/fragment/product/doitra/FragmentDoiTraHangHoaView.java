@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import b.laixuantam.myaarlibrary.base.BaseFragment;
-import b.laixuantam.myaarlibrary.base.BaseParameters;
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseViewInterface;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.model.DataChartModel;
 import qtc.project.pos.model.TongDoanhThuModel;
 
 public interface FragmentThongKeViewInterface extends BaseViewInterface {

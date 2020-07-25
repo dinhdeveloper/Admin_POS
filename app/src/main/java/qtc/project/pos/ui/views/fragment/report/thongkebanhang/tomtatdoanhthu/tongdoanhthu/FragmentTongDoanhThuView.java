@@ -1,8 +1,6 @@
 package qtc.project.pos.ui.views.fragment.report.thongkebanhang.tomtatdoanhthu.tongdoanhthu;
 
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;

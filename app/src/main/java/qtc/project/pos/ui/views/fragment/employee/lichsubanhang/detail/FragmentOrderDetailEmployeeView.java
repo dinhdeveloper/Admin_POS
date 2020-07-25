@@ -2,6 +2,7 @@ package qtc.project.pos.ui.views.fragment.employee.lichsubanhang.detail;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,31 +40,35 @@ public class FragmentOrderDetailEmployeeView extends BaseView<FragmentOrderDetai
 
     @Override
     public void sentDataToView(OrderCustomerModel model) {
-        if (model!=null){
-            ui.id_employee_order.setText(model.getEmployee_id());
-            ui.name_employee.setText(model.getEmployee_fullname());
-            ui.date_create.setText(model.getOrder_created_date());
+        try{
+            if (model!=null){
+                ui.id_employee_order.setText(model.getEmployee_id());
+                ui.name_employee.setText(model.getEmployee_fullname());
+                ui.date_create.setText(model.getOrder_created_date());
 
-            if (model.getOrder_status().equals("Y")){
-                ui.status_order.setText("Hoàn thành");
-            }else if (model.getOrder_status().equals("N")){
-                ui.status_order.setText("Đã hủy");
-            }
+                if (model.getOrder_status().equals("Y")){
+                    ui.status_order.setText("Hoàn thành");
+                }else if (model.getOrder_status().equals("N")){
+                    ui.status_order.setText("Đã hủy");
+                }
 //            ui.priceTotal.setText(model.getOrder_total());
 //            ui.priceGiam.setText(model.getCustomer_level_discount());
 //            ui.priceTemp.setText(Integer.parseInt(model.getOrder_total())-Integer.parseInt(model.getCustomer_level_discount()));
 
-            String pattern = "###,###.###";
-            DecimalFormat decimalFormat = new DecimalFormat(pattern);
+                String pattern = "###,###.###";
+                DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
-            ui.priceGiam.setText(decimalFormat.format(Integer.parseInt(model.getCustomer_level_discount())) + " VNĐ");
-            ui.priceTotal.setText(decimalFormat.format(Integer.parseInt(model.getOrder_total())) + " VNĐ");
-            int tientemp = Integer.parseInt(model.getOrder_total()) + Integer.parseInt(model.getCustomer_level_discount());
-            ui.priceTemp.setText(decimalFormat.format(tientemp) + " VNĐ");
+                ui.priceGiam.setText(decimalFormat.format(Integer.parseInt(model.getCustomer_level_discount())) + " VNĐ");
+                ui.priceTotal.setText(decimalFormat.format(Integer.parseInt(model.getOrder_total())) + " VNĐ");
+                int tientemp = Integer.parseInt(model.getOrder_total()) + Integer.parseInt(model.getCustomer_level_discount());
+                ui.priceTemp.setText(decimalFormat.format(tientemp) + " VNĐ");
 
-            ListOrderDetailAdapter adapter = new ListOrderDetailAdapter(activity, model.getListDataProduct());
-            ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-            ui.recycler_view_list.setAdapter(adapter);
+                ListOrderDetailAdapter adapter = new ListOrderDetailAdapter(activity, model.getListDataProduct());
+                ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                ui.recycler_view_list.setAdapter(adapter);
+            }
+        }catch (Exception e){
+            Log.e("Ex",e.getMessage());
         }
     }
 

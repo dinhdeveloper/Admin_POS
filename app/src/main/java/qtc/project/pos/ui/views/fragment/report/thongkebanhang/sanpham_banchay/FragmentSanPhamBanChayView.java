@@ -85,6 +85,7 @@ public class FragmentSanPhamBanChayView extends BaseView<FragmentSanPhamBanChayV
     @Override
     public void mappingRecyclerView(ArrayList<TopProductModel> list) {
         if (list != null) {
+            listAll.clear();
             listAll.addAll(list);
             adapter = new HangBanChayAdapter(activity, listAll);
             adapter.getListData().addAll(listAll);

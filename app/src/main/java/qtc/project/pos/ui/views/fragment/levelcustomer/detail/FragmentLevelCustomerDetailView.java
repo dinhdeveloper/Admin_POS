@@ -4,6 +4,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
+import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.customer.CustomerAdapter;
@@ -26,8 +29,6 @@ import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.LevelCustomerModel;
-import qtc.project.pos.ui.views.fragment.levelcustomer.FragmentLevelCustomerView;
-import qtc.project.pos.ui.views.fragment.levelcustomer.FragmentLevelCustomerViewInterface;
 
 public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCustomerDetailView.UIContainer> implements FragmentLevelCustomerDetailViewInterface {
     HomeActivity activity;
@@ -103,9 +104,7 @@ public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCusto
         ui.choose_file_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (callback != null) {
-                    callback.showDialogSelecteImage();
-                }
+                showPopupMenu(view);
             }
         });
         //xu ly man hinh xem chi tiet
@@ -181,6 +180,36 @@ public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCusto
                 });
             }
         });
+    }
+
+    private void showPopupMenu(View view) {
+        ActionItem change_password = new ActionItem(1, "Chọn ảnh từ camera", null);
+        ActionItem employee_tracking = new ActionItem(2, "Chọn hình từ thư viện", null);
+//        int backgroundCustom = ContextCompat.getColor(getContext(), R.color.red);
+//        int arrowColorCustom = ContextCompat.getColor(getContext(), R.color.red);
+
+        MyCustomPopupMenu quickAction = new MyCustomPopupMenu(getContext()/*, backgroundCustom, arrowColorCustom*/);
+        quickAction.addActionItem(change_password);
+        quickAction.addActionItem(employee_tracking);
+
+        quickAction.setOnActionItemClickListener(new MyCustomPopupMenu.OnActionItemClickListener() {
+            @Override
+            public void onItemClick(MyCustomPopupMenu source, int pos, int actionId) {
+                switch (actionId) {
+                    case 1:
+                        if (callback != null)
+                            callback.onClickOptionSelectImageFromCamera();
+                        break;
+
+                    case 2:
+                        if (callback != null)
+                            callback.onClickOptionSelectImageFromGallery();
+                        break;
+                }
+            }
+        });
+
+        quickAction.show(view);
     }
 
     @Override

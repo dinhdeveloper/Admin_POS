@@ -1,17 +1,15 @@
 package qtc.project.pos.ui.views.fragment.home;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import b.laixuantam.myaarlibrary.base.BaseFragmentActivity;
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.fragment.customer.FragmentCustomer;
 import qtc.project.pos.fragment.employee.FragmentEmployeeManager;
-import qtc.project.pos.fragment.history.FragmentOrder;
 import qtc.project.pos.fragment.levelcustomer.FragmentLevelCustomer;
 import qtc.project.pos.fragment.order.FragmentOrderManager;
 import qtc.project.pos.fragment.product.FragmentProduct;
@@ -79,6 +77,10 @@ public class FragmentHomeView  extends BaseView<FragmentHomeView.UIContainer> im
                 activity.addFragment(new FragmentReportManager(),true,null);
             }
         });
+
+        ui.imageNavLeft.setOnClickListener(v -> {
+            activity.toggleNav();
+        });
     }
 
     @Override
@@ -111,5 +113,10 @@ public class FragmentHomeView  extends BaseView<FragmentHomeView.UIContainer> im
 
         @UiElement(R.id.layoutQLNCU)
         public LinearLayout layoutQLNCU;
+
+        @UiElement(R.id.imageNavLeft)
+        public ImageView imageNavLeft;
+
+
     }
 }

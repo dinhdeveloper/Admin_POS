@@ -10,7 +10,6 @@ import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
-import b.laixuantam.myaarlibrary.base.BaseViewInterface;
 import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
 import id.zelory.compressor.Compressor;
 import qtc.project.pos.R;
@@ -45,8 +44,10 @@ public class FragmentCreateLevelCustomer extends BaseFragment<FragmentCreateLeve
 
     @Override
     public void onBackProgress() {
-        if (activity != null)
+        if (activity != null) {
+            activity.deleteTempMedia();
             activity.checkBack();
+        }
     }
 
     public void setImageSelected(String filePath) {
@@ -120,5 +121,17 @@ public class FragmentCreateLevelCustomer extends BaseFragment<FragmentCreateLeve
                 }
             });
         }
+    }
+
+    @Override
+    public void onClickOptionSelectImageFromCamera() {
+        if (activity != null)
+            activity.captureImageFromCamera();
+    }
+
+    @Override
+    public void onClickOptionSelectImageFromGallery() {
+        if (activity != null)
+            activity.changeToActivitySelectImage();
     }
 }

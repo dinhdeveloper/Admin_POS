@@ -10,8 +10,6 @@ import java.util.List;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
-import qtc.project.pos.adapter.product.ProductListAdapter;
-import qtc.project.pos.model.ProductListModel;
 import qtc.project.pos.model.SupplierModel;
 
 public class SupplierAdapter  extends SuperAdapter<SupplierModel> {

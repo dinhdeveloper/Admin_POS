@@ -8,7 +8,6 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.model.EmployeeModel;
-import qtc.project.pos.model.UserResponseModel;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "MyFirebaseIIDService";

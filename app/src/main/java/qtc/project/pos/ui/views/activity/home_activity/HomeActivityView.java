@@ -2,14 +2,10 @@ package qtc.project.pos.ui.views.activity.home_activity;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,25 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import b.laixuantam.myaarlibrary.base.BaseFragmentActivity;
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import b.laixuantam.myaarlibrary.helper.AppUtils;
 import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.adapter.levelcustomer.LevelCustomerChooseAdapter;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.fragment.account.information.FragmentThongTinUser;
-import qtc.project.pos.fragment.customer.FragmentCustomer;
-import qtc.project.pos.fragment.history.FragmentOrder;
-import qtc.project.pos.fragment.home.FragmentHome;
-import qtc.project.pos.fragment.levelcustomer.FragmentLevelCustomer;
-import qtc.project.pos.fragment.product.FragmentProduct;
-import qtc.project.pos.helper.SharePrefs;
 import qtc.project.pos.model.EmployeeModel;
-import qtc.project.pos.model.LevelCustomerModel;
 
 public class HomeActivityView extends BaseView<HomeActivityView.UIContainer> implements HomeActivityViewInterface {
 
@@ -98,6 +84,15 @@ public class HomeActivityView extends BaseView<HomeActivityView.UIContainer> imp
                 dialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void toggleNav() {
+        if (isDrawerOpen()){
+            closeDrawer();
+        }else{
+            openDrawer();
+        }
     }
 
 

@@ -1,14 +1,12 @@
 package qtc.project.pos.fragment.product.quanlylohang;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
-import b.laixuantam.myaarlibrary.base.BaseViewInterface;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.product.packageproduct.PackageReturnRequest;
 import qtc.project.pos.dependency.AppProvider;

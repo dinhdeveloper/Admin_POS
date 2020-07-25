@@ -11,7 +11,6 @@ import java.util.List;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
-import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.OrderCustomerModel;
 
 public class HistoryOderCustomerAdapter extends SuperAdapter<OrderCustomerModel> {

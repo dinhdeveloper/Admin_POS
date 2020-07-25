@@ -3,7 +3,6 @@ package qtc.project.pos.ui.views.fragment.report.thongkebanhang.tomtatdoanhthu.t
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,14 +11,12 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.report.tomtatdoanhso.ThongKeAdapter;
-import qtc.project.pos.model.DataChartModel;
 import qtc.project.pos.model.TongDoanhThuModel;
 
 public class FragmentThongKeView extends BaseView<FragmentThongKeView.UIContainer> implements FragmentThongKeViewInterface {

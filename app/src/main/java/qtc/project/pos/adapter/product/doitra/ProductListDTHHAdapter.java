@@ -11,10 +11,7 @@ import java.util.List;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
-import qtc.project.pos.adapter.product.category.ProductCategoryAdapter;
-import qtc.project.pos.api.supplier.SupplierRequest;
 import qtc.project.pos.model.PackageReturnModel;
-import qtc.project.pos.model.ProductCategoryModel;
 
 public class ProductListDTHHAdapter extends SuperAdapter<PackageReturnModel> {
 

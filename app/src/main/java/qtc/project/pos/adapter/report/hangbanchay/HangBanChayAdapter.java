@@ -2,7 +2,6 @@ package qtc.project.pos.adapter.report.hangbanchay;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Filter;
 import android.widget.TextView;
 
@@ -14,7 +13,6 @@ import b.laixuantam.myaarlibrary.helper.AccentRemove;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
-import qtc.project.pos.adapter.report.antoankho.BaoCaoAnToanKhoAdapter;
 import qtc.project.pos.model.TopProductModel;
 
 public class HangBanChayAdapter extends SuperAdapter<TopProductModel> {

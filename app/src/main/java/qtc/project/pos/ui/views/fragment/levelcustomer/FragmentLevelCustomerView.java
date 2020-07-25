@@ -1,7 +1,6 @@
 package qtc.project.pos.ui.views.fragment.levelcustomer;
 
 
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,10 +14,7 @@ import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.levelcustomer.LevelCustomerAdapter;
 import qtc.project.pos.fragment.levelcustomer.FragmentCreateLevelCustomer;
-import qtc.project.pos.fragment.product.productcategory.FragmentCreateProductCategory;
 import qtc.project.pos.model.LevelCustomerModel;
-import qtc.project.pos.ui.views.fragment.customer.FragmentCustomerView;
-import qtc.project.pos.ui.views.fragment.customer.FragmentCustomerViewInterface;
 
 public class FragmentLevelCustomerView extends BaseView<FragmentLevelCustomerView.UIContainer> implements FragmentLevelCustomerViewInterface {
 

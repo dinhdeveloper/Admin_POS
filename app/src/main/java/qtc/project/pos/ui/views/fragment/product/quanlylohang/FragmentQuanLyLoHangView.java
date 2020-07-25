@@ -91,7 +91,6 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
                         return true;
                     }
                 }
-
                 Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
                 return false;
             }

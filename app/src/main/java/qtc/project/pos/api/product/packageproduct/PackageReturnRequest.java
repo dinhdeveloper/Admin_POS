@@ -5,7 +5,6 @@ import b.laixuantam.myaarlibrary.api.BaseApiParams;
 import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.PackageReturnModel;
-import qtc.project.pos.model.ProductListModel;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;

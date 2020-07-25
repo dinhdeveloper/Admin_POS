@@ -1,27 +1,19 @@
 package qtc.project.pos.fragment.employee;
 
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
-import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.employee.EmployeeRequest;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.model.BaseResponseModel;
-import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.EmployeeModel;
 import qtc.project.pos.model.LevelEmployeeModel;
 import qtc.project.pos.ui.views.fragment.employee.detail.FragmentEmployeeDetailView;

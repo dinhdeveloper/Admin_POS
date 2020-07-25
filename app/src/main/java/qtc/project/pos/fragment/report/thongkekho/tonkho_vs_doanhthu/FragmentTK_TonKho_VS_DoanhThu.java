@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;

@@ -15,12 +15,9 @@ import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.fragment.history.FragmentHistoryOrderCustomer;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.CustomerModel;
-import qtc.project.pos.model.ProductListModel;
 import qtc.project.pos.ui.views.fragment.customer.FragmentCustomerView;
 import qtc.project.pos.ui.views.fragment.customer.FragmentCustomerViewCallback;
 import qtc.project.pos.ui.views.fragment.customer.FragmentCustomerViewInterface;
-import qtc.project.pos.ui.views.fragment.product.FragmentProductViewCallback;
-import qtc.project.pos.ui.views.fragment.product.FragmentProductViewInterface;
 
 public class FragmentCustomer extends BaseFragment<FragmentCustomerViewInterface, BaseParameters> implements FragmentCustomerViewCallback {
     HomeActivity activity;

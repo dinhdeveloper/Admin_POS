@@ -2,7 +2,6 @@ package qtc.project.pos.api.product.packageproduct;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.BaseApiParams;
-import qtc.project.pos.api.product.productlist.ProductListRequest;
 import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.ProductListModel;

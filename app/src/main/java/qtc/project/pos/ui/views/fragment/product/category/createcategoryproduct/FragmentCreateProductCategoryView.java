@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
+import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.dependency.AppProvider;
@@ -46,11 +48,38 @@ public class FragmentCreateProductCategoryView extends BaseView<FragmentCreatePr
         ui.choose_file_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (callback != null) {
-                    callback.showDialogSelecteImage();
+                showPopupMenu(view);
+            }
+        });
+    }
+    private void showPopupMenu(View view) {
+        ActionItem change_password = new ActionItem(1, "Chọn ảnh từ camera", null);
+        ActionItem employee_tracking = new ActionItem(2, "Chọn hình từ thư viện", null);
+//        int backgroundCustom = ContextCompat.getColor(getContext(), R.color.red);
+//        int arrowColorCustom = ContextCompat.getColor(getContext(), R.color.red);
+
+        MyCustomPopupMenu quickAction = new MyCustomPopupMenu(getContext()/*, backgroundCustom, arrowColorCustom*/);
+        quickAction.addActionItem(change_password);
+        quickAction.addActionItem(employee_tracking);
+
+        quickAction.setOnActionItemClickListener(new MyCustomPopupMenu.OnActionItemClickListener() {
+            @Override
+            public void onItemClick(MyCustomPopupMenu source, int pos, int actionId) {
+                switch (actionId) {
+                    case 1:
+                        if (callback != null)
+                            callback.onClickOptionSelectImageFromCamera();
+                        break;
+
+                    case 2:
+                        if (callback != null)
+                            callback.onClickOptionSelectImageFromGallery();
+                        break;
                 }
             }
         });
+
+        quickAction.show(view);
     }
 
     private void createProductCategory() {
@@ -115,6 +144,10 @@ public class FragmentCreateProductCategoryView extends BaseView<FragmentCreatePr
         custom_confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ui.id_product_category.setText(null);
+                ui.name_product_category.setText(null);
+                ui.description_product.setText(null);
+                ui.image_product.setImageResource(R.drawable.imageloading);
                 dialog.dismiss();
             }
         });

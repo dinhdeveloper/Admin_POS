@@ -1,6 +1,5 @@
 package qtc.project.pos.adapter.employee;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,22 +7,18 @@ import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import b.laixuantam.myaarlibrary.helper.AccentRemove;
 import qtc.project.pos.R;
-import qtc.project.pos.adapter.report.antoankho.BaoCaoAnToanKhoAdapter;
 import qtc.project.pos.model.EmployeeModel;
 
 public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapter.ViewHolder> {

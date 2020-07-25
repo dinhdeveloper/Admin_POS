@@ -5,8 +5,6 @@ import android.os.Bundle;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.tongdoanhthu.FragmentTongDoanhThu;
-import qtc.project.pos.fragment.report.thongkekho.xuatnhapkho.FragmentBaoCaoXuatNhapKho;
 import qtc.project.pos.ui.views.fragment.report.thongkebanhang.tomtatdoanhthu.filter.FragmentFilterTomTatDoanhSoView;
 import qtc.project.pos.ui.views.fragment.report.thongkebanhang.tomtatdoanhthu.filter.FragmentFilterTomTatDoanhSoViewCallback;
 import qtc.project.pos.ui.views.fragment.report.thongkebanhang.tomtatdoanhthu.filter.FragmentFilterTomTatDoanhSoViewInterface;

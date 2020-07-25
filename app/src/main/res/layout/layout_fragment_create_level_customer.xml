@@ -211,12 +211,18 @@
             <EditText
                 android:id="@+id/description_level"
                 android:textSize="14dp"
-                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginBottom="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginHorizontal="@dimen/dp20"
                 android:background="@color/hinhnen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_marginBottom="@dimen/dp20"
+                android:background="@color/colorAAA"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
 
             <!--btn-->
             <LinearLayout

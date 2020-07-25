@@ -1,8 +1,5 @@
 package qtc.project.pos.fragment.account.login;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
 //
 //import com.facebook.AccessToken;
 //import com.facebook.CallbackManager;
@@ -11,35 +8,8 @@ import android.text.TextUtils;
 //import com.facebook.login.LoginManager;
 //import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Objects;
-
-import b.laixuantam.myaarlibrary.api.ApiRequest;
-import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
-import b.laixuantam.myaarlibrary.base.BaseFragment;
-import b.laixuantam.myaarlibrary.base.BaseParameters;
-import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
-import b.laixuantam.myaarlibrary.helper.MyLog;
-import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
-import qtc.project.pos.R;
 //import qtc.project.pos.activity.HomeActivityBackup;
-import qtc.project.pos.api.account.login.LoginRequest;
-import qtc.project.pos.api.account.register.RequestRegister;
-import qtc.project.pos.dependency.AppProvider;
-import qtc.project.pos.event.FragmentRegisterBackEvent;
-import qtc.project.pos.event.RequestLoginWithGoogleEvent;
-import qtc.project.pos.model.BaseResponseModel;
-import qtc.project.pos.model.UserRegisterModel;
-import qtc.project.pos.model.UserResponseModel;
-import qtc.project.pos.ui.views.fragment.account.login.LoginView;
-import qtc.project.pos.ui.views.fragment.account.login.LoginViewCallback;
-import qtc.project.pos.ui.views.fragment.account.login.LoginViewInterface;
+
 
 //public class FragmentLogin extends BaseFragment<LoginViewInterface, BaseParameters> implements LoginViewCallback {
 //

@@ -11,17 +11,14 @@ import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
-import b.laixuantam.myaarlibrary.base.BaseViewInterface;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.customer.CustomerRequest;
 
 import qtc.project.pos.api.levelcustomer.LevelCustomerRequest;
 import qtc.project.pos.dependency.AppProvider;
-import qtc.project.pos.fragment.history.FragmentHistoryOrderCustomer;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.LevelCustomerModel;
-import qtc.project.pos.model.OrderCustomerModel;
 import qtc.project.pos.ui.views.fragment.customer.detail.FragmentCustomerDetailView;
 import qtc.project.pos.ui.views.fragment.customer.detail.FragmentCustomerDetailViewCallback;
 import qtc.project.pos.ui.views.fragment.customer.detail.FragmentCustomerDetailViewInterface;
@@ -154,7 +151,7 @@ public class FragmentCustomerDetail extends BaseFragment<FragmentCustomerDetailV
                 public void onSuccess(BaseResponseModel<CustomerModel> body) {
                     dismissProgress();
                     if (body.getSuccess().equals("true")){
-                        Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
+                        view.showDialogDeleteSuccess();
                     }else if (body.getSuccess().equals("false")){
                         Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
                     }

@@ -2,7 +2,6 @@ package qtc.project.pos.fragment.product;
 
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
-import b.laixuantam.myaarlibrary.base.BaseViewInterface;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.ui.views.fragment.product.productmanager.FragmentProductManagerView;
 import qtc.project.pos.ui.views.fragment.product.productmanager.FragmentProductManagerViewCallback;

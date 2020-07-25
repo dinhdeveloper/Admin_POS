@@ -16,7 +16,6 @@ import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.report.tonkho_vs_doanhthu.TonKho_Vs_DoanhThuAdapter;
-import qtc.project.pos.model.DataChartModel;
 import qtc.project.pos.model.Stock_Income_Model;
 import qtc.project.pos.model.TonKho_Vs_DoanhThuModel;
 

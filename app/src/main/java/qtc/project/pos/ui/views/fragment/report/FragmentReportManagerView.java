@@ -1,6 +1,5 @@
 package qtc.project.pos.ui.views.fragment.report;
 
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

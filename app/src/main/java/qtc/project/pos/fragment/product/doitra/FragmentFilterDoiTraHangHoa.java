@@ -3,7 +3,6 @@ package qtc.project.pos.fragment.product.doitra;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.fragment.report.thongkekho.xuatnhapkho.FragmentBaoCaoXuatNhapKho;
 import qtc.project.pos.ui.views.fragment.product.doitra.filter.FragmentFilterDoiTraHangHoaView;
 import qtc.project.pos.ui.views.fragment.product.doitra.filter.FragmentFilterDoiTraHangHoaViewCallback;
 import qtc.project.pos.ui.views.fragment.product.doitra.filter.FragmentFilterDoiTraHangHoaViewInterface;

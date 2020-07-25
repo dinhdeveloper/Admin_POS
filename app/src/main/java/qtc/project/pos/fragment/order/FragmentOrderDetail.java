@@ -5,8 +5,6 @@ import android.os.Bundle;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
-import qtc.project.pos.fragment.customer.FragmentCustomerDetail;
-import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.OrderCustomerModel;
 import qtc.project.pos.ui.views.fragment.order.detail.FragmentOrderDetailView;
 import qtc.project.pos.ui.views.fragment.order.detail.FragmentOrderDetailViewCallback;

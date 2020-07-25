@@ -2,10 +2,8 @@ package qtc.project.pos.api.employee;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.BaseApiParams;
-import qtc.project.pos.api.customer.CustomerRequest;
 import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.BaseResponseModel;
-import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.EmployeeModel;
 import retrofit2.Call;
 import retrofit2.http.Body;

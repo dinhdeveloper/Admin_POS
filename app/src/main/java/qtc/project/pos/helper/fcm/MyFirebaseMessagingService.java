@@ -20,6 +20,7 @@ import qtc.project.pos.event.AleartSignedEvent;
 import qtc.project.pos.event.AlertCheckRolePermissionEvent;
 import qtc.project.pos.event.AlertCheckTaskEvent;
 import qtc.project.pos.event.AlertCheckUserRolePermissionEvent;
+import qtc.project.pos.event.FroceSignoutEvent;
 import qtc.project.pos.event.StatusEmployeeEvent;
 import qtc.project.pos.helper.notification.NotificationUtils;
 import qtc.project.pos.helper.notification.NotificationVO;
@@ -96,6 +97,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         break;
                     case "employee_status_disable":
                         StatusEmployeeEvent.post();
+                        break;
+                      case  "check_sign_out":
+                        FroceSignoutEvent.post();
                         break;
 
                     default:

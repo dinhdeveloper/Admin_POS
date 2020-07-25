@@ -1,8 +1,6 @@
 package qtc.project.pos.ui.views.fragment.product.quanlylohang.detail;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,10 +16,7 @@ import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.model.PackageInfoModel;
-import qtc.project.pos.model.ProductListModel;
 import qtc.project.pos.model.SupplierModel;
-import qtc.project.pos.ui.views.fragment.product.quanlylohang.FragmentQuanLyLoHangView;
-import qtc.project.pos.ui.views.fragment.product.quanlylohang.FragmentQuanLyLoHangViewInterface;
 
 public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangView.UIContainer> implements FragmentChiTietLoHangViewInterface {
     HomeActivity activity;

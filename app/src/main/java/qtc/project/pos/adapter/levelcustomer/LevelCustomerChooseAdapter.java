@@ -11,14 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
-import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
-import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
 import qtc.project.pos.model.LevelCustomerModel;
-import qtc.project.pos.model.PackageInfoModel;
 
 public class LevelCustomerChooseAdapter extends RecyclerView.Adapter<LevelCustomerChooseAdapter.ViewHolder> {
 
