@@ -195,7 +195,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
                     ui.qrcode.setText(resultCode);
                     break;
             }
-        } catch (WriterException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
