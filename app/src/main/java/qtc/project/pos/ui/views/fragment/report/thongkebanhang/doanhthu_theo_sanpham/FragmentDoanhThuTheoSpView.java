@@ -231,6 +231,14 @@ public class FragmentDoanhThuTheoSpView extends BaseView<FragmentDoanhThuTheoSpV
                 }
             }
         });
+
+        // clearn text
+        ui.image_close.setOnClickListener(v -> {
+            ui.text_search.setText(null);
+            ui.layout_nodata.setVisibility(View.VISIBLE);
+            ui.layout_data.setVisibility(View.GONE);
+            ui.chon_moc_time.setVisibility(View.GONE);
+        });
     }
 
     private void searchProduct(String search) {
@@ -255,6 +263,9 @@ public class FragmentDoanhThuTheoSpView extends BaseView<FragmentDoanhThuTheoSpV
 
         @UiElement(R.id.image_filter)
         public ImageView image_filter;
+
+        @UiElement(R.id.image_close)
+        public ImageView image_close;
 
         @UiElement(R.id.text_search)
         public EditText text_search;

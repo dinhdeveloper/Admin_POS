@@ -81,22 +81,21 @@ public class FragmentCreateProductCategory extends BaseFragment<FragmentCreatePr
     public void onBackProgress() {
         if (activity != null)
         {
-            activity.deleteTempMedia();
             activity.checkBack();
         }
     }
 
-    @Override
-    public void showDialogSelecteImage() {
-        if (activity != null)
-            activity.changeToActivitySelectImage();
-    }
+//    @Override
+//    public void showDialogSelecteImage() {
+//        if (activity != null)
+//            activity.captureImageFromCamera();
+//    }
 
-    @Override
-    public void showDialogTakePicture() {
-        if (activity != null)
-            activity.captureImageFromCamera();
-    }
+//    @Override
+//    public void showDialogTakePicture() {
+//        if (activity != null)
+//            activity.captureImageFromCamera();
+//    }
 
     @Override
     public void createCategoryProduct(ProductCategoryModel categoryModel) {

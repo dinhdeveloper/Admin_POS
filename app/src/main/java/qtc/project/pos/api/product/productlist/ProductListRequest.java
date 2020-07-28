@@ -19,7 +19,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 @ApiRequest.ApiName("product_manager")
-public class ProductListRequest extends ApiRequest<ProductListRequest.Service, BaseResponseModel<ProductListModel>, ProductListRequest.ApiParams> {
+public class ProductListRequest  extends ApiRequest<ProductListRequest.Service, BaseResponseModel<ProductListModel>, ProductListRequest.ApiParams> {
 
     public ProductListRequest() {
         super(ProductListRequest.Service.class, RequestOrigin.NONE, Consts.HOST_API, Consts.MODE, Consts.TRUST_CERTIFICATE);

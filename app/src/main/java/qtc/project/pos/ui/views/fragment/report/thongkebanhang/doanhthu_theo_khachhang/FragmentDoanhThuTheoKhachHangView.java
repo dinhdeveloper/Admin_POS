@@ -224,6 +224,14 @@ public class FragmentDoanhThuTheoKhachHangView extends BaseView<FragmentDoanhThu
             }
         });
 
+        //image close
+        ui.image_close.setOnClickListener(v -> {
+            ui.text_search.setText(null);
+            ui.layout_nodata.setVisibility(View.VISIBLE);
+            ui.layout_data.setVisibility(View.GONE);
+            ui.chon_moc_time.setVisibility(View.GONE);
+        });
+
     }
 
     private void searchCustomer(String sdt) {
@@ -248,6 +256,9 @@ public class FragmentDoanhThuTheoKhachHangView extends BaseView<FragmentDoanhThu
 
         @UiElement(R.id.image_filter)
         public ImageView image_filter;
+
+        @UiElement(R.id.image_close)
+        public ImageView image_close;
 
         @UiElement(R.id.text_search)
         public EditText text_search;

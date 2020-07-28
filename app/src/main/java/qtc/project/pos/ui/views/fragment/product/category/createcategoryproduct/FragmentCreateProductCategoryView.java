@@ -1,6 +1,7 @@
 package qtc.project.pos.ui.views.fragment.product.category.createcategoryproduct;
 
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.ProductCategoryModel;
 
 public class FragmentCreateProductCategoryView extends BaseView<FragmentCreateProductCategoryView.UIContainer> implements FragmentCreateProductCategoryViewInterface {
@@ -33,6 +35,12 @@ public class FragmentCreateProductCategoryView extends BaseView<FragmentCreatePr
 
         onClick();
         createProductCategory();
+    }
+
+    @Override
+    public void setDataProductImage(String outfile) {
+        image_pro = outfile;
+        AppProvider.getImageHelper().displayImage(outfile, ui.image_product, null, R.drawable.imageloading, false);
     }
 
     private void onClick() {
@@ -87,14 +95,12 @@ public class FragmentCreateProductCategoryView extends BaseView<FragmentCreatePr
         ui.layout_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                AppProvider.getImageHelper().displayImage(image_pro,ui.image_product,null,R.drawable.imageloading);
                 categoryModel = new ProductCategoryModel();
                 categoryModel.setImage(image_pro);
                 categoryModel.setDescription(ui.description_product.getText().toString());
                 categoryModel.setName(ui.name_product_category.getText().toString());
                 categoryModel.setId_code(ui.id_product_category.getText().toString());
-
-
                 if (callback != null) {
                     callback.createCategoryProduct(categoryModel);
                 }
@@ -112,13 +118,6 @@ public class FragmentCreateProductCategoryView extends BaseView<FragmentCreatePr
     public int getViewId() {
         return R.layout.layout_fragment_create_product_category_detail;
     }
-
-    @Override
-    public void setDataProductImage(String outfile) {
-        image_pro = outfile;
-        AppProvider.getImageHelper().displayImage(outfile, ui.image_product, null, R.drawable.imageloading, false);
-    }
-
     @Override
     public void onBack() {
         if (callback != null)

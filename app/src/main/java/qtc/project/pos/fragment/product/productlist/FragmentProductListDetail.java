@@ -91,12 +91,6 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
         }
     }
 
-    @Override
-    public void showDialogSelecteImage() {
-        if (activity != null)
-            activity.captureImageFromCamera();
-    }
-
     public void gotoQr_BarcodeActivity(){
         startActivity(new Intent(activity, Qr_BarcodeActivity.class));
     }

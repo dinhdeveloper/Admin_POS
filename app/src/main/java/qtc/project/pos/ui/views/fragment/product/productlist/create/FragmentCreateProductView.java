@@ -145,10 +145,9 @@ public class FragmentCreateProductView extends BaseView<FragmentCreateProductVie
     }
 
     @Override
-    public void setDataProductImage(String image) {
-        image_pro = image;
-        AppProvider.getImageHelper().displayImage(image, ui.image_product, null, R.drawable.imageloading, false);
-
+    public void setDataProductImage(String outfile) {
+        image_pro = outfile;
+        AppProvider.getImageHelper().displayImage(outfile, ui.image_product, null, R.drawable.imageloading, false);
     }
 
     private void showPopupMenu(View view) {
@@ -177,7 +176,6 @@ public class FragmentCreateProductView extends BaseView<FragmentCreateProductVie
                 }
             }
         });
-
         quickAction.show(view);
     }
 

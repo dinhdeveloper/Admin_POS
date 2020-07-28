@@ -938,6 +938,10 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
                     if (photoFile != null)
                         ((FragmentProductListDetail) fragment).setImageSelected(photoFile.getAbsolutePath());
                 }
+                if (fragment instanceof FragmentCreateProduct) {
+                    if (photoFile != null)
+                        ((FragmentCreateProduct) fragment).setImageSelected(photoFile.getAbsolutePath());
+                }
             }
         } else if (requestCode == EMAIL_SEND) {
             if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {

@@ -338,9 +338,6 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         ui.choose_file_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (callback != null) {
-//                    callback.showDialogSelecteImage();
-//                }
                 showPopupMenu(v);
             }
         });

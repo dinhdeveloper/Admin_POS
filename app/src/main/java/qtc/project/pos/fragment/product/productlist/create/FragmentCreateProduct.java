@@ -160,12 +160,6 @@ public class FragmentCreateProduct extends BaseFragment<FragmentCreateProductVie
             activity.checkBack();
     }
 
-    @Override
-    public void showDialogSelecteImage() {
-        if (activity != null)
-            activity.changeToActivitySelectImage();
-    }
-
 
     @Override
     protected FragmentCreateProductViewInterface getViewInstance() {

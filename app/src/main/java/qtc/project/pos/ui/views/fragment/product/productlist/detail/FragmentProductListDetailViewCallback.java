@@ -5,7 +5,7 @@ import qtc.project.pos.model.ProductListModel;
 public interface FragmentProductListDetailViewCallback {
     void onBackprogress();
 
-    void showDialogSelecteImage();
+    //void showDialogSelecteImage();
 
     void getAllProductCategory();
 
