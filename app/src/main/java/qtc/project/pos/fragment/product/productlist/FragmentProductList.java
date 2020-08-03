@@ -1,15 +1,18 @@
 package qtc.project.pos.fragment.product.productlist;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
+import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.product.productlist.ProductListRequest;
 import qtc.project.pos.dependency.AppProvider;
@@ -23,6 +26,8 @@ public class FragmentProductList extends BaseFragment<FragmentProductListCategor
 
     HomeActivity activity;
     boolean checked;
+    int page =1;
+    private int totalPage = 0;
 
     public static FragmentProductList newInstance(boolean check) {
         FragmentProductList detail = new FragmentProductList();
@@ -50,19 +55,29 @@ public class FragmentProductList extends BaseFragment<FragmentProductListCategor
             checked = check;
         }
     }
-
-    private void callApi() {
+    public void callApi() {
         showProgress();
         ProductListRequest.ApiParams params = new ProductListRequest.ApiParams();
         params.type_manager = "list_product";
         AppProvider.getApiManagement().call(ProductListRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
             @Override
-            public void onSuccess(BaseResponseModel<ProductListModel> body) {
+            public void onSuccess(BaseResponseModel<ProductListModel> result) {
                 dismissProgress();
-                if (body != null) {
-                    ArrayList<ProductListModel> list = new ArrayList<>();
-                    list.addAll(Arrays.asList(body.getData()));
-                    view.mappingRecyclerView(list);
+                if (!TextUtils.isEmpty(result.getSuccess()) && Objects.requireNonNull(result.getSuccess()).equalsIgnoreCase("true")) {
+                    if (!TextUtils.isEmpty(result.getTotal_page())) {
+                        totalPage = Integer.valueOf(result.getTotal_page());
+                        if (page == totalPage) {
+                            view.setNoMoreLoading();
+                        }
+                    } else {
+                        view.setNoMoreLoading();
+                    }
+                    view.mappingRecyclerView(result.getData());
+                } else {
+                    if (!TextUtils.isEmpty(result.getMessage()))
+                        showAlert(result.getMessage(), KAlertDialog.ERROR_TYPE);
+                    else
+                        showAlert("Không thể tải dữ liệu.", KAlertDialog.ERROR_TYPE);
                 }
             }
 
@@ -127,9 +142,9 @@ public class FragmentProductList extends BaseFragment<FragmentProductListCategor
             public void onSuccess(BaseResponseModel<ProductListModel> body) {
                 dismissProgress();
                 if (body != null) {
-                    ArrayList<ProductListModel> list = new ArrayList<>();
-                    list.addAll(Arrays.asList(body.getData()));
-                    view.mappingRecyclerView(list);
+                    view.clearListDataProduct();
+                    view.setNoMoreLoading();
+                    view.mappingRecyclerView(body.getData());
                 }
             }
 
@@ -149,11 +164,33 @@ public class FragmentProductList extends BaseFragment<FragmentProductListCategor
 
     @Override
     public void callAllData() {
+        view.clearListDataProduct();
         callApi();
     }
 
-    public void setDataSearchProduct(ArrayList<ProductListModel> list,String name,String id) {
+    @Override
+    public void reQuestList() {
+
+    }
+
+    @Override
+    public void loadMore() {
+        ++page;
+
+        if (totalPage > 0 && page <= totalPage) {
+
+            callApi();
+        } else {
+            view.setNoMoreLoading();
+        }
+    }
+
+    public void setDataSearchProduct(ProductListModel[] list,String name,String id) {
         if (view!=null)
+        {
+            view.clearListDataProduct();
+            view.setNoMoreLoading();
             view.mappingDataFilterProduct(list,name,id);
+        }
     }
 }

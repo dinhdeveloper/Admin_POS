@@ -8,5 +8,7 @@ import qtc.project.pos.model.ProductCategoryModel;
 
 public interface FragmentCategoryProductViewInterface extends BaseViewInterface {
     void init(HomeActivity activity, FragmentCategoryProductViewCallback callback);
-    void initGetListCategoryProduct(ArrayList<ProductCategoryModel> list);
+    void initGetListCategoryProduct(ProductCategoryModel[] list);
+
+    void setNoMoreLoading();
 }

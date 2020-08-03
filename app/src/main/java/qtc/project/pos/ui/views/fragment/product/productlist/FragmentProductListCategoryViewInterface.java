@@ -9,7 +9,11 @@ import qtc.project.pos.model.ProductListModel;
 public interface FragmentProductListCategoryViewInterface extends BaseViewInterface {
     void init(HomeActivity activity, FragmentProductListCategoryViewCallback callback);
 
-    void mappingRecyclerView(ArrayList<ProductListModel> list);
+    void mappingRecyclerView(ProductListModel[] list);
 
-    void mappingDataFilterProduct(ArrayList<ProductListModel> list,String name,String id);
+    void mappingDataFilterProduct(ProductListModel[] list,String name,String id);
+
+    void setNoMoreLoading();
+
+    void clearListDataProduct();
 }

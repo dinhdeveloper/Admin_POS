@@ -32,6 +32,7 @@ public class ProductCategoryAdapter extends SuperAdapter<ProductCategoryModel> {
 
     public interface ProductCategoryAdapterListener {
         void onClickItem(ProductCategoryModel model);
+        void onRequestLoadMoreProduct();
     }
 
     public void setListener(ProductCategoryAdapterListener listener) {
@@ -57,6 +58,11 @@ public class ProductCategoryAdapter extends SuperAdapter<ProductCategoryModel> {
                 }
             }
         });
+
+        if (layoutPosition == getCount() - 1) {
+            if (listener != null)
+                listener.onRequestLoadMoreProduct();
+        }
     }
 
     private String filterString;

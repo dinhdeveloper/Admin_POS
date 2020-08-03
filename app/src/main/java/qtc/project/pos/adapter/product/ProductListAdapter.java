@@ -25,6 +25,7 @@ public class ProductListAdapter extends SuperAdapter<ProductListModel> {
 
     public interface  ProductListAdapterListener{
         void setOnClick(ProductListModel model);
+        void onRequestLoadMoreProduct();
     }
     public void setListener(ProductListAdapterListener listener){
         this.listener = listener;
@@ -49,5 +50,9 @@ public class ProductListAdapter extends SuperAdapter<ProductListModel> {
                 }
             }
         });
+        if (layoutPosition == getCount() - 1) {
+            if (listener != null)
+                listener.onRequestLoadMoreProduct();
+        }
     }
 }

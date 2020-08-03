@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
@@ -24,8 +25,12 @@ import qtc.project.pos.model.ProductListModel;
 
 public class FragmentProductListCategoryView extends BaseView<FragmentProductListCategoryView.UIContainer> implements FragmentProductListCategoryViewInterface {
 
+    ArrayList<ProductListModel> listProduct = new ArrayList<>();
+    ProductListAdapter adapter;
     HomeActivity activity;
     FragmentProductListCategoryViewCallback callback;
+
+    boolean enableLoadMore = true;
 
     @Override
     public void init(HomeActivity activity, FragmentProductListCategoryViewCallback callback) {
@@ -33,12 +38,34 @@ public class FragmentProductListCategoryView extends BaseView<FragmentProductLis
         this.callback = callback;
 
         onClick();
+        initRecyclerview();
 
     }
 
     @Override
-    public void mappingRecyclerView(ArrayList<ProductListModel> list) {
-        ProductListAdapter adapter = new ProductListAdapter(activity, list);
+    public void clearListDataProduct() {
+        listProduct.clear();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void mappingRecyclerView(ProductListModel[] list) {
+        if (list == null || list.length == 0) {
+            if (listProduct.size() == 0)
+                showEmptyList();
+            return;
+        }
+        listProduct.addAll(Arrays.asList(list));
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showEmptyList() {
+
+    }
+
+    public void initRecyclerview() {
+        ui.recycler_view_list_product.getRecycledViewPool().clear();
+        adapter = new ProductListAdapter(activity, listProduct);
         ui.recycler_view_list_product.setLayoutManager(new GridLayoutManager(activity, 2));
         ui.recycler_view_list_product.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -46,41 +73,70 @@ public class FragmentProductListCategoryView extends BaseView<FragmentProductLis
         adapter.setListener(new ProductListAdapter.ProductListAdapterListener() {
             @Override
             public void setOnClick(ProductListModel model) {
-                if (callback!=null)
+                if (callback != null)
                     callback.goToProductListDetail(model);
+            }
+
+            @Override
+            public void onRequestLoadMoreProduct() {
+                if (callback != null && enableLoadMore)
+                    callback.loadMore();
             }
         });
     }
 
     @Override
-    public void mappingDataFilterProduct(ArrayList<ProductListModel> list,String name,String id) {
-        if (list!=null){
+    public void mappingDataFilterProduct(ProductListModel[] list, String name, String id) {
+        if (list != null) {
             ui.layout_filter.setVisibility(View.VISIBLE);
-            ui.name_product.setText("Tên : "+name);
-            ui.id_product.setText("Mã: "+id);
+            ui.name_product.setText("Tên : " + name);
+            ui.id_product.setText("Mã: " + id);
 
-            ProductListAdapter adapter = new ProductListAdapter(activity, list);
-            ui.recycler_view_list_product.setLayoutManager(new GridLayoutManager(activity, 2));
-            ui.recycler_view_list_product.setAdapter(adapter);
+//            adapter = new ProductListAdapter(activity, list);
+//            ui.recycler_view_list_product.setLayoutManager(new GridLayoutManager(activity, 2));
+//            ui.recycler_view_list_product.setAdapter(adapter);
+//            adapter.notifyDataSetChanged();
+//
+//            adapter.setListener(new ProductListAdapter.ProductListAdapterListener() {
+//                @Override
+//                public void setOnClick(ProductListModel model) {
+//                    if (callback != null)
+//                        callback.goToProductListDetail(model);
+//                }
+//
+//                @Override
+//                public void onRequestLoadMoreProduct() {
+//                    if (callback != null)
+//                        callback.loadMore();
+//                }
+//            });
+            if (list == null || list.length == 0) {
+                if (listProduct.size() == 0)
+                    showEmptyList();
+                return;
+            }
+            listProduct.addAll(Arrays.asList(list));
             adapter.notifyDataSetChanged();
-
-            adapter.setListener(new ProductListAdapter.ProductListAdapterListener() {
-                @Override
-                public void setOnClick(ProductListModel model) {
-                    if (callback!=null)
-                        callback.goToProductListDetail(model);
-                }
-            });
 
             ui.close_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ui.layout_filter.setVisibility(View.GONE);
-                    if (callback!=null)
+                    if (callback != null)
+                    {
+                        listProduct.clear();
+                        adapter.notifyDataSetChanged();
                         callback.callAllData();
+                        enableLoadMore = true;
+                    }
                 }
             });
         }
+    }
+
+    @Override
+    public void setNoMoreLoading() {
+        enableLoadMore = false;
     }
 
 
@@ -101,7 +157,9 @@ public class FragmentProductListCategoryView extends BaseView<FragmentProductLis
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (ui.edit_filter.getText().toString()!=null){
+                    if (ui.edit_filter.getText().toString() != null) {
+                        listProduct.clear();
+                        adapter.notifyDataSetChanged();
                         searchProduct(ui.edit_filter.getText().toString());
                         return true;
                     }
@@ -115,6 +173,8 @@ public class FragmentProductListCategoryView extends BaseView<FragmentProductLis
             @Override
             public void onClick(View view) {
                 if (ui.edit_filter.getText().toString() != null) {
+                    listProduct.clear();
+                    adapter.notifyDataSetChanged();
                     searchProduct(ui.edit_filter.getText().toString());
                 } else {
                     Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
@@ -126,8 +186,11 @@ public class FragmentProductListCategoryView extends BaseView<FragmentProductLis
         ui.image_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listProduct.clear();
+                adapter.notifyDataSetChanged();
                 ui.edit_filter.setText(null);
                 callback.callAllData();
+                enableLoadMore = true;
             }
         });
 
@@ -135,7 +198,7 @@ public class FragmentProductListCategoryView extends BaseView<FragmentProductLis
         ui.image_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.addFragment(new FragmentFilterSanPham(),true,null);
+                activity.addFragment(new FragmentFilterSanPham(), true, null);
             }
         });
 
@@ -143,15 +206,17 @@ public class FragmentProductListCategoryView extends BaseView<FragmentProductLis
         ui.image_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.replaceFragment(new FragmentCreateProduct(),true,null);
+                activity.replaceFragment(new FragmentCreateProduct(), true, null);
             }
         });
     }
 
     private void searchProduct(String name) {
-        if (name!=null){
-            if (callback!=null)
+        if (name != null) {
+            if (callback != null) {
                 callback.searchProduct(name);
+            }
+
         }
     }
 

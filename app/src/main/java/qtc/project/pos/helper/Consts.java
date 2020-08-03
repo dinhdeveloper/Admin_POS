@@ -18,7 +18,7 @@ public class Consts {
     public static final boolean TRUST_CERTIFICATE = false;
 
 
-    public static final String MODE = MODE_PRODUCTION;
+    public static final String MODE = MODE_DEBUG;
 
     public static final String TAG_FRAGMENT_CHECK = "FragmentCheck";
 

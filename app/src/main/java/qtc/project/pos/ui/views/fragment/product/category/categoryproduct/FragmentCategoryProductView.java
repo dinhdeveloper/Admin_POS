@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
@@ -24,21 +25,23 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
     HomeActivity activity;
     FragmentCategoryProductViewCallback callback;
     ProductCategoryAdapter categoryAdapter;
+    ArrayList<ProductCategoryModel> listCategory = new ArrayList<>();
+    boolean enableLoadMore = true;
 
     @Override
     public void init(HomeActivity activity, FragmentCategoryProductViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-        KeyboardUtils.setupUI(getView(),activity);
+        KeyboardUtils.setupUI(getView(), activity);
+        initRecyclerview() ;
         onClickBack();
-
     }
 
     private void onClickBack() {
         ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (callback!=null)
+                if (callback != null)
                     callback.setBackProgress();
             }
         });
@@ -46,7 +49,7 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
         ui.image_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.replaceFragment(new FragmentCreateProductCategory(),true,null);
+                activity.replaceFragment(new FragmentCreateProductCategory(), true, null);
             }
         });
 
@@ -64,18 +67,44 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (categoryAdapter!= null)
+                if (categoryAdapter != null)
                     categoryAdapter.getFilter().filter(s);
+                    enableLoadMore = false;
             }
+        });
+
+        ui.image_close.setOnClickListener(v -> {
+            ui.edit_filter.setText(null);
+            enableLoadMore = true;
+            callback.callAllData();
         });
     }
 
 
     @Override
-    public void initGetListCategoryProduct(ArrayList<ProductCategoryModel> list) {
-        categoryAdapter = new ProductCategoryAdapter(activity,list);
-        categoryAdapter.getListData().addAll(list);
-        categoryAdapter.getListDataBackup().addAll(list);
+    public void initGetListCategoryProduct(ProductCategoryModel[] list) {
+        if (list == null || list.length == 0) {
+            if (listCategory.size() == 0)
+                showEmptyList();
+            return;
+        }
+        listCategory.addAll(Arrays.asList(list));
+        categoryAdapter.notifyDataSetChanged();
+        categoryAdapter.getListData().addAll(listCategory);
+        categoryAdapter.getListDataBackup().addAll(listCategory);
+    }
+
+    @Override
+    public void setNoMoreLoading() {
+        enableLoadMore = false;
+    }
+
+    private void showEmptyList() {
+    }
+
+    public void initRecyclerview(){
+        ui.recycler_view_category_product.getRecycledViewPool().clear();
+        categoryAdapter = new ProductCategoryAdapter(activity,listCategory);
         ui.recycler_view_category_product.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
         ui.recycler_view_category_product.setAdapter(categoryAdapter);
         categoryAdapter.notifyDataSetChanged();
@@ -87,11 +116,19 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
                     callback.onSendData(model);
                 }
             }
+
+            @Override
+            public void onRequestLoadMoreProduct() {
+                if (callback!=null){
+                    callback.loadMore();
+                }
+            }
         });
     }
 
 
     @Override
+
     public BaseUiContainer getUiContainer() {
         return new FragmentCategoryProductView.UIContainer();
     }

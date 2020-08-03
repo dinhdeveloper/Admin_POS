@@ -8,4 +8,6 @@ public interface FragmentCategoryProductViewCallback {
     void onSendData(ProductCategoryModel model);
 
     void callAllData();
+
+    void loadMore();
 }

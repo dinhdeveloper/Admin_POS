@@ -58,15 +58,12 @@ public class FragmentFilterSanPham extends BaseFragment<FragmentFilterSanPhamVie
                 public void onSuccess(BaseResponseModel<ProductListModel> body) {
                     dismissProgress();
                     if (body !=null){
-                        ArrayList<ProductListModel> list = new ArrayList<>();
-                        list.addAll(Arrays.asList(body.getData()));
-
                         if (activity != null) {
                             activity.checkBack();
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    activity.setDataSearchProduct(list,name,id);
+                                    activity.setDataSearchProduct(body.getData(),name,id);
                                 }
                             }, 100);
 

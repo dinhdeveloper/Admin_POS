@@ -363,7 +363,7 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
         }
     }
 
-    public void setDataSearchProduct(ArrayList<ProductListModel> list, String name, String id) {
+    public void setDataSearchProduct(ProductListModel[] list, String name, String id) {
         BaseFragment baseFragment = getCurrentFragment();
         if (baseFragment instanceof FragmentProductList) {
             ((FragmentProductList) baseFragment).setDataSearchProduct(list, name, id);

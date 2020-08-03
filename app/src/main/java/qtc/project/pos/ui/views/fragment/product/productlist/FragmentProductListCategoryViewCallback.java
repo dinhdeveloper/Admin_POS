@@ -10,4 +10,8 @@ public interface FragmentProductListCategoryViewCallback {
     void searchProduct(String name);
 
     void callAllData();
+
+    void reQuestList();
+
+    void loadMore();
 }
