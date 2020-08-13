@@ -77,18 +77,19 @@ public class FragmentCreateSupplierView extends BaseView<FragmentCreateSupplierV
                 }else {
                     Toast.makeText(activity, "Nhập mã nhà cung ứng.", Toast.LENGTH_SHORT).show();
                 }
-
-                if (ui.phone_supplier.getText().toString() !=null && !ui.phone_supplier.getText().toString().isEmpty()){
-                    supplierModel.setPhone_number(ui.phone_supplier.getText().toString());
-                }else {
-                    Toast.makeText(activity, "Nhập số điện thoại.", Toast.LENGTH_SHORT).show();
-                }
-
-                if (ui.email_supplier.getText().toString() !=null && !ui.email_supplier.getText().toString().isEmpty()){
-                    supplierModel.setEmail(ui.email_supplier.getText().toString());
-                }else {
-                    Toast.makeText(activity, "Nhập email.", Toast.LENGTH_SHORT).show();
-                }
+                supplierModel.setPhone_number(ui.phone_supplier.getText().toString());
+                supplierModel.setEmail(ui.email_supplier.getText().toString());
+//                if (ui.phone_supplier.getText().toString() !=null && !ui.phone_supplier.getText().toString().isEmpty()){
+//                    supplierModel.setPhone_number(ui.phone_supplier.getText().toString());
+//                }else {
+//                    Toast.makeText(activity, "Nhập số điện thoại.", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                if (ui.email_supplier.getText().toString() !=null && !ui.email_supplier.getText().toString().isEmpty()){
+//                    supplierModel.setEmail(ui.email_supplier.getText().toString());
+//                }else {
+//                    Toast.makeText(activity, "Nhập email.", Toast.LENGTH_SHORT).show();
+//                }
 
                 if (ui.name_sipplier.getText().toString() !=null && !ui.name_sipplier.getText().toString().isEmpty()){
                     supplierModel.setName(ui.name_sipplier.getText().toString());

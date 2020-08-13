@@ -1,8 +1,6 @@
 package qtc.project.pos.model;
 
-import java.io.Serializable;
-
-public class OrderDetailModel implements Serializable {
+public class OrderDetailModel{
     private String id;
     private String quantity;
     private String name;

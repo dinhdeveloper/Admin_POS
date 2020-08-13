@@ -13,6 +13,7 @@ import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
 import id.zelory.compressor.Compressor;
 import qtc.project.pos.R;
@@ -35,6 +36,7 @@ public class FragmentCreateProduct extends BaseFragment<FragmentCreateProductVie
     protected void initialize() {
         activity = (HomeActivity) getActivity();
         view.init(activity, this);
+        KeyboardUtils.setupUI(getView(),activity);
     }
 
     public void setImageSelected(String filePath) {
@@ -108,6 +110,7 @@ public class FragmentCreateProduct extends BaseFragment<FragmentCreateProductVie
             ProductListRequest.ApiParams params = new ProductListRequest.ApiParams();
             params.type_manager = "create_product";
             params.image = listModel.getImage();
+            params.price_sell = listModel.getPrice_sell();
             params.category_id = listModel.getCategory_id();
             params.name = listModel.getName();
             params.id_code = listModel.getId_code();
@@ -115,7 +118,6 @@ public class FragmentCreateProduct extends BaseFragment<FragmentCreateProductVie
             params.quantity_safetystock = listModel.getQuantity_safetystock();
             params.barcode = listModel.getBarcode();
             params.qr_code = listModel.getQr_code();
-
             AppProvider.getApiManagement().call(ProductListRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<ProductListModel> body) {

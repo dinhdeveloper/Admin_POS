@@ -38,6 +38,7 @@ public class FragmentCategoryProduct extends BaseFragment<FragmentCategoryProduc
         showProgress();
         ProductCategoryRequest.ApiParams params = new ProductCategoryRequest.ApiParams();
         params.type_manager = "list_category";
+        params.page = String.valueOf(page);
         AppProvider.getApiManagement().call(ProductCategoryRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductCategoryModel>>() {
             @Override
             public void onSuccess(BaseResponseModel<ProductCategoryModel> result) {
@@ -51,6 +52,7 @@ public class FragmentCategoryProduct extends BaseFragment<FragmentCategoryProduc
                     } else {
                         view.setNoMoreLoading();
                     }
+                    view.clearnData();
                     view.initGetListCategoryProduct(result.getData());
                 } else {
                     if (!TextUtils.isEmpty(result.getMessage()))

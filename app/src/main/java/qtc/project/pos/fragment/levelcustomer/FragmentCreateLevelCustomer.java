@@ -10,6 +10,7 @@ import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
 import id.zelory.compressor.Compressor;
 import qtc.project.pos.R;
@@ -30,6 +31,7 @@ public class FragmentCreateLevelCustomer extends BaseFragment<FragmentCreateLeve
     protected void initialize() {
         activity = (HomeActivity) getActivity();
         view.init(activity, this);
+        KeyboardUtils.setupUI(getView(),activity);
     }
 
     @Override

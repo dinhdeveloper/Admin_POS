@@ -14,10 +14,10 @@ public class FragmentOrderDetailCustomer extends BaseFragment<FragmentOrderDetai
 
     HomeActivity activity;
 
-    public static FragmentOrderDetailCustomer newIntance(OrderCustomerModel item) {
+    public static FragmentOrderDetailCustomer newIntance(OrderCustomerModel model) {
         FragmentOrderDetailCustomer frag = new FragmentOrderDetailCustomer();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("model", item);
+        bundle.putSerializable("model", model);
         frag.setArguments(bundle);
         return frag;
     }

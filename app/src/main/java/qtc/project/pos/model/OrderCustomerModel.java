@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OrderCustomerModel extends BaseResponseModel{
-
     private String id_order;
     private String order_id_code;
     private String order_created_date;
@@ -30,10 +29,21 @@ public class OrderCustomerModel extends BaseResponseModel{
     private String customer_level_id;
     private String customer_level_code;
     private String customer_level_name;
-    private String customer_level_image;
     private String customer_level_discount;
+    private String customer_level_image;
     private String customer_level_description;
     private OrderDetailModel[] order_detail;
+
+    public List<OrderDetailModel> getListOrderDetailModel() {
+        if (order_detail == null) {
+            return null;
+        }
+        else {
+            List<OrderDetailModel> list = new ArrayList<>();
+            list.addAll(Arrays.asList(order_detail));
+            return list;
+        }
+    }
 
     public String getId_order() {
         return id_order;
@@ -235,14 +245,6 @@ public class OrderCustomerModel extends BaseResponseModel{
         this.customer_level_discount = customer_level_discount;
     }
 
-    public String getCustomer_level_description() {
-        return customer_level_description;
-    }
-
-    public void setCustomer_level_description(String customer_level_description) {
-        this.customer_level_description = customer_level_description;
-    }
-
     public String getCustomer_level_image() {
         return customer_level_image;
     }
@@ -251,22 +253,19 @@ public class OrderCustomerModel extends BaseResponseModel{
         this.customer_level_image = customer_level_image;
     }
 
+    public String getCustomer_level_description() {
+        return customer_level_description;
+    }
+
+    public void setCustomer_level_description(String customer_level_description) {
+        this.customer_level_description = customer_level_description;
+    }
+
     public OrderDetailModel[] getOrder_detail() {
         return order_detail;
     }
 
     public void setOrder_detail(OrderDetailModel[] order_detail) {
         this.order_detail = order_detail;
-    }
-
-    public List<OrderDetailModel> getListDataProduct() {
-        if (order_detail == null) {
-            return null;
-        }
-        else {
-            List<OrderDetailModel> list = new ArrayList<>();
-            list.addAll(Arrays.asList(order_detail));
-            return list;
-        }
     }
 }

@@ -16,6 +16,7 @@ import java.util.Date;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.dependency.AppProvider;
@@ -41,10 +42,17 @@ public class FragmentCreateLoHangView extends BaseView<FragmentCreateLoHangView.
         this.activity = activity;
         this.callback = callback;
 
+        KeyboardUtils.setupUI(getView(),activity);
+
         EmployeeModel employeeModel = AppProvider.getPreferences().getUserModel();
         ui.nguoi_tao_don.setText(employeeModel.getFull_name());
 
         onClick();
+        final Calendar cldr = Calendar.getInstance();
+        int day = cldr.get(Calendar.DAY_OF_MONTH);
+        int month = cldr.get(Calendar.MONTH);
+        int year = cldr.get(Calendar.YEAR);
+        ui.ngay_nhap.setText(year+"-"+(month+1)+"-"+day);
     }
 
     @Override
@@ -86,7 +94,7 @@ public class FragmentCreateLoHangView extends BaseView<FragmentCreateLoHangView.
         custom_confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ui.malohang.setText(null);
+                //ui.malohang.setText(null);
                 ui.gia_nhap.setText(null);
                 ui.nhacungung.setText("Chọn");
                 ui.ngay_nhap.setText(null);
@@ -180,7 +188,7 @@ public class FragmentCreateLoHangView extends BaseView<FragmentCreateLoHangView.
             @Override
             public void onClick(View v) {
                 PackageInfoModel listModel = new PackageInfoModel();
-                listModel.setPack_id_code(ui.malohang.getText().toString());
+                //listModel.setPack_id_code(ui.malohang.getText().toString());
                 listModel.setManufacturer_id(id_nha_cung_ung);
                 listModel.setManufacturer_id_code(id_code_ncu);
                 listModel.setImport_date(ui.ngay_nhap.getText().toString());
@@ -197,8 +205,6 @@ public class FragmentCreateLoHangView extends BaseView<FragmentCreateLoHangView.
                     callback.createPackageInfo(listModel,id_product);
             }
         });
-
-
     }
 
     @Override

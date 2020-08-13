@@ -137,10 +137,17 @@ public class FragmentCreateProductView extends BaseView<FragmentCreateProductVie
                 listModel.setQuantity_safetystock(ui.tonkho.getText().toString());
                 listModel.setBarcode(ui.barcode.getText().toString());
                 listModel.setQr_code(ui.qrcode.getText().toString());
+                listModel.setPrice_sell(ui.giaBan.getText().toString());
 
                 if (callback!=null)
                     callback.createProduct(listModel);
             }
+        });
+
+        //dong layout scanbar code
+        ui.image_close_layout_scan.setOnClickListener(v -> {
+            mScannerView.stopCamera();
+            ui.layout_scanbar_code.setVisibility(View.GONE);
         });
     }
 
@@ -245,6 +252,7 @@ public class FragmentCreateProductView extends BaseView<FragmentCreateProductVie
                 ui.tonkho.setText(null);
                 ui.barcode.setText(null);
                 ui.qrcode.setText(null);
+                ui.giaBan.setText(null);
                 ui.image_product.setImageResource(R.drawable.imageloading);
                 dialog.dismiss();
             }
@@ -358,6 +366,10 @@ public class FragmentCreateProductView extends BaseView<FragmentCreateProductVie
 
         @UiElement(R.id.imv_barcode)
         public ImageView imv_barcode;
+
+        @UiElement(R.id.giaBan)
+        public EditText giaBan;
+
 
     }
 }

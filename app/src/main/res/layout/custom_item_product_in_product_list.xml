@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     android:gravity="center"
     android:layout_marginVertical="@dimen/dp10"
@@ -13,9 +14,10 @@
 
     <ImageView
         android:id="@+id/image_product"
-        android:scaleType="centerInside"
+        android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="130dp"/>
+        android:layout_height="130dp"
+        tools:src="@drawable/imagedemo"/>
 
     <LinearLayout
         android:orientation="vertical"

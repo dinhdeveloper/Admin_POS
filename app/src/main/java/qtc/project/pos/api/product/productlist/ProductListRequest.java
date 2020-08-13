@@ -71,6 +71,11 @@ public class ProductListRequest  extends ApiRequest<ProductListRequest.Service, 
         if (!TextUtils.isEmpty((params.product))) {
             builder.addFormDataPart("product", params.product);
         }
+        if (!TextUtils.isEmpty((params.price_sell))) {
+            builder.addFormDataPart("price_sell", params.price_sell);
+        }if (!TextUtils.isEmpty((params.page))) {
+            builder.addFormDataPart("page", params.page);
+        }
 
         params.detect = "product_manager";
         builder.addFormDataPart("detect", params.detect)
@@ -99,6 +104,8 @@ public class ProductListRequest  extends ApiRequest<ProductListRequest.Service, 
         public String quantity_safetystock;
         public String qr_code;
         public String image;
+        public String price_sell;
         public String product;
+        public String page;
     }
 }

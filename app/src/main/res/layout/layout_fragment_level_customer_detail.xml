@@ -39,7 +39,7 @@
 
                         <ImageView
                             android:id="@+id/imageNavLeft"
-                            android:layout_margin="@dimen/dp5"
+                            android:padding="@dimen/dp10"
                             android:layout_gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                     android:textColor="@color/colorAAA"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="2. Mã cấp độ "
+                    android:text="2. Mã cấp độ(*) "
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -144,7 +144,7 @@
                     android:textColor="@color/colorAAA"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="3. Tên "
+                    android:text="3. Tên(*) "
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -175,7 +175,7 @@
                     android:textColor="@color/colorAAA"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="4. Discount(%) "
+                    android:text="4. Discount(%)(*) "
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

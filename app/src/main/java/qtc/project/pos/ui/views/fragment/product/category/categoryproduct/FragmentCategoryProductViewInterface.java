@@ -11,4 +11,6 @@ public interface FragmentCategoryProductViewInterface extends BaseViewInterface 
     void initGetListCategoryProduct(ProductCategoryModel[] list);
 
     void setNoMoreLoading();
+
+    void clearnData();
 }

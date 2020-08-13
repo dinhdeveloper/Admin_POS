@@ -1,6 +1,7 @@
 package qtc.project.pos.fragment.employee;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
@@ -34,9 +35,7 @@ public class FragmentOrderDetailEmployee extends BaseFragment<FragmentOrderDetai
         Bundle extras = getArguments();
         if (extras != null) {
             OrderCustomerModel model = (OrderCustomerModel) extras.get("model");
-            if (model!=null){
-                view.sentDataToView(model);
-            }
+            view.sentDataToView(model);
         }
     }
 

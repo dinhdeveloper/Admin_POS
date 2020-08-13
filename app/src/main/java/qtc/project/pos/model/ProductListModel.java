@@ -16,6 +16,7 @@ public class ProductListModel extends BaseResponseModel {
     private String category_id;
     private String quantity_safetystock;
     private String category_name;
+    private String price_sell;
     private PackageInfoModel[] package_info;
     private StockOutModel[] stock_out;
 
@@ -39,6 +40,13 @@ public class ProductListModel extends BaseResponseModel {
         }
     }
 
+    public String getPrice_sell() {
+        return price_sell;
+    }
+
+    public void setPrice_sell(String price_sell) {
+        this.price_sell = price_sell;
+    }
 
     public void setStockOutModel(StockOutModel[] stock_out) {
         this.stock_out = stock_out;

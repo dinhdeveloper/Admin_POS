@@ -45,7 +45,7 @@ public class ListOrderManagerAdapter extends SuperAdapter<OrderCustomerModel> {
 
 
         nameCustomer.setText(item.getCustomer_fullname());
-        orderId.setText("Mã đơn: "+item.getId_order());
+        orderId.setText("Mã đơn: "+item.getOrder_id_code());
         phoneCustomer.setText(item.getCustomer_phone_number());
         addressCustomer.setText(item.getEmployee_address());
         createDay.setText(item.getOrder_created_date());

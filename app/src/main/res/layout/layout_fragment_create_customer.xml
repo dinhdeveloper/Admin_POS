@@ -28,7 +28,7 @@
 
                 <ImageView
                     android:id="@+id/imageNavLeft"
-                    android:layout_margin="@dimen/dp5"
+                    android:padding="@dimen/dp10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="@dimen/dp20"
-                    android:text="1. Tên khách hàng: "
+                    android:text="1. Tên khách hàng(*): "
                     android:textColor="@color/colorAAA"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="@dimen/dp20"
-                    android:text="2. Mã khách hàng: "
+                    android:text="2. Mã khách hàng(*): "
                     android:textColor="@color/colorAAA"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="@dimen/dp20"
-                    android:text="3. Số điện thoại: "
+                    android:text="3. Số điện thoại(*): "
                     android:textColor="@color/colorAAA"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -254,7 +254,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="@dimen/dp20"
-                    android:text="6. Cấp độ: "
+                    android:text="6. Cấp độ(*): "
                     android:textColor="@color/colorAAA"
                     android:textStyle="bold" />
             </LinearLayout>

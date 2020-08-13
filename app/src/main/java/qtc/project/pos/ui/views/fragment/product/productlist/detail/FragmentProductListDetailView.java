@@ -107,6 +107,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
             ui.tonkho.setText(model.getQuantity_safetystock());
             ui.qrcode.setText(model.getQr_code());
             ui.barcode.setText(model.getBarcode());
+            ui.gia_ban.setText(model.getPrice_sell());
             try {
                 genarateScanBarcode(model.getBarcode());
                 genarateScanQrcode(model.getQr_code());
@@ -129,6 +130,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
                 listModel.setImage(image_pro);
                 listModel.setBarcode(ui.barcode.getText().toString());
                 listModel.setQr_code(ui.qrcode.getText().toString());
+                listModel.setPrice_sell(ui.gia_ban.getText().toString());
                 if (callback != null) {
                     callback.undateData(listModel);
                 }
@@ -472,6 +474,9 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
 
         @UiElement(R.id.imv_barcode)
         public ImageView imv_barcode;
+
+        @UiElement(R.id.gia_ban)
+        public EditText gia_ban;
 
 
     }

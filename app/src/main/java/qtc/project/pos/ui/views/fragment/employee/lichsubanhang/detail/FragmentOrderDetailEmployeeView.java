@@ -8,13 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.history.ListOrderDetailAdapter;
+import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.OrderCustomerModel;
+import qtc.project.pos.model.OrderDetailModel;
 
 public class FragmentOrderDetailEmployeeView extends BaseView<FragmentOrderDetailEmployeeView.UIContainer> implements FragmentOrderDetailEmployeeViewInterface {
     HomeActivity activity;
@@ -24,7 +28,7 @@ public class FragmentOrderDetailEmployeeView extends BaseView<FragmentOrderDetai
     public void init(HomeActivity activity, FragmentOrderDetailEmployeeViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-        
+
         onClick();
     }
 
@@ -32,7 +36,7 @@ public class FragmentOrderDetailEmployeeView extends BaseView<FragmentOrderDetai
         ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback!=null)
+                if (callback != null)
                     callback.onBackProgress();
             }
         });
@@ -40,36 +44,39 @@ public class FragmentOrderDetailEmployeeView extends BaseView<FragmentOrderDetai
 
     @Override
     public void sentDataToView(OrderCustomerModel model) {
-        try{
-            if (model!=null){
-                ui.id_employee_order.setText(model.getEmployee_id());
-                ui.name_employee.setText(model.getEmployee_fullname());
-                ui.date_create.setText(model.getOrder_created_date());
+        //try{
+        if (model != null) {
+            ui.id_employee_order.setText(model.getEmployee_id());
+            ui.name_employee.setText(model.getEmployee_fullname());
+            ui.date_create.setText(model.getOrder_created_date());
 
-                if (model.getOrder_status().equals("Y")){
-                    ui.status_order.setText("Hoàn thành");
-                }else if (model.getOrder_status().equals("N")){
-                    ui.status_order.setText("Đã hủy");
-                }
-//            ui.priceTotal.setText(model.getOrder_total());
-//            ui.priceGiam.setText(model.getCustomer_level_discount());
-//            ui.priceTemp.setText(Integer.parseInt(model.getOrder_total())-Integer.parseInt(model.getCustomer_level_discount()));
-
-                String pattern = "###,###.###";
-                DecimalFormat decimalFormat = new DecimalFormat(pattern);
-
-                ui.priceGiam.setText(decimalFormat.format(Integer.parseInt(model.getCustomer_level_discount())) + " VNĐ");
-                ui.priceTotal.setText(decimalFormat.format(Integer.parseInt(model.getOrder_total())) + " VNĐ");
-                int tientemp = Integer.parseInt(model.getOrder_total()) + Integer.parseInt(model.getCustomer_level_discount());
-                ui.priceTemp.setText(decimalFormat.format(tientemp) + " VNĐ");
-
-                ListOrderDetailAdapter adapter = new ListOrderDetailAdapter(activity, model.getListDataProduct());
-                ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                ui.recycler_view_list.setAdapter(adapter);
+            if (model.getOrder_status().equals("Y")) {
+                ui.status_order.setText("Hoàn thành");
+            } else if (model.getOrder_status().equals("N")) {
+                ui.status_order.setText("Đã hủy");
             }
-        }catch (Exception e){
-            Log.e("Ex",e.getMessage());
+            ui.priceTotal.setText(model.getOrder_total());
+            String pattern = "###,###.###";
+            DecimalFormat decimalFormat = new DecimalFormat(pattern);
+
+//            ui.priceGiam.setText(decimalFormat.format(Integer.parseInt(model.getCustomer_level_discount())) + " VNĐ");
+            ui.priceTotal.setText(decimalFormat.format(Integer.parseInt(model.getOrder_total())) + " VNĐ");
+            //int tientemp = Integer.parseInt(model.getOrder_total()) + Integer.parseInt(model.getCustomer_level_discount());
+            //ui.priceTemp.setText(decimalFormat.format(tientemp) + " VNĐ");
+            int temp =0;
+            for (OrderDetailModel model1 : model.getListOrderDetailModel()){
+                temp+=Long.valueOf(model1.getPrice()) * Integer.valueOf(model1.getQuantity());
+            }
+            ui.priceTemp.setText(String.valueOf(decimalFormat.format(temp))+" VNĐ");
+            ui.priceGiam.setText(String.valueOf(temp-Integer.valueOf(model.getOrder_total()))+" VNĐ");
+
+            ListOrderDetailAdapter adapter = new ListOrderDetailAdapter(activity, model.getListOrderDetailModel());
+            ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            ui.recycler_view_list.setAdapter(adapter);
         }
+//        }catch (Exception e){
+//            Log.e("Exception",e.getMessage());
+//        }
     }
 
     @Override
@@ -81,7 +88,6 @@ public class FragmentOrderDetailEmployeeView extends BaseView<FragmentOrderDetai
     public int getViewId() {
         return R.layout.layout_fragment_employee_saler_detail;
     }
-
 
 
     public class UIContainer extends BaseUiContainer {

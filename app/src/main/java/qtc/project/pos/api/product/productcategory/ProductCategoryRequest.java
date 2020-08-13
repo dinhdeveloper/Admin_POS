@@ -44,5 +44,6 @@ public class ProductCategoryRequest extends ApiRequest<ProductCategoryRequest.Se
         public String image;
         public String description;
         public String product;
+        public String page;
     }
 }

@@ -59,6 +59,7 @@ public class FragmentProductList extends BaseFragment<FragmentProductListCategor
         showProgress();
         ProductListRequest.ApiParams params = new ProductListRequest.ApiParams();
         params.type_manager = "list_product";
+        params.page = String.valueOf(page);
         AppProvider.getApiManagement().call(ProductListRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
             @Override
             public void onSuccess(BaseResponseModel<ProductListModel> result) {
@@ -178,7 +179,6 @@ public class FragmentProductList extends BaseFragment<FragmentProductListCategor
         ++page;
 
         if (totalPage > 0 && page <= totalPage) {
-
             callApi();
         } else {
             view.setNoMoreLoading();

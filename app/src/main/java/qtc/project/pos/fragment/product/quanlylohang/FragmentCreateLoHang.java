@@ -7,6 +7,7 @@ import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.product.packageproduct.PackageProductRequest;
 import qtc.project.pos.dependency.AppProvider;
@@ -28,6 +29,7 @@ public class FragmentCreateLoHang extends BaseFragment<FragmentCreateLoHangViewI
     protected void initialize() {
         activity = (HomeActivity)getActivity();
         view.init(activity,this);
+        KeyboardUtils.setupUI(getView(),activity);
     }
 
     @Override
@@ -63,7 +65,7 @@ public class FragmentCreateLoHang extends BaseFragment<FragmentCreateLoHangViewI
             PackageProductRequest.ApiParams params = new PackageProductRequest.ApiParams();
             params.type_manager = "create_package";
             params.product_id = id_product;
-            params.id_code = infoModel.getPack_id_code();
+            //params.id_code = infoModel.getPack_id_code();
             params.manufacturer_id = infoModel.getManufacturer_id();
             params.manufacturing_date = infoModel.getManufacturing_date();
             params.sale_price = infoModel.getSale_price();

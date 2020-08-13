@@ -99,6 +99,12 @@ public class FragmentCategoryProductView extends BaseView<FragmentCategoryProduc
         enableLoadMore = false;
     }
 
+    @Override
+    public void clearnData() {
+        listCategory.clear();
+        categoryAdapter.notifyDataSetChanged();
+    }
+
     private void showEmptyList() {
     }
 

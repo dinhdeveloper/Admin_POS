@@ -66,7 +66,7 @@ public class FragmentOrderDetailView extends BaseView<FragmentOrderDetailView.UI
                 }
             }
 
-            ListOrderDetailAdapter adapter = new ListOrderDetailAdapter(activity, model.getListDataProduct());
+            ListOrderDetailAdapter adapter = new ListOrderDetailAdapter(activity, model.getListOrderDetailModel());
             ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             ui.recycler_view_list.setAdapter(adapter);
 
@@ -75,8 +75,8 @@ public class FragmentOrderDetailView extends BaseView<FragmentOrderDetailView.UI
 
             int tongtien = Integer.parseInt(model.getOrder_total());
             int tamtinh = 0;
-            for (int i = 0; i < model.getListDataProduct().size(); i++) {
-                int tien_one_item = Integer.parseInt(model.getListDataProduct().get(i).getPrice()) * Integer.parseInt(model.getListDataProduct().get(i).getQuantity());
+            for (int i = 0; i < model.getListOrderDetailModel().size(); i++) {
+                int tien_one_item = Integer.parseInt(model.getListOrderDetailModel().get(i).getPrice()) * Integer.parseInt(model.getListOrderDetailModel().get(i).getQuantity());
                 tamtinh += tien_one_item;
             }
 

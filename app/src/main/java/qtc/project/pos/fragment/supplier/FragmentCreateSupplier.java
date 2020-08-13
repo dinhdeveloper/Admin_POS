@@ -58,8 +58,8 @@ public class FragmentCreateSupplier extends BaseFragment<FragmentCreateSupplierV
                 public void onSuccess(BaseResponseModel<SupplierModel> body) {
                     if (body.getSuccess().equals("true")){
                         view.showAlerSucess();
-                    } else if (body.getSuccess().equals("true")){
-                        Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else if (body.getSuccess().equals("false")){
+                        //Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
 

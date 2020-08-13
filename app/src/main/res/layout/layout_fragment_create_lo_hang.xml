@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/hinhnen"
     android:orientation="vertical">
 
@@ -35,7 +36,7 @@
 
                         <ImageView
                             android:id="@+id/imageNavLeft"
-                            android:layout_margin="@dimen/dp10"
+                            android:padding="@dimen/dp10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -67,6 +68,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_gravity="center"
@@ -83,6 +85,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:id="@+id/malohang"
                     android:textSize="14dp"
@@ -93,6 +96,7 @@
                     android:background="@color/hinhnen"/>
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="@dimen/dp10"
@@ -109,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="2. Nhà cung ứng "
+                        android:text="1. Nhà cung ứng(*) "
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -156,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="3. Sản phẩm "
+                        android:text="2. Sản phẩm(*) "
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -203,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="4. Ngày nhập hàng "
+                        android:text="3. Ngày nhập hàng "
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -250,7 +254,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="5. Ngày sản xuất "
+                        android:text="4. Ngày sản xuất "
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -295,7 +299,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="6. Hạn sử dụng"
+                        android:text="5. Hạn sử dụng"
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -340,7 +344,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="7. Giá nhập(VNĐ) "
+                        android:text="6. Giá nhập(VNĐ)(*) "
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -373,7 +377,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="8. Giá bán(VNĐ) "
+                        android:text="7. Giá bán(VNĐ)(*) "
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -406,7 +410,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="9. Mô tả lô hàng "
+                        android:text="8. Mô tả lô hàng "
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -439,7 +443,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/dp20"
-                        android:text="10. Số lượng nhập vào"
+                        android:text="9. Số lượng nhập vào(*)"
                         android:textColor="@color/colorAAA"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -469,7 +473,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:text="12. Người tạo đơn: "
+                        android:text="10. Người tạo đơn: "
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:textStyle="bold"

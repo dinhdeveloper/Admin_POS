@@ -236,7 +236,7 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
         public EditText name_product_category;
 
         @UiElement(R.id.id_product_category)
-        public TextView id_product_category;
+        public EditText id_product_category;
 
         @UiElement(R.id.description_product)
         public EditText description_product;

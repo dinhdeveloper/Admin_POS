@@ -9,6 +9,7 @@ import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.employee.EmployeeRequest;
 import qtc.project.pos.dependency.AppProvider;
@@ -26,6 +27,7 @@ public class FragmentCreateEmployee extends BaseFragment<FragmentCreateEmployeeV
     protected void initialize() {
         activity = (HomeActivity)getActivity();
         view.init(activity,this);
+        KeyboardUtils.setupUI(getView(),activity);
     }
 
     @Override

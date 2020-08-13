@@ -141,6 +141,7 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
             params.quantity_safetystock = listModel.getQuantity_safetystock();
             params.qr_code = listModel.getQr_code();
             params.image = listModel.getImage();
+            params.price_sell = listModel.getPrice_sell();
 
             AppProvider.getApiManagement().call(ProductListRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
                 @Override

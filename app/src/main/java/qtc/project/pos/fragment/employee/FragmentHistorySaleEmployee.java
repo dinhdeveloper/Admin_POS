@@ -46,7 +46,6 @@ public class FragmentHistorySaleEmployee extends BaseFragment<FragmentHistorySal
             EmployeeModel model = (EmployeeModel) extras.get("model");
             HistoryOrderCustomerRequest.ApiParams params = new HistoryOrderCustomerRequest.ApiParams();
             params.employee_id = model.getId();
-            Log.e("AAAAAA",model.getId());
             AppProvider.getApiManagement().call(HistoryOrderCustomerRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<OrderCustomerModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<OrderCustomerModel> body) {
