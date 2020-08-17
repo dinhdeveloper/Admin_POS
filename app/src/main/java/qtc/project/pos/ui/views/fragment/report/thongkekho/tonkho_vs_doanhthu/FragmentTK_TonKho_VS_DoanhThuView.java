@@ -79,8 +79,8 @@ public class FragmentTK_TonKho_VS_DoanhThuView extends BaseView<FragmentTK_TonKh
 
     public void setHeight(List<Stock_Income_Model> list) {
         //stock
-        int minStock = Integer.parseInt(list.get(0).getValueStock());
-        int maxStock = Integer.parseInt(list.get(0).getValueStock());
+        long minStock = Long.valueOf(list.get(0).getValueStock());
+        long maxStock = Long.valueOf(list.get(0).getValueStock());
         for (int i = 0; i < list.size(); i++) {
             int number = Integer.parseInt(list.get(i).getValueStock());
             if (number < minStock) {
@@ -91,8 +91,8 @@ public class FragmentTK_TonKho_VS_DoanhThuView extends BaseView<FragmentTK_TonKh
             }
         }
         //min max income
-        int minIncome = Integer.parseInt(list.get(0).getValueIncome());
-        int maxIncome = Integer.parseInt(list.get(0).getValueIncome());
+        long minIncome = Long.valueOf(list.get(0).getValueIncome());
+        long maxIncome = Long.valueOf(list.get(0).getValueIncome());
         for (int i = 0; i < list.size(); i++) {
             int number = Integer.parseInt(list.get(i).getValueIncome());
             if (number < minIncome) {
@@ -103,14 +103,14 @@ public class FragmentTK_TonKho_VS_DoanhThuView extends BaseView<FragmentTK_TonKh
             }
         }
         //tim max all
-        int maxAll = 0;
+        long maxAll = 0;
         if (maxIncome > maxStock) {
             maxAll = maxIncome;
         } else {
             maxAll = maxStock;
         }
 
-        int maxHeight = 270;
+        int maxHeight = 100000000;
 
         for (int i = 0; i < list.size(); i++) {
             long heightIncome = (Long.parseLong(list.get(i).getValueIncome()) * maxHeight) / maxAll;

@@ -74,7 +74,9 @@ public class FragmentProductListCategoryView extends BaseView<FragmentProductLis
             @Override
             public void setOnClick(ProductListModel model) {
                 if (callback != null)
-                    callback.goToProductListDetail(model);
+                    {
+                        callback.goToProductListDetail(model);
+                    }
             }
 
             @Override

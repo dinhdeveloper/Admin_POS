@@ -30,7 +30,7 @@ public class ThongKeAdapter extends SuperAdapter<DataChartModel> {
                 DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
                 text_title.setText(item.getTitle());
-                text_value.setText(decimalFormat.format(Integer.parseInt(item.getValue())));
+                text_value.setText(decimalFormat.format(Long.valueOf(item.getValue())));
            }
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());

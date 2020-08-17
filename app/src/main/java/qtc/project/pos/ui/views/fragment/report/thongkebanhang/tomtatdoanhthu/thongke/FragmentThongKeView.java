@@ -42,9 +42,9 @@ public class FragmentThongKeView extends BaseView<FragmentThongKeView.UIContaine
             ui.recycler_view_list.setAdapter(thongKeAdapter);
             thongKeAdapter.notifyDataSetChanged();
 
-            int tongtien = 0;
+            long tongtien = 0;
             for (int i = 0; i < list.get(0).getListDataChartModel().size(); i++) {
-                tongtien += Integer.parseInt(list.get(0).getListDataChartModel().get(i).getValue());
+                tongtien += Long.valueOf(list.get(0).getListDataChartModel().get(i).getValue());
             }
             String pattern = "###,###,###";
             DecimalFormat decimalFormat = new DecimalFormat(pattern);

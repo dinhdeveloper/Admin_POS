@@ -110,6 +110,7 @@ public class FragmentProductList extends BaseFragment<FragmentProductListCategor
     public void onBackprogress() {
         if (activity!=null){
             activity.checkBack();
+            callApi();
         }
     }
 
@@ -128,7 +129,7 @@ public class FragmentProductList extends BaseFragment<FragmentProductListCategor
             }
         }
         else {
-            activity.replaceFragment( FragmentProductListDetail.newIntance(model),true,null);
+            activity.addFragment( FragmentProductListDetail.newIntance(model),true,null);
         }
     }
 

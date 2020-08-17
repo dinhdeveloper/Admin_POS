@@ -110,7 +110,7 @@ public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangVie
             ui.ngay_nhap.setText(infoModel.getImport_date());
             ui.ngay_sx.setText(infoModel.getManufacturing_date());
             ui.han_su_dung.setText(infoModel.getExpiry_date());
-            ui.gia_nhap.setText(infoModel.getImport_price());
+            ui.edtGiaNhap.setText(infoModel.getImport_price());
             ui.gia_ban.setText(infoModel.getSale_price());
             ui.mota.setText(infoModel.getDescription());
             ui.soluong_nhapvao.setText(infoModel.getQuantity_order());
@@ -132,12 +132,12 @@ public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangVie
                     info.setManufacturing_date(ui.ngay_sx.getText().toString());
                     info.setImport_date(ui.ngay_nhap.getText().toString());
                     info.setExpiry_date(ui.han_su_dung.getText().toString());
-                    info.setImport_price(ui.gia_nhap.getText().toString());
+                    info.setImport_price(ui.edtGiaNhap.getText().toString());
                     info.setSale_price(ui.gia_ban.getText().toString());
                     info.setDescription(ui.mota.getText().toString());
                     info.setQuantity_order(ui.soluong_nhapvao.getText().toString());
                     info.setEmployee_fullname(ui.nguoi_tao_don.getText().toString());
-                    callback.updateDataPackage(infoModel, id_product);
+                    callback.updateDataPackage(info, id_product);
                 }
             }
         });
@@ -193,8 +193,8 @@ public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangVie
         @UiElement(R.id.han_su_dung)
         public TextView han_su_dung;
 
-        @UiElement(R.id.gia_nhap)
-        public EditText gia_nhap;
+        @UiElement(R.id.edtGiaNhap)
+        public EditText edtGiaNhap;
 
         @UiElement(R.id.gia_ban)
         public EditText gia_ban;

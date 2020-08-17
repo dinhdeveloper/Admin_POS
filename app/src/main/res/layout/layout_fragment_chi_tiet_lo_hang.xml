@@ -338,7 +338,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/gia_nhap"
+                    android:id="@+id/edtGiaNhap"
                     android:textSize="14dp"
                     android:layout_marginTop="@dimen/dp10"
                     android:textColor="@color/black"
