@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/hinhnen"
     android:orientation="vertical">
 
@@ -181,7 +182,8 @@
                 android:layout_marginHorizontal="@dimen/dp15"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                tools:visibility="visible">
                 <TextView
                     android:text="Số liệu thống kê:"
                     android:textColor="@color/colorAAA"

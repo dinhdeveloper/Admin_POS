@@ -80,7 +80,7 @@ public class FragmentQuanLyLoHang extends BaseFragment<FragmentQuanLyLoHangViewI
 
     @Override
     public void sentDataToDetail(PackageInfoModel model, String name_product,String id_product) {
-        activity.addFragment( FragmentChiTietLoHang.newIntance(model,name_product,id_product),true,null);
+        activity.replaceFragment( FragmentChiTietLoHang.newIntance(model,name_product,id_product),true,null);
     }
 
 }

@@ -42,20 +42,22 @@ public class FragmentBaoCaoXuatNhapKho extends BaseFragment<FragmentBaoCaoXuatNh
         activity = (HomeActivity) getActivity();
         view.init(activity, this);
 
-        //getDataToBundle();
+        getDataToBundle();
     }
 
     private void getDataToBundle() {
         Bundle extras = getArguments();
         if (extras != null) {
-            String thang = (String) extras.get("thang");
-            String nam = (String) extras.get("nam");
+            Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            // Trả về giá trị từ 0 - 11
+            int month = c.get(Calendar.MONTH)+1;
 
             showProgress();
             BaoCaoXuatNhapKhoRequest.ApiParams params = new BaoCaoXuatNhapKhoRequest.ApiParams();
             params.type_manager = "stock_in_out";
-            params.date_start = nam + "-" + thang + "-01";
-            params.date_end = nam + "-" + thang + "-31";
+            params.date_start = year + "-" + month + "-01";
+            params.date_end = year + "-" + month + "-31";
 
             AppProvider.getApiManagement().call(BaoCaoXuatNhapKhoRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ReportXuatNhapKhoModel>>() {
                 @Override

@@ -129,7 +129,7 @@ public class FragmentProductList extends BaseFragment<FragmentProductListCategor
             }
         }
         else {
-            activity.addFragment( FragmentProductListDetail.newIntance(model),true,null);
+            activity.replaceFragment( FragmentProductListDetail.newIntance(model),true,null);
         }
     }
 

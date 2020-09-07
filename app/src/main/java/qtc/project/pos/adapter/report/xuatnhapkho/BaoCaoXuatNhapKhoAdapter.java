@@ -30,14 +30,13 @@ public class BaoCaoXuatNhapKhoAdapter extends RecyclerView.Adapter<RecyclerView.
 
     BaoCaoXuatNhapKhoAdapterListener listener;
 
-    public interface BaoCaoXuatNhapKhoAdapterListener{
+    public interface BaoCaoXuatNhapKhoAdapterListener {
         void onClickItem(ReportXuatNhapKhoModel model);
     }
 
-    public void setListener(BaoCaoXuatNhapKhoAdapterListener listener){
+    public void setListener(BaoCaoXuatNhapKhoAdapterListener listener) {
         this.listener = listener;
     }
-
 
 
     public BaoCaoXuatNhapKhoAdapter(Context context, List<ReportXuatNhapKhoModel> list) {
@@ -87,15 +86,20 @@ public class BaoCaoXuatNhapKhoAdapter extends RecyclerView.Adapter<RecyclerView.
             headerViewHolder.tonkho.setGravity(Gravity.CENTER);
             headerViewHolder.xuat.setGravity(Gravity.CENTER);
         } else if (holder instanceof ItemViewHolder) {
-
             final ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
 
-            itemViewHolder.id_stt.setText(String.valueOf(position));
-            itemViewHolder.name_product.setText(String.valueOf(list.get(position - 1).getProduct_name()));
-            itemViewHolder.nhap.setText("+" + list.get(position-1).getStock_in());
-            itemViewHolder.tonkho.setTextColor(Color.parseColor("#FF6D4C"));
-            itemViewHolder.tonkho.setText(list.get(position-1).getStock());
-            itemViewHolder.xuat.setText("-" + list.get(position-1).getStock_out());
+            if (list.get(position - 1).getStock_in() != null || list.get(position - 1).getStock() != null) {
+                itemViewHolder.id_stt.setText(String.valueOf(position));
+                itemViewHolder.name_product.setText(String.valueOf(list.get(position - 1).getProduct_name()));
+                itemViewHolder.nhap.setText("+" + list.get(position - 1).getStock_in());
+                itemViewHolder.tonkho.setTextColor(Color.parseColor("#FF6D4C"));
+                itemViewHolder.tonkho.setText(list.get(position - 1).getStock());
+                itemViewHolder.xuat.setText("-" + list.get(position - 1).getStock_out());
+            }else {
+                itemViewHolder.nhap.setText("+0");
+                itemViewHolder.tonkho.setTextColor(Color.parseColor("#FF6D4C"));
+                itemViewHolder.tonkho.setText("+0");
+            }
         }
     }
 
@@ -111,7 +115,7 @@ public class BaoCaoXuatNhapKhoAdapter extends RecyclerView.Adapter<RecyclerView.
     // getItemCount increasing the position to 1. This will be the row of header
     @Override
     public int getItemCount() {
-        return list.size()+1;
+        return list.size() + 1;
     }
 
 
@@ -154,8 +158,8 @@ public class BaoCaoXuatNhapKhoAdapter extends RecyclerView.Adapter<RecyclerView.
             table_row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener!=null)
-                        listener.onClickItem(list.get(getLayoutPosition()-1));
+                    if (listener != null)
+                        listener.onClickItem(list.get(getLayoutPosition() - 1));
                 }
             });
         }

@@ -1,7 +1,10 @@
 package qtc.project.pos.ui.views.fragment.product.quanlylohang.detail;
 
 import android.app.DatePickerDialog;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -99,7 +102,7 @@ public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangVie
 
 
     }
-
+    String ma_cungung;
     @Override
     public void sendDataToView(PackageInfoModel infoModel, String name, String id) {
         if (infoModel != null) {
@@ -128,6 +131,7 @@ public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangVie
                 if (callback != null) {
                     PackageInfoModel info = new PackageInfoModel();
                     info.setPack_id(infoModel.getPack_id());
+                    info.setManufacturer_id(infoModel.getManufacturer_id());
                     info.setManufacturer_name(ui.nhacungung.getText().toString());
                     info.setManufacturing_date(ui.ngay_sx.getText().toString());
                     info.setImport_date(ui.ngay_nhap.getText().toString());
@@ -159,6 +163,27 @@ public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangVie
         if (supplierModel != null) {
             ui.nhacungung.setText(supplierModel.getName());
         }
+    }
+
+    @Override
+    public void showPopSuccess() {
+        LayoutInflater layoutInflater = activity.getLayoutInflater();
+        View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
+        TextView title_text = popupView.findViewById(R.id.title_text);
+        TextView content_text = popupView.findViewById(R.id.content_text);
+        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
+
+        title_text.setText("Xác nhận");
+        content_text.setText("Bạn đã cập nhật thành công!");
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(popupView);
+        AlertDialog dialog = alert.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        custom_confirm_button.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
     }
 
     @Override

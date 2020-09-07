@@ -99,8 +99,7 @@ public class FragmentChiTietLoHang extends BaseFragment<FragmentChiTietLoHangVie
                 public void onSuccess(BaseResponseModel<ProductListModel> body) {
                     dismissProgress();
                     if (body.getSuccess().equals("true")) {
-                        Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
-                        onBack();
+                        view.showPopSuccess();
                     } else if (body.getSuccess().equals("false")) {
                         Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
                     }

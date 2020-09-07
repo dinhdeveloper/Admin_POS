@@ -69,9 +69,6 @@ public class FragmentTongDoanhThu extends BaseFragment<FragmentTongDoanhThuViewI
 
         params.date_start = date_start + "-01";
         params.date_end = date_end + "-31";
-
-        Log.e("AAAAA",params.date_end);
-
         AppProvider.getApiManagement().call(TomTatDoanhSoRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<TongDoanhThuModel>>() {
             @Override
             public void onSuccess(BaseResponseModel<TongDoanhThuModel> body) {

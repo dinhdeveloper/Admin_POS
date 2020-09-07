@@ -167,9 +167,9 @@ public class FragmentDoanhThuTheoSpView extends BaseView<FragmentDoanhThuTheoSpV
         List<DataChartModel> chartModels = models.get(0).getListDataChartModel();
 
         int size = chartModels.size();
-        int total = 0;
+        long total = 0;
         for (int i = 0; i < size; i++) {
-            total += Integer.parseInt(chartModels.get(i).getValue());
+            total += Long.valueOf(chartModels.get(i).getValue());
         }
         String pattern = "###,###.###";
         DecimalFormat decimalFormat = new DecimalFormat(pattern);

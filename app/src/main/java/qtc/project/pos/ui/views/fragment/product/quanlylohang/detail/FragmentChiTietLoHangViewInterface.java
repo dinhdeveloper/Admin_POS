@@ -11,4 +11,6 @@ public interface FragmentChiTietLoHangViewInterface extends BaseViewInterface {
     void sendDataToView(PackageInfoModel infoModel, String name,String id);
 
     void sendDataToViewTwo(SupplierModel supplierModel);
+
+    void showPopSuccess();
 }
