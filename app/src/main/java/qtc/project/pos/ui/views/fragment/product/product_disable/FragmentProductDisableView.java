@@ -35,6 +35,7 @@ public class FragmentProductDisableView extends BaseView<FragmentProductDisableV
         this.callback = callback;
         ui.image_filter.setVisibility(View.GONE);
         ui.image_create.setVisibility(View.GONE);
+        ui.tvTitle.setText("Sản phẩm vô hiệu hóa");
         ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,6 +180,10 @@ public class FragmentProductDisableView extends BaseView<FragmentProductDisableV
 
         @UiElement(R.id.image_create)
         public ImageView image_create;
+
+        @UiElement(R.id.tvTitle)
+        public TextView tvTitle;
+
 
     }
 }

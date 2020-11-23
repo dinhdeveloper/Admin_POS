@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import qtc.project.pos.R;
@@ -25,7 +26,7 @@ public class FragmentCreateLevelCustomerView extends BaseView<FragmentCreateLeve
     public void init(HomeActivity activity, FragmentCreateLevelCustomerViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-
+        KeyboardUtils.setupUI(getView(),activity);
         onClick();
     }
 

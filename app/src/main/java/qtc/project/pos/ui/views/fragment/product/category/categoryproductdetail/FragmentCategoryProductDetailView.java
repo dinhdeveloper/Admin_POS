@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import qtc.project.pos.R;
@@ -30,7 +31,7 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
     public void init(HomeActivity activity, FragmentCategoryProductDetailViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-
+        KeyboardUtils.setupUI(getView(),activity);
         onClickItem();
     }
 

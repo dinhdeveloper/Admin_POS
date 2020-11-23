@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.employee.HistoryOderEmployeeAdapter;
@@ -24,6 +25,7 @@ public class FragmentHistorySaleEmployeeView extends BaseView<FragmentHistorySal
     public void init(HomeActivity activity, FragmentHistorySaleEmployeeViewCallback callback) {
         this.callback = callback;
         this.activity = activity;
+        KeyboardUtils.setupUI(getView(),activity);
         onClick();
         
         getData();

@@ -9,7 +9,8 @@ android {
         vectorDrawables.useSupportLibrary = true
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 8
+        versionCode 9
+        versionName "1.0.0" // cap nhat push notify
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -171,6 +172,7 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
     implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    implementation 'org.jsoup:jsoup:1.10.2'
 }
 repositories {
     mavenCentral()

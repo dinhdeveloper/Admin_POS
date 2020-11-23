@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import qtc.project.pos.R;
@@ -40,7 +41,7 @@ public class FragmentLevelCustomerDetailView extends BaseView<FragmentLevelCusto
     public void init(HomeActivity activity, FragmentLevelCustomerDetailViewCallback callback) {
         this.callback = callback;
         this.activity = activity;
-
+        KeyboardUtils.setupUI(getView(),activity);
         backHome();
         xulySearch();
     }

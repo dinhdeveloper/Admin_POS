@@ -20,6 +20,7 @@ import java.util.Date;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.employee.LevelEmployeeChooseAdapter;
@@ -36,6 +37,7 @@ public class FragmentCreateEmployeeView extends BaseView<FragmentCreateEmployeeV
     public void init(HomeActivity activity, FragmentCreateEmployeeViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
+        KeyboardUtils.setupUI(getView(),activity);
         onClick();
     }
 

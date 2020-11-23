@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import b.laixuantam.myaarlibrary.widgets.roundview.RoundTextView;
@@ -59,7 +60,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
     public void init(HomeActivity activity, FragmentProductListDetailViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-
+        KeyboardUtils.setupUI(getView(),activity);
         onClick();
 
     }

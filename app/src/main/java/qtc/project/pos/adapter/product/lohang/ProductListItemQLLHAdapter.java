@@ -1,6 +1,7 @@
 package qtc.project.pos.adapter.product.lohang;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,23 +42,27 @@ public class ProductListItemQLLHAdapter extends SuperAdapter<PackageInfoModel> {
         TextView price_buy = holder.findViewById(R.id.price_buy);
         LinearLayout layout_item = holder.findViewById(R.id.layout_item);
 
-        if (item != null) {
-            String pattern = "###,###.###";
-            DecimalFormat decimalFormat = new DecimalFormat(pattern);
+        try {
+            if (item != null) {
+                String pattern = "###,###.###";
+                DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
-            date_create.setText(item.getImport_date());
-            date_end.setText(item.getExpiry_date());
-            price_buy.setText(decimalFormat.format(Integer.parseInt(item.getImport_price())) + " VNĐ");
-            price_sale.setText(decimalFormat.format(Integer.parseInt(item.getSale_price())) + " VNĐ");
+                date_create.setText(item.getImport_date());
+                date_end.setText(item.getExpiry_date());
+                price_buy.setText(decimalFormat.format(Float.valueOf(item.getImport_price())) + " VNĐ");
+                price_sale.setText(decimalFormat.format(Float.valueOf(item.getSale_price())) + " VNĐ");
 
-            layout_item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null) {
-                        listener.sentDataOnClick(item,name,id_product);
+                layout_item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (listener != null) {
+                            listener.sentDataOnClick(item,name,id_product);
+                        }
                     }
-                }
-            });
+                });
+            }
+        }catch (Exception e){
+            Log.e("EXXX",e.getMessage());
         }
     }
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 
@@ -29,6 +30,7 @@ public class FragmentHistoryOrderCustomerView extends BaseView<FragmentHistoryOr
     public void init(HomeActivity activity, FragmentHistoryOrderCustomerViewCallback callback) {
         this.callback = callback;
         this.activity = activity;
+        KeyboardUtils.setupUI(getView(),activity);
         onClick();
     }
 

@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_weight="1"
-                    android:hint="Áo thun nam..." />
+                    android:hint="Tên, mã sản phẩm" />
 
                 <ImageView
                     android:id="@+id/image_close"

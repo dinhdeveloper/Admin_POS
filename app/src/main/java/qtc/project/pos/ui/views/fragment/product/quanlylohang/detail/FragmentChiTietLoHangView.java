@@ -16,6 +16,7 @@ import java.util.Date;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.model.PackageInfoModel;
@@ -31,7 +32,7 @@ public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangVie
     public void init(HomeActivity activity, FragmentChiTietLoHangViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-
+        KeyboardUtils.setupUI(getView(),activity);
         onClick();
     }
 
@@ -117,10 +118,13 @@ public class FragmentChiTietLoHangView extends BaseView<FragmentChiTietLoHangVie
             ui.gia_ban.setText(infoModel.getSale_price());
             ui.mota.setText(infoModel.getDescription());
             ui.soluong_nhapvao.setText(infoModel.getQuantity_order());
+            if (!Float.valueOf(infoModel.getQuantity_order()).equals(Float.valueOf(infoModel.getQuantity_storage()))){
+                ui.soluong_nhapvao.setEnabled(false);
+            }
             ui.nguoi_tao_don.setText(infoModel.getEmployee_fullname());
             ui.tonkho.setText(infoModel.getQuantity_storage());
 
-            if (Integer.parseInt(infoModel.getQuantity_storage())>0){
+            if (Float.valueOf(infoModel.getQuantity_storage())>0){
                 ui.layout_trahang.setVisibility(View.VISIBLE);
             }
         }
