@@ -34,6 +34,7 @@ import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
+import b.laixuantam.myaarlibrary.widgets.roundview.RoundTextView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
@@ -135,6 +136,11 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
                     callback.undateData(listModel);
                 }
             }
+        });
+
+        ui.btnDisable.setOnClickListener(v -> {
+            if (callback!=null)
+                callback.disableProduct(model.getId());
         });
 
         //xoa sp
@@ -478,6 +484,8 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         @UiElement(R.id.gia_ban)
         public EditText gia_ban;
 
+        @UiElement(R.id.btnDisable)
+        public RoundTextView btnDisable;
 
     }
 }

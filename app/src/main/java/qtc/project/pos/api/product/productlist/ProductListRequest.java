@@ -19,7 +19,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 @ApiRequest.ApiName("product_manager")
-public class ProductListRequest  extends ApiRequest<ProductListRequest.Service, BaseResponseModel<ProductListModel>, ProductListRequest.ApiParams> {
+public class ProductListRequest extends ApiRequest<ProductListRequest.Service, BaseResponseModel<ProductListModel>, ProductListRequest.ApiParams> {
 
     public ProductListRequest() {
         super(ProductListRequest.Service.class, RequestOrigin.NONE, Consts.HOST_API, Consts.MODE, Consts.TRUST_CERTIFICATE);
@@ -73,8 +73,12 @@ public class ProductListRequest  extends ApiRequest<ProductListRequest.Service, 
         }
         if (!TextUtils.isEmpty((params.price_sell))) {
             builder.addFormDataPart("price_sell", params.price_sell);
-        }if (!TextUtils.isEmpty((params.page))) {
+        }
+        if (!TextUtils.isEmpty((params.page))) {
             builder.addFormDataPart("page", params.page);
+        }
+        if (!TextUtils.isEmpty((params.status_product))) {
+            builder.addFormDataPart("status_product", params.status_product);
         }
 
         params.detect = "product_manager";
@@ -107,5 +111,6 @@ public class ProductListRequest  extends ApiRequest<ProductListRequest.Service, 
         public String price_sell;
         public String product;
         public String page;
+        public String status_product;
     }
 }

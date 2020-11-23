@@ -230,6 +230,41 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutVHH"
+                android:layout_marginVertical="@dimen/dp10"
+                android:orientation="horizontal"
+                android:elevation="3dp"
+                android:background="@drawable/custom_background_item_home"
+                android:paddingVertical="18dp"
+                android:paddingHorizontal="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_service_disible"
+                    android:tint="#709FB0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:textSize="@dimen/dp20"
+                    android:layout_weight="1"
+                    android:text="Sản phẩm vô hiệu hóa"
+                    android:textStyle="bold"
+                    android:textColor="@color/dangnhap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_icon_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

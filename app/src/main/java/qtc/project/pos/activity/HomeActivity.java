@@ -668,10 +668,10 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
 
         switch (type) {
             case KAlertDialog.SUCCESS_TYPE:
-                mCustomAlert.setCustomImage(R.drawable.ic_check);
+                mCustomAlert.setCustomImage(R.drawable.ic_img_alert_success);
                 break;
             case KAlertDialog.WARNING_TYPE:
-                mCustomAlert.setCustomImage(R.drawable.ic_check);
+                mCustomAlert.setCustomImage(R.drawable.ic_img_alert_warning);
                 break;
         }
 

@@ -204,6 +204,95 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
     }
 
     @Override
+    public void disableProduct(String id) {
+        String title = "Vô hiệu hóa sản phẩm";
+        String message = "Bạn có muốn vô hiệu hóa sản phẩm?";
+
+        activity.showConfirmAlert(title, message, new KAlertDialog.KAlertClickListener() {
+            @Override
+            public void onClick(KAlertDialog kAlertDialog) {
+                //confirm
+                kAlertDialog.dismiss();
+                //request active or lock account
+
+                requestDisableProduct(id);
+            }
+        }, new KAlertDialog.KAlertClickListener() {
+            @Override
+            public void onClick(KAlertDialog kAlertDialog) {
+                //cancel
+                kAlertDialog.dismiss();
+            }
+        }, KAlertDialog.WARNING_TYPE);
+    }
+
+    private void requestDisableProduct(String id) {
+        final KAlertDialog mCustomAlert = new KAlertDialog(getContext());
+        mCustomAlert.setContentText("Đang xử lý...")
+                .showCancelButton(false)
+                .setCancelClickListener(null)
+                .changeAlertType(KAlertDialog.PROGRESS_TYPE);
+
+        mCustomAlert.setCancelable(false);
+        mCustomAlert.setCanceledOnTouchOutside(false);
+        mCustomAlert.show();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!AppProvider.getConnectivityHelper().hasInternetConnection()) {
+                    showAlert(getString(R.string.error_connect_internet), KAlertDialog.ERROR_TYPE);
+                    return;
+                }
+                showProgress();
+
+                showProgress();
+                ProductListRequest.ApiParams params = new ProductListRequest.ApiParams();
+                params.type_manager = "update_status_product";
+                params.id_product  = id;
+                params.status_product  = "N";
+                AppProvider.getApiManagement().call(ProductListRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
+                    @Override
+                    public void onSuccess(BaseResponseModel<ProductListModel> body) {
+                        dismissProgress();
+
+                        if (!TextUtils.isEmpty(body.getSuccess()) && body.getSuccess().equalsIgnoreCase("true")) {
+                            mCustomAlert.setContentText("Cập nhật sản phẩm thành công.")
+                                    .setConfirmText("OK")
+                                    .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                                        @Override
+                                        public void onClick(KAlertDialog kAlertDialog) {
+                                            mCustomAlert.dismissWithAnimation();
+                                            onBackprogress();
+                                        }
+                                    })
+                                    .changeAlertType(KAlertDialog.SUCCESS_TYPE);
+                        } else {
+                            if (!TextUtils.isEmpty(body.getMessage())) {
+                                showAlert(body.getMessage(), KAlertDialog.ERROR_TYPE);
+                            } else {
+                                activity.showAlert("Không thể tải dịch vụ", KAlertDialog.ERROR_TYPE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(ErrorApiResponse error) {
+                        dismissProgress();
+                        Log.e("onError", error.message);
+                    }
+
+                    @Override
+                    public void onFail(ApiRequest.RequestError error) {
+                        dismissProgress();
+                        Log.e("onFail", error.name());
+                    }
+                });
+            }
+        }, 500);
+    }
+
+    @Override
     public void onClickOptionSelectImageFromCamera() {
         if (activity!=null)
             activity.captureImageFromCamera();

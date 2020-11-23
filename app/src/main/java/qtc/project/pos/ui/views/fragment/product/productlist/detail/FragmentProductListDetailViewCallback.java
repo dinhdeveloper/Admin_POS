@@ -16,4 +16,6 @@ public interface FragmentProductListDetailViewCallback {
     void onClickOptionSelectImageFromCamera();
 
     void onClickOptionSelectImageFromGallery();
+
+    void disableProduct(String id);
 }
