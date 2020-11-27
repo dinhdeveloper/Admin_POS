@@ -20,6 +20,7 @@ import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.StringTokenizer;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
@@ -158,7 +160,7 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
                         .select("div.hAyfc:nth-child(4) > span:nth-child(2) > div:nth-child(1) > span:nth-child(1)")
                         .first()
                         .ownText();
-                MyLog.e("latestversion", "---" + latestVersion);
+                //compareVersion(latestVersion, currentVersion);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -180,6 +182,71 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
 
             showAlertUpdateAppVersion();
         }
+    }
+
+    public int compareVersion(String lhs, String rhs) {
+        // lhs :  current version 1.1.0
+        // rhs : new version 1.1.1
+        List<String> lhsStringElements = new ArrayList<>();
+        StringTokenizer lhsStringTokenizer = new StringTokenizer(lhs, ".");
+        while (lhsStringTokenizer.hasMoreElements()) {
+            lhsStringElements.add(lhsStringTokenizer.nextElement().toString());
+        }
+
+        List<String> rhsStringElements = new ArrayList<>();
+        StringTokenizer rhsStringTokenizer = new StringTokenizer(rhs, ".");
+        while (rhsStringTokenizer.hasMoreElements()) {
+            rhsStringElements.add(rhsStringTokenizer.nextElement().toString());
+        }
+
+        // Compare token[0] with characters
+        int resultWithString = removeAllDigits(lhsStringElements.get(0)).compareToIgnoreCase(removeAllDigits(rhsStringElements.get(0)));
+        if (resultWithString != 0) {
+            return resultWithString;
+        }
+
+        // Compare all tokens with number
+        int sizeLHSStringElements = lhsStringElements.size();
+        int sizeRHSStringElements = rhsStringElements.size();
+
+        int size = Math.min(sizeLHSStringElements, sizeRHSStringElements);
+
+        for (int i = 0; i < size; i++) {
+            int resultWithNumber = removeAllCharacters(lhsStringElements.get(i)) - removeAllCharacters(rhsStringElements.get(i));
+            if (resultWithNumber != 0) {
+                return resultWithNumber;
+            }
+        }
+
+        if (sizeLHSStringElements > size) {
+            for (int i = size; i < sizeLHSStringElements; i++) {
+                if (removeAllCharacters(lhsStringElements.get(i)) > 0) {
+                    return 1;
+                }
+            }
+        } else if (sizeRHSStringElements > size) {
+            for (int i = size; i < sizeRHSStringElements; i++) {
+                if (removeAllCharacters(rhsStringElements.get(i)) > 0) {
+                    return -1;
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    private int removeAllCharacters(String str) {
+        try {
+            return Integer.parseInt(str.replaceAll("[^\\d]", ""));
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+
+            return -1;
+        }
+    }
+
+    private static String removeAllDigits(String str) {
+        return str.replaceAll("\\d", "");
     }
 
     @Override
@@ -327,7 +394,7 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
         }
     }
 
-    public void toggleNav(){
+    public void toggleNav() {
         view.toggleNav();
     }
 
