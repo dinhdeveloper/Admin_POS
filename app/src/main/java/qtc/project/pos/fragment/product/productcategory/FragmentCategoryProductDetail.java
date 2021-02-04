@@ -2,6 +2,7 @@ package qtc.project.pos.fragment.product.productcategory;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -17,6 +18,8 @@ import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.product.productcategory.ProductCategoryUpdateRequest;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.event.BackShowRootViewEvent;
+import qtc.project.pos.event.UpdateListProductEvent;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.ProductCategoryModel;
 import qtc.project.pos.ui.views.fragment.product.category.categoryproductdetail.FragmentCategoryProductDetailView;
@@ -46,7 +49,11 @@ public class FragmentCategoryProductDetail extends BaseFragment<FragmentCategory
         Bundle extras = getArguments();
         if (extras != null) {
             ProductCategoryModel model = (ProductCategoryModel) extras.get("model");
-            view.sendDataToView(model);
+            if (model != null) {
+                view.setDataCategoryDetail(model);
+            } else {
+                view.setDataCategoryDetail(null);
+            }
         }
     }
 
@@ -62,11 +69,11 @@ public class FragmentCategoryProductDetail extends BaseFragment<FragmentCategory
 
     @Override
     public void onBackProgress() {
-        if (activity != null)
-            {
-                activity.deleteTempMedia();
-                activity.checkBack();
-            }
+        if (activity != null) {
+            activity.deleteTempMedia();
+            activity.checkBack();
+            BackShowRootViewEvent.post();
+        }
     }
 
     public void setImageSelected(String filePath) {
@@ -115,33 +122,46 @@ public class FragmentCategoryProductDetail extends BaseFragment<FragmentCategory
     }
 
     @Override
-    public void updateData(ProductCategoryModel categoryModel) {
+    public void updateCategoryDetail(ProductCategoryModel categoryModel) {
         if (categoryModel != null) {
+            if (!AppProvider.getConnectivityHelper().hasInternetConnection()) {
+                showAlert(getContext().getResources().getString(R.string.error_internet_connection), KAlertDialog.ERROR_TYPE);
+                return;
+            }
             showProgress();
             ProductCategoryUpdateRequest.ApiParams params = new ProductCategoryUpdateRequest.ApiParams();
-            params.type_manager = "update_category";
-            params.id_category = categoryModel.getId();
+            if (!TextUtils.isEmpty(categoryModel.getId())){
+                params.type_manager = "update_category";
+                params.id_category = categoryModel.getId();
+            }else {
+                params.type_manager = "create_category";
+            }
             params.name = categoryModel.getName();
             params.image = categoryModel.getImage();
             params.description = categoryModel.getDescription();
-            params.id_code  = categoryModel.getId_code();
+            params.id_code = categoryModel.getId_code();
             AppProvider.getApiManagement().call(ProductCategoryUpdateRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductCategoryModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<ProductCategoryModel> body) {
-                    if (body.getSuccess().equals("true")) {
+                    if (!TextUtils.isEmpty(body.getSuccess()) && body.getSuccess().equalsIgnoreCase("true")) {
                         dismissProgress();
-                        view.confirmDialog();
+                        UpdateListProductEvent.post();
+                        showAlert(body.getMessage(), KAlertDialog.SUCCESS_TYPE);
+                    } else {
+                        showAlert(body.getMessage(), KAlertDialog.ERROR_TYPE);
                     }
                 }
 
                 @Override
                 public void onError(ErrorApiResponse error) {
                     dismissProgress();
+                    showAlert("Không tải được dữ liệu", KAlertDialog.ERROR_TYPE);
                 }
 
                 @Override
                 public void onFail(ApiRequest.RequestError error) {
                     dismissProgress();
+                    showAlert("Không tải được dữ liệu", KAlertDialog.ERROR_TYPE);
                 }
             });
         }
@@ -149,43 +169,89 @@ public class FragmentCategoryProductDetail extends BaseFragment<FragmentCategory
 
     @Override
     public void onClickOptionSelectImageFromCamera() {
-        if (activity!=null)
+        if (activity != null)
             activity.captureImageFromCamera();
     }
 
     @Override
     public void onClickOptionSelectImageFromGallery() {
-        if (activity!=null)
+        if (activity != null)
             activity.changeToActivitySelectImage();
     }
 
     @Override
     public void deleteProductCategoryModel(String id) {
-        if (id!=null){
-            showProgress();
-            ProductCategoryUpdateRequest.ApiParams params = new ProductCategoryUpdateRequest.ApiParams();
-            params.type_manager = "delete_category";
-            params.id_category = id;
-            AppProvider.getApiManagement().call(ProductCategoryUpdateRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductCategoryModel>>() {
-                @Override
-                public void onSuccess(BaseResponseModel<ProductCategoryModel> body) {
-                    if (body.getSuccess().equals("true")) {
-                        dismissProgress();
-                        Toast.makeText(activity, body.getMessage(), Toast.LENGTH_SHORT).show();
-                        view.confirm();
+        String title = "Xóa danh mục sản phẩm";
+        String message = "Bạn có muốn xóa danh mục sản phẩm?";
+
+        showConfirmAlert(title, message, new KAlertDialog.KAlertClickListener() {
+            @Override
+            public void onClick(KAlertDialog kAlertDialog) {
+                //confirm
+                kAlertDialog.dismiss();
+                //request active or lock account
+                final KAlertDialog mCustomAlert = new KAlertDialog(getContext());
+                mCustomAlert.setContentText("Đang xử lý...")
+                        .showCancelButton(false)
+                        .setCancelClickListener(null)
+                        .changeAlertType(KAlertDialog.PROGRESS_TYPE);
+
+                mCustomAlert.setCancelable(false);
+                mCustomAlert.setCanceledOnTouchOutside(false);
+                mCustomAlert.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        showProgress();
+                        ProductCategoryUpdateRequest.ApiParams params = new ProductCategoryUpdateRequest.ApiParams();
+                        params.type_manager = "delete_category";
+                        params.id_category = id;
+                        AppProvider.getApiManagement().call(ProductCategoryUpdateRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductCategoryModel>>() {
+                            @Override
+                            public void onSuccess(BaseResponseModel<ProductCategoryModel> body) {
+                                if (!TextUtils.isEmpty(body.getSuccess()) && body.getSuccess().equals("true")) {
+                                    mCustomAlert.setContentText("Xóa danh mục thành công.")
+                                            .setConfirmText("OK")
+                                            .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                                                @Override
+                                                public void onClick(KAlertDialog kAlertDialog) {
+                                                    dismissProgress();
+                                                    onBackProgress();
+                                                    UpdateListProductEvent.post();
+                                                    mCustomAlert.dismissWithAnimation();
+                                                    mCustomAlert.dismiss();
+                                                }
+                                            })
+                                            .changeAlertType(KAlertDialog.SUCCESS_TYPE);
+                                } else {
+                                    showAlert(body.getMessage(), KAlertDialog.ERROR_TYPE);
+                                }
+                            }
+
+                            @Override
+                            public void onError(ErrorApiResponse error) {
+                                dismissProgress();
+                                mCustomAlert.dismissWithAnimation();
+                                mCustomAlert.dismiss();
+                            }
+
+                            @Override
+                            public void onFail(ApiRequest.RequestError error) {
+                                dismissProgress();
+                                mCustomAlert.dismissWithAnimation();
+                                mCustomAlert.dismiss();
+                            }
+                        });
                     }
-                }
-
-                @Override
-                public void onError(ErrorApiResponse error) {
-                    dismissProgress();
-                }
-
-                @Override
-                public void onFail(ApiRequest.RequestError error) {
-                    dismissProgress();
-                }
-            });
-        }
+                }, 500);
+            }
+        }, new KAlertDialog.KAlertClickListener() {
+            @Override
+            public void onClick(KAlertDialog kAlertDialog) {
+                //cancel
+                kAlertDialog.dismiss();
+            }
+        }, KAlertDialog.WARNING_TYPE);
     }
 }

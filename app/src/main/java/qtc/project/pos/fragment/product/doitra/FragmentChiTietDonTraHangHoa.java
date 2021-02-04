@@ -11,6 +11,7 @@ import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.product.packageproduct.PackageReturnRequest;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.event.BackShowRootViewEvent;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.PackageReturnModel;
 import qtc.project.pos.ui.views.fragment.product.doitra.detail.FragmentChiTietDonTraHangHoaView;
@@ -58,6 +59,7 @@ public class FragmentChiTietDonTraHangHoa extends BaseFragment<FragmentChiTietDo
     public void onBackProgress() {
         if (activity != null)
             activity.checkBack();
+            BackShowRootViewEvent.post();
     }
 
     @Override
@@ -132,7 +134,7 @@ public class FragmentChiTietDonTraHangHoa extends BaseFragment<FragmentChiTietDo
     }
 
     private void onBack() {
-        if (activity!=null)
+        if (activity != null)
             activity.checkBack();
     }
 }

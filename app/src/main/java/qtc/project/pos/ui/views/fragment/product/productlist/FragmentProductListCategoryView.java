@@ -1,7 +1,11 @@
 package qtc.project.pos.ui.views.fragment.product.productlist;
 
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,215 +17,243 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.AppUtils;
+import b.laixuantam.myaarlibrary.widgets.cptr.PtrClassicFrameLayout;
+import b.laixuantam.myaarlibrary.widgets.cptr.PtrDefaultHandler;
+import b.laixuantam.myaarlibrary.widgets.cptr.PtrFrameLayout;
+import b.laixuantam.myaarlibrary.widgets.cptr.loadmore.OnLoadMoreListener;
+import b.laixuantam.myaarlibrary.widgets.cptr.recyclerview.RecyclerAdapterWithHF;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.adapter.product.ProductListAdapter;
+import qtc.project.pos.adapter.product.category.ProductCategoryAdapter;
+import qtc.project.pos.dialog.option.OptionModel;
 import qtc.project.pos.fragment.product.productlist.create.FragmentCreateProduct;
 import qtc.project.pos.fragment.product.productlist.filter.FragmentFilterSanPham;
+import qtc.project.pos.model.BaseResponseModel;
+import qtc.project.pos.model.ProductCategoryModel;
 import qtc.project.pos.model.ProductListModel;
+import qtc.project.pos.ui.views.fragment.list_base.FragmentListBaseViewCallback;
+import qtc.project.pos.ui.views.fragment.list_base.FragmentListBaseViewInterface;
 
-public class FragmentProductListCategoryView extends BaseView<FragmentProductListCategoryView.UIContainer> implements FragmentProductListCategoryViewInterface {
+public class FragmentProductListCategoryView extends BaseView<FragmentProductListCategoryView.UIContainer> implements FragmentListBaseViewInterface {
 
-    ArrayList<ProductListModel> listProduct = new ArrayList<>();
-    ProductListAdapter adapter;
+    private ProductListAdapter productListAdapter;
     HomeActivity activity;
-    FragmentProductListCategoryViewCallback callback;
-
+    FragmentListBaseViewCallback callback;
+    private RecyclerAdapterWithHF recyclerAdapterWithHF;
+    private ArrayList<OptionModel> listDatas = new ArrayList<>();
+    private Timer timer = new Timer();
+    private final long DELAY = 1000; // in ms
+    private boolean isRefreshList = false;
     boolean enableLoadMore = true;
 
     @Override
-    public void init(HomeActivity activity, FragmentProductListCategoryViewCallback callback) {
+    public void init(HomeActivity activity, FragmentListBaseViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
+        ui.actionAdd.setVisibility(View.GONE);
+        ui.actionFilter.setVisibility(View.VISIBLE);
+        ui.imvAction1.setVisibility(View.VISIBLE);
+        ui.title_header.setText("Danh sách sản phẩm");
+        ui.edit_filter.setHint("Tên sản phẩm, mã sản phẩm");
 
-        onClick();
-        initRecyclerview();
+        ui.imageNavLeft.setOnClickListener(v -> {
+            if (callback != null)
+                callback.onClickBackHeader();
+        });
 
-    }
+        ui.actionFilter.setOnClickListener(v -> {
+            if (callback != null)
+                callback.onClickFilter();
+        });
 
-    @Override
-    public void clearListDataProduct() {
-        listProduct.clear();
-        adapter.notifyDataSetChanged();
-    }
+        ui.imvAction1.setOnClickListener(v -> {
+            if (callback!=null)
+                callback.onClickAddItem();
+        });
+        setUpListData();
 
-    @Override
-    public void mappingRecyclerView(ProductListModel[] list) {
-        if (list == null || list.length == 0) {
-            if (listProduct.size() == 0)
-                showEmptyList();
-            return;
-        }
-        listProduct.addAll(Arrays.asList(list));
-        adapter.notifyDataSetChanged();
-    }
-
-    private void showEmptyList() {
-
-    }
-
-    public void initRecyclerview() {
-        ui.recycler_view_list_product.getRecycledViewPool().clear();
-        adapter = new ProductListAdapter(activity, listProduct);
-        ui.recycler_view_list_product.setLayoutManager(new GridLayoutManager(activity, 2));
-        ui.recycler_view_list_product.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-        adapter.setListener(new ProductListAdapter.ProductListAdapterListener() {
+        ui.edit_filter.addTextChangedListener(new TextWatcher() {
             @Override
-            public void setOnClick(ProductListModel model) {
-                if (callback != null)
-                    {
-                        callback.goToProductListDetail(model);
-                    }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
-            public void onRequestLoadMoreProduct() {
-                if (callback != null && enableLoadMore)
-                    callback.loadMore();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer != null)
+                    timer.cancel();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() >= 1) {
+
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            String key = s.toString().trim();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.hideKeyBoard(getView());
+                                    listDatas.clear();
+                                    productListAdapter.notifyDataSetChanged();
+                                    ui.recycler_view_list_order.getRecycledViewPool().clear();
+                                    callback.onRequestSearchWithFilter( key);
+                                }
+                            });
+                        }
+
+                    }, DELAY);
+                } else {
+                    if (!isRefreshList) {
+                        AppUtils.hideKeyBoard(getView());
+                        listDatas.clear();
+                        productListAdapter.notifyDataSetChanged();
+                        ui.recycler_view_list_order.getRecycledViewPool().clear();
+                        callback.onRequestSearchWithFilter( "");
+                    }
+                }
             }
         });
     }
 
-    @Override
-    public void mappingDataFilterProduct(ProductListModel[] list, String name, String id) {
-        if (list != null) {
-            ui.layout_filter.setVisibility(View.VISIBLE);
-            ui.name_product.setText("Tên : " + name);
-            ui.id_product.setText("Mã: " + id);
+    private void setUpListData() {
+        ui.recycler_view_list_order.getRecycledViewPool().clear();
 
-//            adapter = new ProductListAdapter(activity, list);
-//            ui.recycler_view_list_product.setLayoutManager(new GridLayoutManager(activity, 2));
-//            ui.recycler_view_list_product.setAdapter(adapter);
-//            adapter.notifyDataSetChanged();
-//
-//            adapter.setListener(new ProductListAdapter.ProductListAdapterListener() {
-//                @Override
-//                public void setOnClick(ProductListModel model) {
-//                    if (callback != null)
-//                        callback.goToProductListDetail(model);
-//                }
-//
-//                @Override
-//                public void onRequestLoadMoreProduct() {
-//                    if (callback != null)
-//                        callback.loadMore();
-//                }
-//            });
-            if (list == null || list.length == 0) {
-                if (listProduct.size() == 0)
-                    showEmptyList();
-                return;
-            }
-            listProduct.addAll(Arrays.asList(list));
-            adapter.notifyDataSetChanged();
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(activity, 2, LinearLayoutManager.VERTICAL, false);
+        ui.recycler_view_list_order.setLayoutManager(linearLayoutManager);
 
-            ui.close_layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ui.layout_filter.setVisibility(View.GONE);
-                    if (callback != null)
-                    {
-                        listProduct.clear();
-                        adapter.notifyDataSetChanged();
-                        callback.callAllData();
-                        enableLoadMore = true;
+        //todo setup list with adapter
+
+        productListAdapter = new ProductListAdapter(getContext(), listDatas);
+
+        productListAdapter.setListener(item -> {
+            if (callback != null)
+                callback.onItemListSelected(item);
+        });
+
+        recyclerAdapterWithHF = new RecyclerAdapterWithHF(productListAdapter);
+
+        ui.recycler_view_list_order.setAdapter(recyclerAdapterWithHF);
+
+        ui.ptrClassicFrameLayout.setLoadMoreEnable(true);
+
+        ui.ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler(true) {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                AppUtils.hideKeyBoard(getView());
+                isRefreshList = true;
+                ui.edit_filter.setText("");
+                listDatas.clear();
+                productListAdapter.notifyDataSetChanged();
+                ui.recycler_view_list_order.getRecycledViewPool().clear();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ui.ptrClassicFrameLayout.refreshComplete();
+
+                        if (callback != null) {
+                            callback.refreshLoadingList();
+                            isRefreshList = false;
+                        }
                     }
-                }
-            });
+                }, 100);
+
+
+            }
+        });
+
+        ui.ptrClassicFrameLayout.setOnLoadMoreListener(() -> handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+
+                if (callback != null)
+                    callback.onRequestLoadMoreList();
+
+            }
+        }, 100));
+    }
+
+    @Override
+    public void showEmptyList() {
+        setVisible(ui.layoutEmptyList);
+        setGone(ui.ptrClassicFrameLayout);
+    }
+
+    @Override
+    public void hideEmptyList() {
+        setGone(ui.layoutEmptyList);
+        setVisible(ui.ptrClassicFrameLayout);
+    }
+
+    @Override
+    public void setDataList(BaseResponseModel dataList) {
+        ui.recycler_view_list_order.getRecycledViewPool().clear();
+
+        if (dataList.getData() == null || dataList.getData().length == 0) {
+            if (listDatas.size() == 0)
+                showEmptyList();
+            return;
         }
+
+        hideEmptyList();
+
+//        listDatas.addAll(Arrays.asList(arrDatas));
+        ProductListModel[] arrOrder = (ProductListModel[]) dataList.getData();
+        for (ProductListModel itemOrderModel : arrOrder) {
+            OptionModel optionModel = new OptionModel();
+            optionModel.setDtaCustom(itemOrderModel);
+            listDatas.add(optionModel);
+//            if (productListAdapter != null) {
+//                productListAdapter.getListData().add(optionModel);
+//                productListAdapter.getListDataBackup().add(optionModel);
+//            }
+        }
+
+        recyclerAdapterWithHF.notifyDataSetChanged();
+        ui.ptrClassicFrameLayout.loadMoreComplete(true);
+        ui.ptrClassicFrameLayout.setLoadMoreEnable(true);
     }
 
     @Override
     public void setNoMoreLoading() {
-        enableLoadMore = false;
+        ui.ptrClassicFrameLayout.loadMoreComplete(true);
+        ui.ptrClassicFrameLayout.setLoadMoreEnable(false);
     }
 
-
-    private void onClick() {
-        ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (callback != null) {
-                    callback.onBackprogress();
-                }
-            }
-        });
-
-        //search customer
-        ui.edit_filter.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        //ui.edit_filter.setInputType();
-        ui.edit_filter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (ui.edit_filter.getText().toString() != null) {
-                        listProduct.clear();
-                        adapter.notifyDataSetChanged();
-                        searchProduct(ui.edit_filter.getText().toString());
-                        return true;
-                    }
-                }
-                Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-        ui.image_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ui.edit_filter.getText().toString() != null) {
-                    listProduct.clear();
-                    adapter.notifyDataSetChanged();
-                    searchProduct(ui.edit_filter.getText().toString());
-                } else {
-                    Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        //xos search
-        ui.image_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listProduct.clear();
-                adapter.notifyDataSetChanged();
-                ui.edit_filter.setText(null);
-                callback.callAllData();
-                enableLoadMore = true;
-            }
-        });
-
-        //filter
-        ui.image_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.addFragment(new FragmentFilterSanPham(), true, null);
-            }
-        });
-
-        //tao moi san pham
-        ui.image_create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.replaceFragment(new FragmentCreateProduct(), true, null);
-            }
-        });
+    @Override
+    public void resetListData() {
+        listDatas.clear();
+        productListAdapter.notifyDataSetChanged();
+        ui.recycler_view_list_order.getRecycledViewPool().clear();
     }
 
-    private void searchProduct(String name) {
-        if (name != null) {
-            if (callback != null) {
-                callback.searchProduct(name);
-            }
-
-        }
+    @Override
+    public void hideRootView() {
+        setGone(ui.layoutRootView);
     }
 
+    @Override
+    public void showRootView() {
+            setVisible(ui.layoutRootView);
+    }
+
+    @Override
+    public void clearListData() {
+        listDatas.clear();
+        productListAdapter.notifyDataSetChanged();
+        ui.recycler_view_list_order.getRecycledViewPool().clear();
+    }
 
     @Override
     public BaseUiContainer getUiContainer() {
@@ -230,43 +262,38 @@ public class FragmentProductListCategoryView extends BaseView<FragmentProductLis
 
     @Override
     public int getViewId() {
-        return R.layout.layout_fragment_product_list_category;
+        return R.layout.layout_admin_fragment_list_base;
     }
 
-    public static class UIContainer extends BaseUiContainer {
-        @UiElement(R.id.recycler_view_list_product)
-        public RecyclerView recycler_view_list_product;
+    public class UIContainer extends BaseUiContainer {
+        @UiElement(R.id.layoutRootView)
+        public View layoutRootView;
 
         @UiElement(R.id.imageNavLeft)
-        public ImageView imageNavLeft;
+        public View imageNavLeft;
 
-        @UiElement(R.id.image_filter)
-        public ImageView image_filter;
-
-        @UiElement(R.id.image_search)
-        public ImageView image_search;
-
-        @UiElement(R.id.image_close)
-        public ImageView image_close;
+        @UiElement(R.id.title_header)
+        public TextView title_header;
 
         @UiElement(R.id.edit_filter)
         public EditText edit_filter;
 
-        @UiElement(R.id.layout_filter)
-        public RelativeLayout layout_filter;
+        @UiElement(R.id.btnAction1)
+        public ImageView actionAdd;
 
-        @UiElement(R.id.name_product)
-        public TextView name_product;
+        @UiElement(R.id.imvAction1)
+        public ImageView imvAction1;
 
-        @UiElement(R.id.id_product)
-        public TextView id_product;
+        @UiElement(R.id.btnAction2)
+        public View actionFilter;
 
-        @UiElement(R.id.close_layout)
-        public ImageView close_layout;
+        @UiElement(R.id.ptrClassicFrameLayout)
+        public PtrClassicFrameLayout ptrClassicFrameLayout;
 
-        @UiElement(R.id.image_create)
-        public ImageView image_create;
+        @UiElement(R.id.recycler_view_list)
+        public RecyclerView recycler_view_list_order;
 
-
+        @UiElement(R.id.layoutEmptyList)
+        public View layoutEmptyList;
     }
 }

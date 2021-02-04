@@ -32,7 +32,8 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
     public void init(HomeActivity activity, FragmentQuanLyLoHangViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-
+        ui.title_header.setText("Quản lý lô hàng");
+        ui.edit_filter.setHint("Tên sản phẩm, mã sản phẩm");
         onClick();
     }
 
@@ -42,39 +43,35 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
         ui.recycler_view_qllh.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         ui.recycler_view_qllh.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        adapter.setListener(new ProductListQLLHAdapter.ProductListQLLHAdapterListener() {
-            @Override
-            public void setOnClick(ProductListModel model) {
-                if (model.getListDataProduct().size()>0){
-                    ui.recycler_view_qllh_detail.setVisibility(View.VISIBLE);
-                    ProductListItemQLLHAdapter qllhAdapter = new ProductListItemQLLHAdapter(activity,model.getListDataProduct(),model.getName(),model.getId());
-                    ui.recycler_view_qllh_detail.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-                    ui.recycler_view_qllh_detail.setAdapter(qllhAdapter);
-                    qllhAdapter.notifyDataSetChanged();
+        adapter.setListener(model -> {
+            if (model.getListDataProduct().size() > 0) {
+                ui.recycler_view_qllh_detail.setVisibility(View.VISIBLE);
+                ProductListItemQLLHAdapter qllhAdapter = new ProductListItemQLLHAdapter(activity, model.getListDataProduct(), model.getName(), model.getId());
+                ui.recycler_view_qllh_detail.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                ui.recycler_view_qllh_detail.setAdapter(qllhAdapter);
+                qllhAdapter.notifyDataSetChanged();
 
-                    qllhAdapter.setListener(new ProductListItemQLLHAdapter.ProductListItemQLLHAdapterListener() {
-                        @Override
-                        public void setOnClick(PackageInfoModel model) {
+                qllhAdapter.setListener(new ProductListItemQLLHAdapter.ProductListItemQLLHAdapterListener() {
+                    @Override
+                    public void setOnClick(PackageInfoModel model) {
 
-                        }
+                    }
 
-                        @Override
-                        public void sentDataOnClick(PackageInfoModel infoModel, String name,String id) {
-                            if (callback!=null)
-                                callback.sentDataToDetail(infoModel,name,id);
-                        }
-                    });
-                }
-                else {
-                    ui.recycler_view_qllh_detail.setVisibility(View.GONE);
-                }
+                    @Override
+                    public void sentDataOnClick(PackageInfoModel infoModel, String name, String id) {
+                        if (callback != null)
+                            callback.sentDataToDetail(infoModel, name, id);
+                    }
+                });
+            } else {
+                ui.recycler_view_qllh_detail.setVisibility(View.GONE);
             }
         });
     }
 
     private void onClick() {
 
-        ui.imageNav.setOnClickListener(new View.OnClickListener() {
+        ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (callback != null)
@@ -85,7 +82,7 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
         ui.edit_filter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (ui.edit_filter.getText().toString() != null && !ui.edit_filter.getText().toString().isEmpty()){
+                if (ui.edit_filter.getText().toString() != null && !ui.edit_filter.getText().toString().isEmpty()) {
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                         searchQLLH(ui.edit_filter.getText().toString());
                         return true;
@@ -96,34 +93,11 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
             }
         });
 
-        ui.image_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ui.edit_filter.getText().toString() != null && !ui.edit_filter.getText().toString().isEmpty()) {
-                    searchQLLH(ui.edit_filter.getText().toString());
-                } else {
-                    Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        ui.image_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ui.edit_filter.setText(null);
-                ui.layout_qldh_data.setVisibility(View.GONE);
-                ui.layout_qldh_nodata.setVisibility(View.VISIBLE);
-            }
-        });
-
         //them lo hamg
-        ui.addLoHang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (activity!=null){
-                    activity.replaceFragment(new FragmentCreateLoHang(),true,null);
-                }
-            }
+        ui.addLoHang.setVisibility(View.VISIBLE);
+        ui.addLoHang.setOnClickListener(v -> {
+            if (callback != null)
+                callback.sentDataToDetail(null, null, null);
         });
     }
 
@@ -138,6 +112,21 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
     }
 
     @Override
+    public void hideRootView() {
+        setGone(ui.layoutRootView);
+    }
+
+    @Override
+    public void showRootView() {
+        setVisible(ui.layoutRootView);
+    }
+
+    @Override
+    public void hideRecyclerViewDetail() {
+        setGone(ui.recycler_view_qllh_detail);
+    }
+
+    @Override
     public BaseUiContainer getUiContainer() {
         return new FragmentQuanLyLoHangView.UIContainer();
     }
@@ -148,6 +137,9 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
     }
 
     public static class UIContainer extends BaseUiContainer {
+        @UiElement(R.id.layoutRootView)
+        public View layoutRootView;
+
         @UiElement(R.id.recycler_view_qllh)
         public RecyclerView recycler_view_qllh;
 
@@ -166,15 +158,16 @@ public class FragmentQuanLyLoHangView extends BaseView<FragmentQuanLyLoHangView.
         @UiElement(R.id.image_search)
         public ImageView image_search;
 
-        @UiElement(R.id.imageNav)
-        public ImageView imageNav;
-
-        @UiElement(R.id.addLoHang)
-        public ImageView addLoHang;
-
         @UiElement(R.id.image_close)
         public ImageView image_close;
 
+        @UiElement(R.id.imvAction1)
+        public ImageView addLoHang;
 
+        @UiElement(R.id.imageNavLeft)
+        public ImageView imageNavLeft;
+
+        @UiElement(R.id.title_header)
+        public TextView title_header;
     }
 }

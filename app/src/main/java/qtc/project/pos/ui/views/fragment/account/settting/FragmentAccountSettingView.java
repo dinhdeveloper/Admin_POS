@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
-import b.laixuantam.myaarlibrary.widgets.scaletouchlistener.ScaleTouchListener;
+import b.laixuantam.myaarlibrary.widgets.touch_view_anim.scaletouchlistener.ScaleTouchListener;
 import qtc.project.pos.R;
 
 public class FragmentAccountSettingView extends BaseView<FragmentAccountSettingView.UIContainer> implements FragmentAccountSettingViewInterface {

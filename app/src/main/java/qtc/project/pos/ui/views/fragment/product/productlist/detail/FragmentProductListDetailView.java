@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
+import b.laixuantam.myaarlibrary.widgets.currencyedittext.CurrencyEditText;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.ActionItem;
 import b.laixuantam.myaarlibrary.widgets.popupmenu.MyCustomPopupMenu;
 import b.laixuantam.myaarlibrary.widgets.roundview.RoundTextView;
@@ -100,9 +101,10 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
     }
 
     @Override
-    public void sendDataToView(ProductListModel model) {
+    public void setProductDetail(ProductListModel model) {
         if (model != null) {
-            AppProvider.getImageHelper().displayImage(Consts.HOST_API + model.getImage(), ui.image_product, null, R.drawable.imageloading);
+            AppProvider.getImageHelper().displayImage(Consts.HOST_API + model.getImage(), ui.image_product, null, R.drawable.no_image_full);
+            ui.title_header.setText(model.getName());
             ui.name_product.setText(model.getName());
             ui.id_product.setText(model.getId_code());
             ui.description_product.setText(model.getDescription());
@@ -117,70 +119,67 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
                 Log.e("Ex",e.getMessage());
             }
             ui.name_product_category.setText(model.getCategory_name());
-        }
-        //cap nhat
-        ui.layout_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+            //cap nhat
+            ui.layout_update.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ProductListModel listModel = new ProductListModel();
+                    listModel.setId(model.getId());
+                    listModel.setId_code(ui.id_product.getText().toString());
+                    listModel.setName(ui.name_product.getText().toString());
+                    listModel.setDescription(ui.description_product.getText().toString());
+                    listModel.setCategory_id(id_category);
+                    listModel.setQuantity_safetystock(ui.tonkho.getStringValue());
+                    listModel.setImage(image_pro);
+                    listModel.setBarcode(ui.barcode.getText().toString());
+                    listModel.setQr_code(ui.qrcode.getText().toString());
+                    listModel.setPrice_sell(ui.gia_ban.getStringValue());
+                    if (callback != null) {
+                        callback.updateProductDetail(listModel);
+                    }
+                }
+            });
+
+            ui.layout_delete.setOnClickListener(v -> {
+                if (callback!=null)
+                    callback.deleteProduct(model);
+            });
+
+            ui.btnDisable.setOnClickListener(v -> {
+                if (callback!=null)
+                    callback.disableProduct(model.getId());
+            });
+
+            //xoa sp
+        }else {
+            ui.layout_delete.setVisibility(View.GONE);
+            ui.title_header.setText("Tạo mới sản phẩm");
+            ui.tvTitleUpdate.setText("Tạo mới");
+            ui.layout_update.setOnClickListener(view -> {
                 ProductListModel listModel = new ProductListModel();
-                listModel.setId(model.getId());
                 listModel.setId_code(ui.id_product.getText().toString());
                 listModel.setName(ui.name_product.getText().toString());
                 listModel.setDescription(ui.description_product.getText().toString());
                 listModel.setCategory_id(id_category);
-                listModel.setQuantity_safetystock(ui.tonkho.getText().toString());
+                listModel.setQuantity_safetystock(ui.tonkho.getStringValue());
                 listModel.setImage(image_pro);
                 listModel.setBarcode(ui.barcode.getText().toString());
                 listModel.setQr_code(ui.qrcode.getText().toString());
-                listModel.setPrice_sell(ui.gia_ban.getText().toString());
+                listModel.setPrice_sell(ui.gia_ban.getStringValue());
                 if (callback != null) {
-                    callback.undateData(listModel);
+                    callback.updateProductDetail(listModel);
                 }
-            }
-        });
+            });
+        }
+    }
 
-        ui.btnDisable.setOnClickListener(v -> {
-            if (callback!=null)
-                callback.disableProduct(model.getId());
-        });
-
-        //xoa sp
-        ui.layout_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater layoutInflater = activity.getLayoutInflater();
-                View popupView = layoutInflater.inflate(R.layout.alert_dialog_waiting, null);
-                TextView title_text = popupView.findViewById(R.id.title_text);
-                TextView content_text = popupView.findViewById(R.id.content_text);
-                Button cancel_button = popupView.findViewById(R.id.cancel_button);
-                Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
-
-                title_text.setText("Cảnh báo");
-                content_text.setText("Bạn có muốn xóa sản phẩm này không?");
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setView(popupView);
-                AlertDialog dialog = alert.create();
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
-
-
-                cancel_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (callback != null)
-                            callback.deleteProduct(model);
-                        dialog.dismiss();
-                    }
-                });
-            }
-        });
+    @Override
+    public void clearData() {
+        ui.id_product.setText(null);
+        ui.name_product_category.setText(null);
+        ui.description_product.setText(null);
+        ui.image_product.setImageResource(R.drawable.imageloading);
     }
 
     public void generateCode(String resultCode) {
@@ -212,7 +211,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
     @Override
     public void setDataProductImage(String outfile) {
         image_pro = outfile;
-        AppProvider.getImageHelper().displayImage(outfile, ui.image_product, null, R.drawable.imageloading, false);
+        AppProvider.getImageHelper().displayImage(outfile, ui.image_product, null, R.drawable.no_image_full, false);
     }
 
     @Override
@@ -256,54 +255,10 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
 
     @Override
     public void showConfirm() {
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
-        TextView title_text = popupView.findViewById(R.id.title_text);
-        TextView content_text = popupView.findViewById(R.id.content_text);
-        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
-
-        title_text.setText("Xác nhận");
-        content_text.setText("Bạn đã cập nhật thành công!");
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-        alert.setView(popupView);
-        AlertDialog dialog = alert.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
     }
 
     @Override
     public void showConfirmDelete() {
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
-        TextView title_text = popupView.findViewById(R.id.title_text);
-        TextView content_text = popupView.findViewById(R.id.content_text);
-        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
-
-        title_text.setText("Xác nhận");
-        content_text.setText("Bạn đã xóa sản phẩm thành công!");
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-        alert.setView(popupView);
-        AlertDialog dialog = alert.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (callback != null) {
-                    callback.onBackprogress();
-                    dialog.dismiss();
-                }
-
-            }
-        });
     }
 
     private void onClick() {
@@ -352,12 +307,9 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         });
 
         //chon danh muc
-        ui.choose_category.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (callback != null)
-                    callback.getAllProductCategory();
-            }
+        ui.choose_category.setOnClickListener(v -> {
+            if (callback != null)
+                callback.getAllProductCategory();
         });
 
         //dong layout scanbar code
@@ -421,8 +373,12 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
     }
 
     public static class UIContainer extends BaseUiContainer {
+        @UiElement(R.id.title_header)
+        public TextView title_header;
+
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
+
 
         @UiElement(R.id.name_product)
         public EditText name_product;
@@ -431,7 +387,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         public EditText id_product;
 
         @UiElement(R.id.tonkho)
-        public EditText tonkho;
+        public CurrencyEditText tonkho;
 
         @UiElement(R.id.barcode)
         public EditText barcode;
@@ -483,10 +439,14 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         public ImageView imv_barcode;
 
         @UiElement(R.id.gia_ban)
-        public EditText gia_ban;
+        public CurrencyEditText gia_ban;
 
         @UiElement(R.id.btnDisable)
         public RoundTextView btnDisable;
+
+        @UiElement(R.id.tvTitleUpdate)
+        public TextView tvTitleUpdate;
+
 
     }
 }

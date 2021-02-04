@@ -5,7 +5,7 @@
     android:id="@+id/layoutRootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/hinhnen"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,14 +13,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_header"></include>
+        <include layout="@layout/layout_header_detail"/>
+        <include
+            android:id="@+id/layout_permisition"
+            android:visibility="gone"
+            tools:visibility="visible"
+            layout="@layout/layout_permisition"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <include layout="@layout/layout_filter"></include>
+            <include layout="@layout/layout_search"></include>
         </RelativeLayout>
 
 
@@ -28,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:rv_backgroundColor="@color/white">
+            app:rv_backgroundColor="@color/hinhnen">
 
             <RelativeLayout
                 android:layout_width="match_parent"

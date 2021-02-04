@@ -45,6 +45,7 @@
             android:drawablePadding="@dimen/dp10"
             android:drawableLeft="@drawable/ic_lock_login_24"
             android:textColor="@color/dangnhap"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:hint="Mật khẩu"
             android:textColorHint="@color/dangnhap"

@@ -1,16 +1,25 @@
 package qtc.project.pos.fragment.product.quanlylohang;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
+import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.product.packageproduct.PackageProductRequest;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.event.BackShowRootViewEvent;
+import qtc.project.pos.event.BackShowRootViewEvent2;
+import qtc.project.pos.event.UpdateCreateProductEvent;
+import qtc.project.pos.event.UpdateListProductEvent;
 import qtc.project.pos.fragment.supplier.FragmentSupplier;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.PackageInfoModel;
@@ -53,7 +62,11 @@ public class FragmentChiTietLoHang extends BaseFragment<FragmentChiTietLoHangVie
             PackageInfoModel infoModel = (PackageInfoModel) extras.get("infoModel");
             String name_product = (String) extras.get("name_product");
             String id_product = (String) extras.get("id_product");
-            view.sendDataToView(infoModel, name_product, id_product);
+            if (infoModel != null) {
+                view.sendDataToView(infoModel, name_product, id_product);
+            }else {
+                view.sendDataToView(null, null, null);
+            }
         }
     }
 
@@ -71,11 +84,18 @@ public class FragmentChiTietLoHang extends BaseFragment<FragmentChiTietLoHangVie
     public void onBackProgress() {
         if (activity != null)
             activity.checkBack();
+            BackShowRootViewEvent.post();
     }
 
     @Override
     public void getAllDataNhaCungUng() {
         activity.addFragment(new FragmentSupplier(), true, null);
+    }
+
+    @Override
+    public void getAllDataProduct(boolean check) {
+        if (activity!=null)
+            activity.changToFragmentGetAllProduct(check);
     }
 
     @Override
@@ -98,36 +118,66 @@ public class FragmentChiTietLoHang extends BaseFragment<FragmentChiTietLoHangVie
                 @Override
                 public void onSuccess(BaseResponseModel<ProductListModel> body) {
                     dismissProgress();
-                    if (body.getSuccess().equals("true")) {
-                        view.showPopSuccess();
-                    } else if (body.getSuccess().equals("false")) {
-                        Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (!TextUtils.isEmpty(body.getSuccess()) && body.getSuccess().equals("true")) {
+                        showAlert(body.getMessage(), KAlertDialog.SUCCESS_TYPE);
+                        UpdateListProductEvent.post();
+                    } else {
+                        showAlert(body.getMessage(), KAlertDialog.ERROR_TYPE);
                     }
                 }
 
                 @Override
                 public void onError(ErrorApiResponse error) {
                     dismissProgress();
-                    Log.e("onError", error.message);
+                    showAlert("Không tải được dữ liệu", KAlertDialog.ERROR_TYPE);
                 }
 
                 @Override
                 public void onFail(ApiRequest.RequestError error) {
                     dismissProgress();
-                    Log.e("onFail", error.name());
+                    showAlert("Không tải được dữ liệu", KAlertDialog.ERROR_TYPE);
                 }
             });
         }
     }
 
     @Override
-    public void taoDonTraHang(PackageInfoModel infoModel,String name,String id) {
-        activity.addFragment(new FragmentDonTraHang().newIntance(infoModel,name,id),true,null);
-    }
-
-    private void onBack() {
-        if (activity!=null){
-            activity.checkBack();
+    public void taoDonTraHang(PackageInfoModel infoModel, String name, String id) {
+        if (activity != null) {
+            activity.changToFragmentCreateDonTraHang(infoModel, name, id);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    view.hideRootView();
+                }
+            }, 500);
         }
     }
+
+    boolean isUpdateItem = false;
+    @SuppressWarnings("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBackShowRootViewEvent2(BackShowRootViewEvent2 event) {
+        isUpdateItem = true;
+        if (isUpdateItem) {
+            view.showRootView();
+            isUpdateItem = false;
+        }
+    }
+
+    public void setDataProduct(ProductListModel model) {
+        if (model!=null){
+            view.sentDataProductToView(model);
+        }
+    }
+
+//    @SuppressWarnings("unused")
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onUpdateCreateProductEvent(UpdateCreateProductEvent event) {
+//        isUpdateItem = true;
+//        if (isUpdateItem) {
+//            view.showRootView();
+//            isUpdateItem = false;
+//        }
+//    }
 }

@@ -12,4 +12,6 @@ public interface FragmentDoiTraHangHoaViewCallback {
     void getAllData();
 
     void searchData(String search);
+
+    void changToFragmentFilterDoiTraHangHoa();
 }

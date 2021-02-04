@@ -1,6 +1,7 @@
 package qtc.project.pos.fragment.employee;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,10 +11,14 @@ import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
+import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
 import qtc.project.pos.activity.HomeActivity;
+import qtc.project.pos.api.customer.CustomerRequest;
 import qtc.project.pos.api.employee.EmployeeRequest;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.event.UpdateListProductEvent;
 import qtc.project.pos.model.BaseResponseModel;
+import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.EmployeeModel;
 import qtc.project.pos.model.LevelEmployeeModel;
 import qtc.project.pos.ui.views.fragment.employee.detail.FragmentEmployeeDetailView;
@@ -123,37 +128,80 @@ public class FragmentEmployeeDetail extends BaseFragment<FragmentEmployeeDetailV
 
     @Override
     public void deleteEmployee(EmployeeModel employeeModel) {
-        if (employeeModel != null) {
-            showProgress();
-            EmployeeRequest.ApiParams params = new EmployeeRequest.ApiParams();
-            params.type_manager = "delete_employee";
-            // xoa tai khoan dang muon xoa.
-            params.id_employee = employeeModel.getId();
+        String title = "Xóa khách hàng";
+        String message = "Bạn có muốn xóa khách hàng?";
 
-            AppProvider.getApiManagement().call(EmployeeRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<EmployeeModel>>() {
-                @Override
-                public void onSuccess(BaseResponseModel<EmployeeModel> body) {
-                    dismissProgress();
-                    if (body.getSuccess().equals("true")) {
-                        view.showDiaLogDelete();
-                    } else if (body.getSuccess().equals("false")) {
-                        Toast.makeText(activity, "" + body.getMessage(), Toast.LENGTH_SHORT).show();
+        showConfirmAlert(title, message, new KAlertDialog.KAlertClickListener() {
+            @Override
+            public void onClick(KAlertDialog kAlertDialog) {
+                //confirm
+                kAlertDialog.dismiss();
+                //request active or lock account
+                final KAlertDialog mCustomAlert = new KAlertDialog(getContext());
+                mCustomAlert.setContentText("Đang xử lý...")
+                        .showCancelButton(false)
+                        .setCancelClickListener(null)
+                        .changeAlertType(KAlertDialog.PROGRESS_TYPE);
+
+                mCustomAlert.setCancelable(false);
+                mCustomAlert.setCanceledOnTouchOutside(false);
+                mCustomAlert.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        showProgress();
+                        showProgress();
+                        EmployeeRequest.ApiParams params = new EmployeeRequest.ApiParams();
+                        params.type_manager = "delete_employee";
+                        // xoa tai khoan dang muon xoa.
+                        params.id_employee = employeeModel.getId();
+
+                        AppProvider.getApiManagement().call(EmployeeRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<EmployeeModel>>() {
+                            @Override
+                            public void onSuccess(BaseResponseModel<EmployeeModel> body) {
+                                dismissProgress();
+                                if (!TextUtils.isEmpty(body.getSuccess()) && body.getSuccess().equals("true")) {
+                                    mCustomAlert.setContentText(body.getMessage())
+                                            .setConfirmText("OK")
+                                            .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                                                @Override
+                                                public void onClick(KAlertDialog kAlertDialog) {
+                                                    dismissProgress();
+                                                    UpdateListProductEvent.post();
+                                                    mCustomAlert.dismissWithAnimation();
+                                                    mCustomAlert.dismiss();
+                                                    onBackProgress();
+                                                }
+                                            })
+                                            .changeAlertType(KAlertDialog.SUCCESS_TYPE);
+                                } else {
+                                    showAlert(body.getMessage(), KAlertDialog.ERROR_TYPE);
+                                }
+                            }
+
+                            @Override
+                            public void onError(ErrorApiResponse error) {
+                                dismissProgress();
+                                Log.e("onError", error.message);
+                            }
+
+                            @Override
+                            public void onFail(ApiRequest.RequestError error) {
+                                dismissProgress();
+                                Log.e("onFail", error.name());
+                            }
+                        });
                     }
-                }
-
-                @Override
-                public void onError(ErrorApiResponse error) {
-                    dismissProgress();
-                    Log.e("onError", error.message);
-                }
-
-                @Override
-                public void onFail(ApiRequest.RequestError error) {
-                    dismissProgress();
-                    Log.e("onFail", error.name());
-                }
-            });
-        }
+                }, 500);
+            }
+        }, new KAlertDialog.KAlertClickListener() {
+            @Override
+            public void onClick(KAlertDialog kAlertDialog) {
+                //cancel
+                kAlertDialog.dismiss();
+            }
+        }, KAlertDialog.WARNING_TYPE);
     }
 
     @Override

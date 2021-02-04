@@ -1,7 +1,10 @@
 package qtc.project.pos.ui.views.fragment.product.doitra;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,117 +14,238 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
+import b.laixuantam.myaarlibrary.helper.AppUtils;
 import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
+import b.laixuantam.myaarlibrary.widgets.cptr.PtrClassicFrameLayout;
+import b.laixuantam.myaarlibrary.widgets.cptr.PtrDefaultHandler;
+import b.laixuantam.myaarlibrary.widgets.cptr.PtrFrameLayout;
+import b.laixuantam.myaarlibrary.widgets.cptr.recyclerview.RecyclerAdapterWithHF;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
+import qtc.project.pos.adapter.product.ProductListAdapter;
 import qtc.project.pos.adapter.product.doitra.ProductListDTHHAdapter;
+import qtc.project.pos.dialog.option.OptionModel;
 import qtc.project.pos.fragment.product.doitra.FragmentFilterDoiTraHangHoa;
+import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.PackageReturnModel;
+import qtc.project.pos.model.ProductListModel;
+import qtc.project.pos.ui.views.fragment.list_base.FragmentListBaseViewCallback;
+import qtc.project.pos.ui.views.fragment.list_base.FragmentListBaseViewInterface;
 
-public class FragmentDoiTraHangHoaView extends BaseView<FragmentDoiTraHangHoaView.UIContainer> implements FragmentDoiTraHangHoaViewInterface {
+public class FragmentDoiTraHangHoaView extends BaseView<FragmentDoiTraHangHoaView.UIContainer> implements FragmentListBaseViewInterface {
 
     HomeActivity activity;
-    FragmentDoiTraHangHoaViewCallback callback;
+    FragmentListBaseViewCallback callback;
+    private RecyclerAdapterWithHF recyclerAdapterWithHF;
+    private ArrayList<OptionModel> listDatas = new ArrayList<>();
+    private Timer timer = new Timer();
+    private final long DELAY = 1000; // in ms
+    private boolean isRefreshList = false;
+    boolean enableLoadMore = true;
+
+    ProductListDTHHAdapter productListAdapter;
 
     @Override
-    public void init(HomeActivity activity, FragmentDoiTraHangHoaViewCallback callback) {
+    public void init(HomeActivity activity, FragmentListBaseViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-        KeyboardUtils.setupUI(getView(),activity);
-        callBack();
+        KeyboardUtils.setupUI(getView(), activity);
+        ui.title_header.setText("Đổi trả hàng hóa");
+        ui.edit_filter.setHint("Mã trả hàng");
+        ui.actionAdd.setVisibility(View.GONE);
+        ui.actionFilter.setVisibility(View.VISIBLE);
+        ui.imageNavLeft.setOnClickListener(v -> {
+            if (callback!=null)
+                callback.onClickBackHeader();
+        });
 
-        getData();
+        ui.actionFilter.setOnClickListener(v -> {
+            if (callback!=null)
+                callback.onClickFilter();
+        });
+
+        ui.edit_filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer != null)
+                    timer.cancel();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() >= 1) {
+
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            String key = s.toString().trim();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.hideKeyBoard(getView());
+                                    listDatas.clear();
+                                    productListAdapter.notifyDataSetChanged();
+                                    ui.recycler_view_list_order.getRecycledViewPool().clear();
+                                    callback.onRequestSearchWithFilter( key);
+                                }
+                            });
+                        }
+
+                    }, DELAY);
+                } else {
+                    if (!isRefreshList) {
+                        AppUtils.hideKeyBoard(getView());
+                        listDatas.clear();
+                        productListAdapter.notifyDataSetChanged();
+                        ui.recycler_view_list_order.getRecycledViewPool().clear();
+                        callback.onRequestSearchWithFilter( "");
+                    }
+                }
+            }
+        });
+
+        setUpListData();
+    }
+
+    private void setUpListData() {
+        ui.recycler_view_list_order.getRecycledViewPool().clear();
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, false);
+        ui.recycler_view_list_order.setLayoutManager(linearLayoutManager);
+
+        //todo setup list with adapter
+
+        productListAdapter = new ProductListDTHHAdapter(getContext(), listDatas);
+
+        productListAdapter.setListener(item -> {
+            if (callback != null)
+                callback.onItemListSelected(item);
+        });
+
+        recyclerAdapterWithHF = new RecyclerAdapterWithHF(productListAdapter);
+
+        ui.recycler_view_list_order.setAdapter(recyclerAdapterWithHF);
+
+        ui.ptrClassicFrameLayout.setLoadMoreEnable(true);
+
+        ui.ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler(true) {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                AppUtils.hideKeyBoard(getView());
+                isRefreshList = true;
+                ui.edit_filter.setText("");
+                listDatas.clear();
+                productListAdapter.notifyDataSetChanged();
+                ui.recycler_view_list_order.getRecycledViewPool().clear();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ui.ptrClassicFrameLayout.refreshComplete();
+
+                        if (callback != null) {
+                            callback.refreshLoadingList();
+                            isRefreshList = false;
+                        }
+                    }
+                }, 100);
+
+
+            }
+        });
+
+        ui.ptrClassicFrameLayout.setOnLoadMoreListener(() -> handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+
+                if (callback != null)
+                    callback.onRequestLoadMoreList();
+
+            }
+        }, 100));
     }
 
     @Override
-    public void mappingRecyclerView(ArrayList<PackageReturnModel> list) {
-        if (list!=null){
-            ProductListDTHHAdapter adapter = new ProductListDTHHAdapter(activity, list);
-            ui.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-            ui.recycler_view_list.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+    public void showEmptyList() {
+        setVisible(ui.layoutEmptyList);
+        setGone(ui.ptrClassicFrameLayout);
+    }
 
-            adapter.setListener(new ProductListDTHHAdapter.ProductListDTHHAdapterListener() {
-                @Override
-                public void onClickItem(PackageReturnModel model) {
-                    if (callback!=null)
-                        callback.sentDataToDetailDTHH(model);
-                }
-            });
+    @Override
+    public void hideEmptyList() {
+        setGone(ui.layoutEmptyList);
+        setVisible(ui.ptrClassicFrameLayout);
+    }
+
+    @Override
+    public void setDataList(BaseResponseModel dataList) {
+        ui.recycler_view_list_order.getRecycledViewPool().clear();
+
+        if (dataList.getData() == null || dataList.getData().length == 0) {
+            if (listDatas.size() == 0)
+                showEmptyList();
+            return;
         }
-        else {
-            Toast.makeText(activity, "Không có kết quả tìm kiếm", Toast.LENGTH_SHORT).show();
+
+        hideEmptyList();
+
+//        listDatas.addAll(Arrays.asList(arrDatas));
+        PackageReturnModel[] arrOrder = (PackageReturnModel[]) dataList.getData();
+        for (PackageReturnModel itemOrderModel : arrOrder) {
+            OptionModel optionModel = new OptionModel();
+            optionModel.setDtaCustom(itemOrderModel);
+            listDatas.add(optionModel);
+//            if (productListAdapter != null) {
+//                productListAdapter.getListData().add(optionModel);
+//                productListAdapter.getListDataBackup().add(optionModel);
+//            }
         }
+
+        recyclerAdapterWithHF.notifyDataSetChanged();
+        ui.ptrClassicFrameLayout.loadMoreComplete(true);
+        ui.ptrClassicFrameLayout.setLoadMoreEnable(true);
     }
 
-    private void getData() {
-        if (callback != null) {
-            callback.getDataDoiTraHangHoa();
-        }
+    @Override
+    public void setNoMoreLoading() {
+        ui.ptrClassicFrameLayout.loadMoreComplete(true);
+        ui.ptrClassicFrameLayout.setLoadMoreEnable(false);
     }
 
-    private void callBack() {
-        ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (callback != null)
-                    callback.onBackProgress();
-            }
-        });
-        //fillter
-        ui.image_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (activity!=null)
-                    activity.replaceFragment(new FragmentFilterDoiTraHangHoa(),true,null);
-            }
-        });
-
-        //search customer
-        ui.edit_filter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (ui.edit_filter.getText().toString()!=null&& !ui.edit_filter.getText().toString().isEmpty()){
-                        searchPackInfo(ui.edit_filter.getText().toString());
-                        return true;
-                    }
-                }
-                Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-        ui.search_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ui.edit_filter.getText().toString() != null&& !ui.edit_filter.getText().toString().isEmpty()) {
-                    searchPackInfo(ui.edit_filter.getText().toString());
-                } else {
-                    Toast.makeText(activity, "Không có kết quả tìm kiếm!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        //xos search
-        ui.image_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ui.edit_filter.setText(null);
-                if (callback!=null)
-                    callback.getAllData();
-            }
-        });
+    @Override
+    public void resetListData() {
+        listDatas.clear();
+        productListAdapter.notifyDataSetChanged();
+        ui.recycler_view_list_order.getRecycledViewPool().clear();
     }
 
-    private void searchPackInfo(String search) {
-        if (callback!=null)
-            callback.searchData(search);
+    @Override
+    public void hideRootView() {
+        setGone(ui.layoutRootView);
     }
 
+    @Override
+    public void showRootView() {
+        setVisible(ui.layoutRootView);
+    }
+
+    @Override
+    public void clearListData() {
+        listDatas.clear();
+        productListAdapter.notifyDataSetChanged();
+        ui.recycler_view_list_order.getRecycledViewPool().clear();
+    }
 
     @Override
     public BaseUiContainer getUiContainer() {
@@ -130,28 +254,38 @@ public class FragmentDoiTraHangHoaView extends BaseView<FragmentDoiTraHangHoaVie
 
     @Override
     public int getViewId() {
-        return R.layout.layout_fragment_doi_tra_hang_hoa;
+        return R.layout.layout_admin_fragment_list_base;
     }
 
-    public static class UIContainer extends BaseUiContainer {
-        @UiElement(R.id.recycler_view_list)
-        public RecyclerView recycler_view_list;
+    public class UIContainer extends BaseUiContainer {
+        @UiElement(R.id.layoutRootView)
+        public View layoutRootView;
 
         @UiElement(R.id.imageNavLeft)
-        public ImageView imageNavLeft;
+        public View imageNavLeft;
 
-        @UiElement(R.id.search_button)
-        public ImageView search_button;
+        @UiElement(R.id.title_header)
+        public TextView title_header;
 
         @UiElement(R.id.edit_filter)
         public EditText edit_filter;
 
-        @UiElement(R.id.image_filter)
-        public ImageView image_filter;
+        @UiElement(R.id.btnAction1)
+        public ImageView actionAdd;
 
-        @UiElement(R.id.image_close)
-        public ImageView image_close;
+        @UiElement(R.id.imvAction1)
+        public ImageView imvAction1;
 
+        @UiElement(R.id.btnAction2)
+        public View actionFilter;
 
+        @UiElement(R.id.ptrClassicFrameLayout)
+        public PtrClassicFrameLayout ptrClassicFrameLayout;
+
+        @UiElement(R.id.recycler_view_list)
+        public RecyclerView recycler_view_list_order;
+
+        @UiElement(R.id.layoutEmptyList)
+        public View layoutEmptyList;
     }
 }

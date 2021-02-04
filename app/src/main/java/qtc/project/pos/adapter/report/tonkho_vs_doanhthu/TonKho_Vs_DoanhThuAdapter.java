@@ -12,7 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import b.laixuantam.myaarlibrary.helper.NumericFormater;
+//import b.laixuantam.myaarlibrary.helper.NumericFormater;
+import b.laixuantam.myaarlibrary.helper.CurrencyFormater;
 import qtc.project.pos.R;
 import qtc.project.pos.model.Stock_Income_Model;
 
@@ -55,8 +56,8 @@ public class TonKho_Vs_DoanhThuAdapter extends RecyclerView.Adapter<TonKho_Vs_Do
             long valueStock = Long.valueOf(list.get(position).getValueStock());
             long valueIncome = Long.valueOf(list.get(position).getValueIncome());
 
-            String valueStockF = NumericFormater.getStringPrice(valueStock, NumericFormater.SHORT_PRICE);
-            String valueIncomeF = NumericFormater.getStringPrice(valueIncome, NumericFormater.SHORT_PRICE);
+            String valueStockF = CurrencyFormater.getStringPrice(valueStock, CurrencyFormater.SHORT_PRICE);
+            String valueIncomeF = CurrencyFormater.getStringPrice(valueIncome, CurrencyFormater.SHORT_PRICE);
 
             holder.id_one.setText(valueStockF);
             holder.id_two.setText(valueIncomeF);

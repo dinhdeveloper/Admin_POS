@@ -48,5 +48,7 @@ public class CustomerRequest extends ApiRequest<CustomerRequest.Service, BaseRes
         public String email;
         public String phone_number;
         public String address;
+        public String page;
+        public String limit;
     }
 }

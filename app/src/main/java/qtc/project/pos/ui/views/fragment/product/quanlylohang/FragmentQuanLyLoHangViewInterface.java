@@ -10,4 +10,10 @@ public interface FragmentQuanLyLoHangViewInterface extends BaseViewInterface {
     void init(HomeActivity activity,FragmentQuanLyLoHangViewCallback callback);
 
     void mappingRecyclerView(ArrayList<ProductListModel> list);
+
+    void hideRootView();
+
+    void showRootView();
+
+    void hideRecyclerViewDetail();
 }

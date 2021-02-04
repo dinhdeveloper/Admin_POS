@@ -6,7 +6,7 @@
     <solid android:color="@color/hinhnen"/>
 
     <stroke
-        android:width="2dp"
+        android:width="1dp"
         android:color="@color/black" />
 
 </shape>

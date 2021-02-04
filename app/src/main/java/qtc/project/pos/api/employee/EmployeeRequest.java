@@ -50,6 +50,8 @@ public class EmployeeRequest  extends ApiRequest<EmployeeRequest.Service, BaseRe
         public String old_password;
         public String status;
         public String password_reset;
+        public String page;
+        public String limit;
 
         //cap nhat pw
 

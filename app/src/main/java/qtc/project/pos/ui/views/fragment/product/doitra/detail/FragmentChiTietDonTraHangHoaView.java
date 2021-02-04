@@ -11,6 +11,7 @@ import android.widget.TextView;
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
+import b.laixuantam.myaarlibrary.widgets.roundview.RoundTextView;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.model.PackageReturnModel;
@@ -24,6 +25,7 @@ public class FragmentChiTietDonTraHangHoaView extends BaseView<FragmentChiTietDo
         this.activity = activity;
         this.callback = callback;
         KeyboardUtils.setupUI(getView(),activity);
+        ui.title_header.setText("Chi tiết đơn trả hàng hóa");
         onClick();
     }
 
@@ -146,6 +148,9 @@ public class FragmentChiTietDonTraHangHoaView extends BaseView<FragmentChiTietDo
         @UiElement(R.id.ma_tra_hang)
         public TextView ma_tra_hang;
 
+        @UiElement(R.id.title_header)
+        public TextView title_header;
+
         @UiElement(R.id.ten_sp)
         public TextView ten_sp;
 
@@ -171,7 +176,7 @@ public class FragmentChiTietDonTraHangHoaView extends BaseView<FragmentChiTietDo
         public TextView nguoi_tao_don;
 
         @UiElement(R.id.lydo_tra)
-        public TextView lydo_tra;
+        public RoundTextView lydo_tra;
 
         @UiElement(R.id.id_lo_hang)
         public TextView id_lo_hang;

@@ -38,6 +38,8 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
         this.callback = callback;
 
         KeyboardUtils.setupUI(getView(), activity);
+        ui.tvTitleHeader.setText("Danh sách nhân viên");
+        ui.edit_filter.setHint("Tên nhân viên");
 
         ui.edit_filter.addTextChangedListener(new TextWatcher() {
             @Override
@@ -170,18 +172,6 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
                     callback.createEmployee();
             }
         });
-
-        //close
-        ui.image_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ui.edit_filter.setText(null);
-                if (callback != null) {
-                    callback.getAllDataEmployee();
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
     }
 
     private void getDataEmployee() {
@@ -205,21 +195,17 @@ public class FragmentEmployeeListView extends BaseView<FragmentEmployeeListView.
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
 
-        @UiElement(R.id.ic_search)
-        public ImageView ic_search;
+        @UiElement(R.id.tvTitleHeader)
+        public TextView tvTitleHeader;
 
-        @UiElement(R.id.image_create)
+        @UiElement(R.id.btnAction1)
         public ImageView image_create;
-
-        @UiElement(R.id.image_close)
-        public ImageView image_close;
 
         @UiElement(R.id.edit_filter)
         public EditText edit_filter;
 
         @UiElement(R.id.recycler_view_list)
         public RecyclerView recycler_view_list;
-
 
     }
 }

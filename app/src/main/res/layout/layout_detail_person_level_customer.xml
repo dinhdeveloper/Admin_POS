@@ -9,6 +9,7 @@
     android:paddingBottom="50dp"
     android:id="@+id/layout_detail_persion"
     android:visibility="gone"
+    tools:visibility="visible"
     android:orientation="vertical">
 
     <RelativeLayout

@@ -25,7 +25,6 @@ import qtc.project.pos.R;
 
 /**
  * <p>The {@code DialogFragment} that contains the {@link SlidingTabLayout}
- * and {@link CustomViewPager}.</p>
  *
  * <p>The {@code CustomViewPager} contains the {@link DateFragment} and {@link TimeFragment}.</p>
  *
@@ -40,7 +39,7 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
     private static SlideDateTimeListener mListener;
 
     private Context mContext;
-    private CustomViewPager mViewPager;
+//    private CustomViewPager2 mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
     private SlidingTabLayout mSlidingTabLayout;
     private View mButtonHorizontalDivider;
@@ -177,7 +176,7 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
     }
 
     private void setupViews(View v) {
-        mViewPager = (CustomViewPager) v.findViewById(R.id.viewPager);
+        //mViewPager = (CustomViewPager2) v.findViewById(R.id.viewPager);
         mSlidingTabLayout = (SlidingTabLayout) v.findViewById(R.id.slidingTabLayout);
         mButtonHorizontalDivider = v.findViewById(R.id.buttonHorizontalDivider);
         mButtonVerticalDivider = v.findViewById(R.id.buttonVerticalDivider);
@@ -212,12 +211,12 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
     private void initViewPager() {
         mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         mViewPagerAdapter.setType_show_dialog(typeShowDialog);
-        mViewPager.setAdapter(mViewPagerAdapter);
+        //mViewPager.setAdapter(mViewPagerAdapter);
 
         // Setting this custom layout for each tab ensures that the tabs will
         // fill all available horizontal space.
         mSlidingTabLayout.setCustomTabView(R.layout.custom_tab, R.id.tabText);
-        mSlidingTabLayout.setViewPager(mViewPager);
+        //mSlidingTabLayout.setViewPager(mViewPager);
     }
 
     private void initTabs() {

@@ -17,12 +17,13 @@ import android.widget.TextView;
 
 import java.util.Objects;
 
-import b.laixuantam.myaarlibrary.helper.NumericFormater;
+import b.laixuantam.myaarlibrary.helper.CurrencyFormater;
 import b.laixuantam.myaarlibrary.widgets.dialog.AppDialog;
 import qtc.project.pos.R;
 
-import static b.laixuantam.myaarlibrary.helper.NumericFormater.parseCurrency;
-import static b.laixuantam.myaarlibrary.helper.NumericFormater.parseNumber;
+import static b.laixuantam.myaarlibrary.helper.CurrencyFormater.parseCurrency;
+import static b.laixuantam.myaarlibrary.helper.CurrencyFormater.parseNumber;
+
 
 public class InputNumberDialog extends AppDialog<InputNumberDialog.DialogChoseNumberListener> implements OnClickListener {
     private static final String EXTRA_NOTE = "EXTRA_NOTE";
@@ -103,8 +104,8 @@ public class InputNumberDialog extends AppDialog<InputNumberDialog.DialogChoseNu
 
         buttonRemove = dialogLayout.findViewById(R.id.button_remove);
         textValueNumber = dialogLayout.findViewById(R.id.text_value);
-        sValue.append(NumericFormater.formatNumber(defaultValue));
-        textValueNumber.setText(NumericFormater.formatCurrency(defaultValue));
+        sValue.append(CurrencyFormater.formatNumber(defaultValue));
+        textValueNumber.setText(CurrencyFormater.formatCurrency(defaultValue));
         textValueNumber.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.gray_light_opacity));
 
         buttonRemove.setOnClickListener(v -> {
@@ -130,12 +131,12 @@ public class InputNumberDialog extends AppDialog<InputNumberDialog.DialogChoseNu
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
-                        textValueNumber.setText(NumericFormater.formatCurrency(number1) + "." + s[1]);
+                        textValueNumber.setText(CurrencyFormater.formatCurrency(number1) + "." + s[1]);
                     } else {
-                        textValueNumber.setText(NumericFormater.formatCurrency(number));
+                        textValueNumber.setText(CurrencyFormater.formatCurrency(number));
                     }
                 } else {
-                    String sDefault = NumericFormater.formatNumber(defaultValue);
+                    String sDefault = CurrencyFormater.formatNumber(defaultValue);
                     sValue.append(sDefault);
                     textValueNumber.setText(sDefault);
                     firstDefaultValue = true;
@@ -184,9 +185,9 @@ public class InputNumberDialog extends AppDialog<InputNumberDialog.DialogChoseNu
         try {
             number = parseNumber(sValue.toString());
             if (hasSign) {
-                textValueNumber.setText(NumericFormater.formatCurrency(parseNumber(s[0])) + "." + (s.length == 2 ? s[1] : ""));
+                textValueNumber.setText(CurrencyFormater.formatCurrency(parseNumber(s[0])) + "." + (s.length == 2 ? s[1] : ""));
             } else {
-                textValueNumber.setText(NumericFormater.formatCurrency(number));
+                textValueNumber.setText(CurrencyFormater.formatCurrency(number));
             }
             buttonRemove.setVisibility(View.VISIBLE);
         } catch (Exception e) {

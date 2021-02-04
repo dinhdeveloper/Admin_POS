@@ -5,52 +5,7 @@
     android:background="@color/hinhnen"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background_toolbar_home"
-        android:minHeight="?attr/actionBarSize"
-        android:paddingRight="8dp">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageNavLeft"
-                    android:padding="@dimen/dp10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_icon_back" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Chi tiết khách hàng"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
-            </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.Toolbar>
+    <include layout="@layout/layout_header_detail"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -300,6 +255,7 @@
                 android:background="@drawable/custom_background_button_login">
 
                 <TextView
+                    android:id="@+id/tvTitleUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

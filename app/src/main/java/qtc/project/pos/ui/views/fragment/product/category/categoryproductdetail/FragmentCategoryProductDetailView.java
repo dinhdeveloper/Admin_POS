@@ -1,7 +1,7 @@
 package qtc.project.pos.ui.views.fragment.product.category.categoryproductdetail;
 
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -36,23 +36,24 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
     }
 
     @Override
-    public void sendDataToView(ProductCategoryModel model) {
-        ui.id_product_category.setText(model.getId_code());
-        ui.name_product_category_header.setText(model.getName());
-        ui.name_product_category.setText(model.getName());
-        ui.description_product.setText(model.getDescription());
-        AppProvider.getImageHelper().displayImage(Consts.HOST_API+model.getImage(),ui.image_product,null,R.drawable.imageloading);
-
-        ui.choose_file_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopupMenu(view);
+    public void setDataCategoryDetail(ProductCategoryModel model) {
+        if (model!=null){
+            ui.id_product_category.setText(model.getId_code());
+            if (!TextUtils.isEmpty(model.getName())){
+                ui.title_header.setText(model.getName());
+                ui.name_product_category.setText(model.getName());
             }
-        });
+            ui.description_product.setText(model.getDescription());
+            AppProvider.getImageHelper().displayImage(Consts.HOST_API+model.getImage(),ui.image_product,null,R.drawable.no_image_full);
 
-        ui.layout_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            ui.choose_file_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPopupMenu(view);
+                }
+            });
+
+            ui.layout_update.setOnClickListener(view -> {
                 ProductCategoryModel categoryModel = new ProductCategoryModel();
                 categoryModel.setId(model.getId());
                 categoryModel.setName(ui.name_product_category.getText().toString());
@@ -60,47 +61,29 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
                 categoryModel.setImage(user_avata);
                 categoryModel.setId_code(ui.id_product_category.getText().toString());
                 if (callback !=null){
-                    callback.updateData(categoryModel);
+                    callback.updateCategoryDetail(categoryModel);
                 }
-            }
-        });
+            });
+            ui.layout_delete.setOnClickListener(v -> {
+                if (callback!=null)
+                    callback.deleteProductCategoryModel(model.getId());
+            });
 
-        ui.layout_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                LayoutInflater layoutInflater = activity.getLayoutInflater();
-                View popupView = layoutInflater.inflate(R.layout.alert_dialog_waiting, null);
-                TextView title_text = popupView.findViewById(R.id.title_text);
-                TextView content_text = popupView.findViewById(R.id.content_text);
-                Button cancel_button = popupView.findViewById(R.id.cancel_button);
-                Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
-
-                title_text.setText("Cảnh báo");
-                content_text.setText("Bạn có muốn xóa danh mục này không?");
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setView(popupView);
-                AlertDialog dialog = alert.create();
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
-                cancel_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (callback!=null)
-                            callback.deleteProductCategoryModel(model.getId());
-                        dialog.dismiss();
-                    }
-                });
-            }
-        });
-
+        }else {
+            ui.layout_delete.setVisibility(View.GONE);
+            ui.title_header.setText("Tạo mới danh mục");
+            ui.tvTitleUpdate.setText("Tạo mới");
+            ui.layout_update.setOnClickListener(v -> {
+                ProductCategoryModel categoryModel = new ProductCategoryModel();
+                categoryModel.setName(ui.name_product_category.getText().toString());
+                categoryModel.setDescription(ui.description_product.getText().toString());
+                categoryModel.setImage(user_avata);
+                categoryModel.setId_code(ui.id_product_category.getText().toString());
+                if (callback !=null){
+                    callback.updateCategoryDetail(categoryModel);
+                }
+            });
+        }
     }
 
     private void showPopupMenu(View view) {
@@ -148,50 +131,11 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
 
     @Override
     public void confirmDialog() {
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
-        TextView title_text = popupView.findViewById(R.id.title_text);
-        TextView content_text = popupView.findViewById(R.id.content_text);
-        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
-
-        title_text.setText("Xác nhận");
-        content_text.setText("Bạn đã cập nhật thành công!");
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-        alert.setView(popupView);
-        AlertDialog dialog = alert.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
     }
 
     @Override
     public void confirm() {
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
-        TextView title_text = popupView.findViewById(R.id.title_text);
-        TextView content_text = popupView.findViewById(R.id.content_text);
-        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
 
-        title_text.setText("Xác nhận");
-        content_text.setText("Bạn đã xóa danh mục này thành công!");
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-        alert.setView(popupView);
-        AlertDialog dialog = alert.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
     }
 
     public void changeStateBtnSubmitUpdate(boolean active) {
@@ -230,8 +174,8 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
 
-        @UiElement(R.id.name_product_category_header)
-        public TextView name_product_category_header;
+        @UiElement(R.id.title_header)
+        public TextView title_header;
 
         @UiElement(R.id.name_product_category)
         public EditText name_product_category;
@@ -250,6 +194,10 @@ public class FragmentCategoryProductDetailView extends BaseView<FragmentCategory
 
         @UiElement(R.id.layout_update)
         public LinearLayout layout_update;
+
+        @UiElement(R.id.tvTitleUpdate)
+        public TextView tvTitleUpdate;
+
 
         @UiElement(R.id.layout_delete)
         public LinearLayout layout_delete;

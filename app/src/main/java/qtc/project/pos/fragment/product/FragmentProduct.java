@@ -18,6 +18,36 @@ public class FragmentProduct extends BaseFragment<FragmentProductViewInterface, 
     }
 
     @Override
+    public void changToFragmentCategoryProduct() {
+        if (activity!=null)
+            activity.changToFragmentCategoryProduct();
+    }
+
+    @Override
+    public void changToFragmentListProduct() {
+        if (activity!=null)
+            activity.changToFragmentListProduct();
+    }
+
+    @Override
+    public void changToFragmentLoHangManager() {
+        if (activity!=null)
+            activity.changToFragmentLoHangManager();
+    }
+
+    @Override
+    public void changToFragmentDoiTraHangHoa() {
+        if (activity!=null)
+            activity.changToFragmentDoiTraHangHoa();
+    }
+
+    @Override
+    public void changToFragmentDisableProduct() {
+        if (activity!=null)
+            activity.changToFragmentDisableProduct();
+    }
+
+    @Override
     protected FragmentProductViewInterface getViewInstance() {
         return new FragmentProductView();
     }

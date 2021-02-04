@@ -10,4 +10,6 @@ public interface FragmentChiTietLoHangViewCallback {
     void updateDataPackage(PackageInfoModel infoModel,String id);
 
     void taoDonTraHang(PackageInfoModel infoModel,String name,String id);
+
+    void getAllDataProduct(boolean check);
 }

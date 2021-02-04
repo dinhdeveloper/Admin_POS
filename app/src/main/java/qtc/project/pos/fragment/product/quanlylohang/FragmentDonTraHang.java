@@ -1,15 +1,21 @@
 package qtc.project.pos.fragment.product.quanlylohang;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import b.laixuantam.myaarlibrary.api.ApiRequest;
 import b.laixuantam.myaarlibrary.api.ErrorApiResponse;
 import b.laixuantam.myaarlibrary.base.BaseFragment;
 import b.laixuantam.myaarlibrary.base.BaseParameters;
+import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.product.packageproduct.PackageReturnRequest;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.event.BackShowRootViewEvent;
+import qtc.project.pos.event.BackShowRootViewEvent2;
+import qtc.project.pos.event.UpdateCreateProductEvent;
+import qtc.project.pos.event.UpdateListProductEvent;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.PackageInfoModel;
 import qtc.project.pos.model.PackageReturnModel;
@@ -33,9 +39,9 @@ public class FragmentDonTraHang extends BaseFragment<FragmentDonTraHangViewInter
 
     @Override
     protected void initialize() {
-        activity = (HomeActivity)getActivity();
-        view.init(activity,this);
-        
+        activity = (HomeActivity) getActivity();
+        view.init(activity, this);
+
         getBundle();
     }
 
@@ -61,13 +67,14 @@ public class FragmentDonTraHang extends BaseFragment<FragmentDonTraHangViewInter
 
     @Override
     public void onBackProgress() {
-        if (activity!=null)
+        if (activity != null)
             activity.checkBack();
+        BackShowRootViewEvent2.post();
     }
 
     @Override
     public void setDataDoiTraHang(PackageReturnModel returnModel) {
-        if (returnModel!=null){
+        if (returnModel != null) {
             PackageReturnRequest.ApiParams params = new PackageReturnRequest.ApiParams();
             params.type_manager = "create_package_return";
             params.id_code = returnModel.getProduct_return_id_code();
@@ -81,10 +88,12 @@ public class FragmentDonTraHang extends BaseFragment<FragmentDonTraHangViewInter
             AppProvider.getApiManagement().call(PackageReturnRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<PackageReturnModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<PackageReturnModel> body) {
-                    if (body.getSuccess().equals("true")){
+                    if (!TextUtils.isEmpty(body.getSuccess()) && body.getSuccess().equals("true")) {
+                        showAlert(body.getMessage(), KAlertDialog.SUCCESS_TYPE);
+                        BackShowRootViewEvent2.post();
                         view.showSuccess();
-                    } else if (body.getSuccess().equals("false")){
-                        Toast.makeText(activity, ""+body.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        showAlert(body.getMessage(), KAlertDialog.ERROR_TYPE);
                     }
                 }
 

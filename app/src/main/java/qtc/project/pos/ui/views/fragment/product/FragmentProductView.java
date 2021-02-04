@@ -3,6 +3,7 @@ package qtc.project.pos.ui.views.fragment.product;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
@@ -23,50 +24,39 @@ public class FragmentProductView  extends BaseView<FragmentProductView.UIContain
     public void init(HomeActivity activity, FragmentProductViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-        
+        ui.title_header.setText("Quản lý sản phẩm");
+        ui.tvTitlePermisstion.setText("Danh sách quản lý sản phẩm");
+        ui.tvTitlePermisstionDescription.setText("Đây là danh mục sản phẩm ta sẽ quản lý sửa đổi vận hành hệ thống");
         onClickItem();
     }
 
     private void onClickItem() {
-        ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(callback != null)
-                    callback.onClickBackHeader();
-            }
+        ui.imageNavLeft.setOnClickListener(view -> {
+            if(callback != null)
+                callback.onClickBackHeader();
         });
-        ui.layoutDMSP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.addFragment(new FragmentCategoryProduct(),true,null);
-            }
+        ui.layoutDMSP.setOnClickListener(view -> {
+            if (callback!=null)
+                callback.changToFragmentCategoryProduct();
         });
 
-        ui.layoutDSSP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.addFragment(new FragmentProductList(),true,null);
-            }
+        ui.layoutDSSP.setOnClickListener(view -> {
+            if (callback!=null)
+                callback.changToFragmentListProduct();
         });
-        ui.layoutQLLH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.addFragment(new FragmentQuanLyLoHang(),true,null);
-            }
+        ui.layoutQLLH.setOnClickListener(v -> {
+            if (callback!=null)
+                callback.changToFragmentLoHangManager();
         });
 
-        ui.layoutDTHH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.addFragment(new FragmentDoiTraHangHoa(),true,null);
-            }
+        ui.layoutDTHH.setOnClickListener(v -> {
+            if (callback!=null)
+                callback.changToFragmentDoiTraHangHoa();
         });
 
-        ui.layoutVHH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.addFragment(new FragmentProductDisable(),true,null);
-            }
+        ui.layoutVHH.setOnClickListener(v -> {
+            if (callback!=null)
+                callback.changToFragmentDisableProduct();
         });
     }
 
@@ -81,16 +71,33 @@ public class FragmentProductView  extends BaseView<FragmentProductView.UIContain
     }
 
     public static class UIContainer extends BaseUiContainer {
-        @UiElement(R.id.layoutDMSP)
-        public LinearLayout layoutDMSP;
-        @UiElement(R.id.layoutDSSP)
-        public LinearLayout layoutDSSP;
-        @UiElement(R.id.layoutQLLH)
-        public LinearLayout layoutQLLH;
-        @UiElement(R.id.layoutDTHH)
-        public LinearLayout layoutDTHH;
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
+
+        @UiElement(R.id.title_header)
+        public TextView title_header;
+
+        @UiElement(R.id.imvAction1)
+        public ImageView imvAction1;
+
+        @UiElement(R.id.tvTitlePermisstion)
+        public TextView tvTitlePermisstion;
+
+        @UiElement(R.id.tvTitlePermisstionDescription)
+        public TextView tvTitlePermisstionDescription;
+
+        @UiElement(R.id.layoutDMSP)
+        public LinearLayout layoutDMSP;
+
+        @UiElement(R.id.layoutDSSP)
+        public LinearLayout layoutDSSP;
+
+        @UiElement(R.id.layoutQLLH)
+        public LinearLayout layoutQLLH;
+
+        @UiElement(R.id.layoutDTHH)
+        public LinearLayout layoutDTHH;
+
         @UiElement(R.id.layoutVHH)
         public LinearLayout layoutVHH;
     }

@@ -74,15 +74,16 @@ public class FragmentOrderDetailView extends BaseView<FragmentOrderDetailView.UI
             String pattern = "###,###.###";
             DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
-            int tongtien = Integer.parseInt(model.getOrder_total());
-            int tamtinh = 0;
+            long tongtien = Long.valueOf(model.getOrder_total());
+            long tamtinh = 0;
             for (int i = 0; i < model.getListOrderDetailModel().size(); i++) {
                 int tien_one_item = Integer.parseInt(model.getListOrderDetailModel().get(i).getPrice()) * Integer.parseInt(model.getListOrderDetailModel().get(i).getQuantity());
                 tamtinh += tien_one_item;
             }
 
             ui.priceGiam.setText(decimalFormat.format(tamtinh - tongtien) + " VNĐ");
-            ui.priceTotal.setText(decimalFormat.format(Integer.parseInt(model.getOrder_total())) + " VNĐ");
+            ui.priceTotal.setText(decimalFormat.format(Double.valueOf(model.getOrder_total())) + " VNĐ");
+            ui.priceTempTT.setText(decimalFormat.format(Double.valueOf(model.getOrder_direct_discount())) + " VNĐ");
             //int tientemp = Integer.parseInt(model.getOrder_total()) + Integer.parseInt(model.getCustomer_level_discount());
             ui.priceTemp.setText(decimalFormat.format(tamtinh) + " VNĐ");
 
@@ -143,6 +144,9 @@ public class FragmentOrderDetailView extends BaseView<FragmentOrderDetailView.UI
 
         @UiElement(R.id.priceTotal)
         public TextView priceTotal;
+
+        @UiElement(R.id.priceTempTT)
+        public TextView priceTempTT;
 
 
         @UiElement(R.id.recycler_view_list)

@@ -8,7 +8,7 @@ public interface FragmentCategoryProductDetailViewCallback {
 
     void showDialogTakePicture();
 
-    void updateData(ProductCategoryModel categoryModel);
+    void updateCategoryDetail(ProductCategoryModel categoryModel);
 
     void deleteProductCategoryModel(String id);
 

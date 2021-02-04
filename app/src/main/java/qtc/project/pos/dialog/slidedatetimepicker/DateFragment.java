@@ -12,12 +12,12 @@ import android.widget.DatePicker.OnDateChangedListener;
 
 import java.util.Date;
 
+import b.laixuantam.myaarlibrary.widgets.slidedatetimepicker.CustomDatePicker;
 import qtc.project.pos.R;
 
 
 /**
  * The fragment for the first page in the ViewPager that holds
- * the {@link CustomDatePicker}.
  *
  * @author jjobes
  */
@@ -57,7 +57,6 @@ public class DateFragment extends Fragment {
     /**
      * Return an instance of DateFragment with its bundle filled with the
      * constructor arguments. The values in the bundle are retrieved in
-     * {@link #onCreateView()} below to properly initialize the DatePicker.
      *
      * @param theme
      * @param year

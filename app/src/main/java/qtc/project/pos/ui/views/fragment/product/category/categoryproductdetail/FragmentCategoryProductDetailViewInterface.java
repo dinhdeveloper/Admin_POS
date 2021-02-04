@@ -7,7 +7,7 @@ import qtc.project.pos.model.ProductCategoryModel;
 public interface FragmentCategoryProductDetailViewInterface extends BaseViewInterface {
     void init(HomeActivity activity, FragmentCategoryProductDetailViewCallback callback);
 
-    void sendDataToView(ProductCategoryModel model);
+    void setDataCategoryDetail(ProductCategoryModel model);
     void setDataProductImage(String outfile);
 
     void onBack();

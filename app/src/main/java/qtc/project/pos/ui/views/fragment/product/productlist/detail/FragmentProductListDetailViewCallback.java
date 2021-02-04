@@ -9,7 +9,7 @@ public interface FragmentProductListDetailViewCallback {
 
     void getAllProductCategory();
 
-    void undateData(ProductListModel listModel);
+    void updateProductDetail(ProductListModel listModel);
 
     void deleteProduct(ProductListModel model);
 

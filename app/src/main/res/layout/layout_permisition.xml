@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <b.laixuantam.myaarlibrary.widgets.roundview.RoundLinearLayout
+        android:id="@+id/layoutPermisstion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:rv_backgroundColor="@color/background_toolbar_home"
+        app:rv_cornerRadius_BL="20dp"
+        app:rv_cornerRadius_BR="20dp">
+
+        <TextView
+            android:id="@+id/tvTitlePermisstionDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="10dp"
+            android:textColor="@color/white"
+            android:textStyle="normal"
+            tools:text="Đây là danh mục theo dõi và tạo công việc cho nhân viên"
+            tools:visibility="visible" />
+
+        <b.laixuantam.myaarlibrary.widgets.roundview.RoundRelativeLayout
+            app:rv_backgroundColor="#4FFFFFFF"
+            app:rv_cornerRadius="@dimen/dp5"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitlePermisstion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:paddingRight="50dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="List danh mục quản lý nhân viên, List danh mục quản lý nhân viên" />
+
+            <ImageView
+                android:id="@+id/imgIconPermission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_icon_start" />
+        </b.laixuantam.myaarlibrary.widgets.roundview.RoundRelativeLayout>
+
+    </b.laixuantam.myaarlibrary.widgets.roundview.RoundLinearLayout>
+
+</RelativeLayout>

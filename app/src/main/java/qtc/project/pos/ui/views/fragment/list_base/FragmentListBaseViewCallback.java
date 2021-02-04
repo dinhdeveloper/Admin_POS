@@ -1,19 +1,22 @@
 package qtc.project.pos.ui.views.fragment.list_base;
 
+
 import qtc.project.pos.dialog.option.OptionModel;
 
-public interface FragmentAdminManagerListBaseViewCallback {
+public interface FragmentListBaseViewCallback {
     void onClickBackHeader();
 
     void refreshLoadingList();
 
     void onRequestLoadMoreList();
 
-    void onRequestSearchWithFilter(String status, String key);
+    void onRequestSearchWithFilter(String key);
 
     void onItemListSelected(OptionModel item);
 
     void onClickAddItem();
 
     void onDeleteItemSelected(OptionModel item);
+
+    void onClickFilter();
 }

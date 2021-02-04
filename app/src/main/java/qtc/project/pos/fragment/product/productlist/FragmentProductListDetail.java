@@ -21,8 +21,11 @@ import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.activity.Qr_BarcodeActivity;
 import qtc.project.pos.api.product.productcategory.ProductCategoryRequest;
+import qtc.project.pos.api.product.productcategory.ProductCategoryUpdateRequest;
 import qtc.project.pos.api.product.productlist.ProductListRequest;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.event.BackShowRootViewEvent;
+import qtc.project.pos.event.UpdateListProductEvent;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.ProductCategoryModel;
 import qtc.project.pos.model.ProductListModel;
@@ -54,7 +57,11 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
         Bundle extras = getArguments();
         if (extras != null) {
             ProductListModel model = (ProductListModel) extras.get("model");
-            view.sendDataToView(model);
+            if (model != null) {
+                view.setProductDetail(model);
+            } else {
+                view.setProductDetail(null);
+            }
         }
     }
 
@@ -91,7 +98,7 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
         }
     }
 
-    public void gotoQr_BarcodeActivity(){
+    public void gotoQr_BarcodeActivity() {
         startActivity(new Intent(activity, Qr_BarcodeActivity.class));
     }
 
@@ -127,12 +134,16 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
     }
 
     @Override
-    public void undateData(ProductListModel listModel) {
+    public void updateProductDetail(ProductListModel listModel) {
         showProgress();
         if (listModel != null) {
             ProductListRequest.ApiParams params = new ProductListRequest.ApiParams();
-            params.type_manager = "update_product";
-            params.id_product = listModel.getId();
+            if (!TextUtils.isEmpty(listModel.getId())) {
+                params.type_manager = "update_product";
+                params.id_product = listModel.getId();
+            } else {
+                params.type_manager = "create_product";
+            }
             params.id_code = listModel.getId_code();
             params.name = listModel.getName();
             params.description = listModel.getDescription();
@@ -147,23 +158,27 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
                 @Override
                 public void onSuccess(BaseResponseModel<ProductListModel> body) {
                     dismissProgress();
-                    if (body.getSuccess().equals("true")) {
-                        view.showConfirm();
-                    } else if (body.getSuccess().equals("false")) {
-                        Toast.makeText(activity, "" + body.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (!TextUtils.isEmpty(body.getSuccess()) && body.getSuccess().equals("true")) {
+                        showAlert(body.getMessage(), KAlertDialog.SUCCESS_TYPE);
+                        UpdateListProductEvent.post();
+                        if (params.type_manager.equalsIgnoreCase("create_product")) {
+                            view.clearData();
+                        }
+                    } else {
+                        showAlert(body.getMessage(), KAlertDialog.ERROR_TYPE);
                     }
                 }
 
                 @Override
                 public void onError(ErrorApiResponse error) {
                     dismissProgress();
-                    Log.e("", error.message);
+                    showAlert("Không tải được dữ liệu", KAlertDialog.ERROR_TYPE);
                 }
 
                 @Override
                 public void onFail(ApiRequest.RequestError error) {
                     dismissProgress();
-                    Log.e("", error.name());
+                    showAlert("Không tải được dữ liệu", KAlertDialog.ERROR_TYPE);
                 }
             });
         }
@@ -171,36 +186,80 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
 
     @Override
     public void deleteProduct(ProductListModel model) {
-        showProgress();
-        if (model!=null){
-            ProductListRequest.ApiParams params = new ProductListRequest.ApiParams();
-            params.type_manager = "delete_product";
-            params.id_product = model.getId();
+        String title = "Xóa danh mục sản phẩm";
+        String message = "Bạn có muốn xóa danh mục sản phẩm?";
 
-            AppProvider.getApiManagement().call(ProductListRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
-                @Override
-                public void onSuccess(BaseResponseModel<ProductListModel> body) {
-                    dismissProgress();
-                    if (body.getSuccess().equals("true")) {
-                        view.showConfirmDelete();
-                    } else if (body.getSuccess().equals("false")) {
-                        Toast.makeText(activity, "" + body.getMessage(), Toast.LENGTH_SHORT).show();
+        showConfirmAlert(title, message, new KAlertDialog.KAlertClickListener() {
+            @Override
+            public void onClick(KAlertDialog kAlertDialog) {
+                //confirm
+                kAlertDialog.dismiss();
+                //request active or lock account
+                final KAlertDialog mCustomAlert = new KAlertDialog(getContext());
+                mCustomAlert.setContentText("Đang xử lý...")
+                        .showCancelButton(false)
+                        .setCancelClickListener(null)
+                        .changeAlertType(KAlertDialog.PROGRESS_TYPE);
+
+                mCustomAlert.setCancelable(false);
+                mCustomAlert.setCanceledOnTouchOutside(false);
+                mCustomAlert.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        showProgress();
+                        if (model != null) {
+                            ProductListRequest.ApiParams params = new ProductListRequest.ApiParams();
+                            params.type_manager = "delete_product";
+                            params.id_product = model.getId();
+
+                            AppProvider.getApiManagement().call(ProductListRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
+                                @Override
+                                public void onSuccess(BaseResponseModel<ProductListModel> body) {
+                                    dismissProgress();
+                                    if (!TextUtils.isEmpty(body.getSuccess()) && body.getSuccess().equals("true")) {
+                                        mCustomAlert.setContentText("Xóa sản phẩm thành công.")
+                                                .setConfirmText("OK")
+                                                .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                                                    @Override
+                                                    public void onClick(KAlertDialog kAlertDialog) {
+                                                        dismissProgress();
+                                                        onBackprogress();
+                                                        UpdateListProductEvent.post();
+                                                        mCustomAlert.dismissWithAnimation();
+                                                        mCustomAlert.dismiss();
+                                                    }
+                                                })
+                                                .changeAlertType(KAlertDialog.SUCCESS_TYPE);
+                                    } else {
+                                        showAlert(body.getMessage(), KAlertDialog.ERROR_TYPE);
+                                    }
+                                }
+
+                                @Override
+                                public void onError(ErrorApiResponse error) {
+                                    dismissProgress();
+                                    showAlert("Không tải được dữ liệu", KAlertDialog.ERROR_TYPE);
+                                }
+
+                                @Override
+                                public void onFail(ApiRequest.RequestError error) {
+                                    dismissProgress();
+                                    showAlert("Không tải được dữ liệu", KAlertDialog.ERROR_TYPE);
+                                }
+                            });
+                        }
                     }
-                }
-
-                @Override
-                public void onError(ErrorApiResponse error) {
-                    dismissProgress();
-                    Log.e("", error.message);
-                }
-
-                @Override
-                public void onFail(ApiRequest.RequestError error) {
-                    dismissProgress();
-                    Log.e("", error.name());
-                }
-            });
-        }
+                }, 500);
+            }
+        }, new KAlertDialog.KAlertClickListener() {
+            @Override
+            public void onClick(KAlertDialog kAlertDialog) {
+                //cancel
+                kAlertDialog.dismiss();
+            }
+        }, KAlertDialog.WARNING_TYPE);
     }
 
     @Override
@@ -249,8 +308,8 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
                 showProgress();
                 ProductListRequest.ApiParams params = new ProductListRequest.ApiParams();
                 params.type_manager = "update_status_product";
-                params.id_product  = id;
-                params.status_product  = "N";
+                params.id_product = id;
+                params.status_product = "N";
                 AppProvider.getApiManagement().call(ProductListRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
                     @Override
                     public void onSuccess(BaseResponseModel<ProductListModel> body) {
@@ -264,6 +323,7 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
                                         public void onClick(KAlertDialog kAlertDialog) {
                                             mCustomAlert.dismissWithAnimation();
                                             onBackprogress();
+                                            UpdateListProductEvent.post();
                                         }
                                     })
                                     .changeAlertType(KAlertDialog.SUCCESS_TYPE);
@@ -294,13 +354,13 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
 
     @Override
     public void onClickOptionSelectImageFromCamera() {
-        if (activity!=null)
+        if (activity != null)
             activity.captureImageFromCamera();
     }
 
     @Override
     public void onClickOptionSelectImageFromGallery() {
-        if (activity!=null)
+        if (activity != null)
             activity.changeToActivitySelectImage();
     }
 
@@ -316,11 +376,11 @@ public class FragmentProductListDetail extends BaseFragment<FragmentProductListD
 
     @Override
     public void onBackprogress() {
-        if (activity != null)
-            {
-                activity.deleteTempMedia();
-                activity.checkBack();
-            }
+        if (activity != null) {
+            activity.deleteTempMedia();
+            activity.checkBack();
+            BackShowRootViewEvent.post();
+        }
     }
 
 }

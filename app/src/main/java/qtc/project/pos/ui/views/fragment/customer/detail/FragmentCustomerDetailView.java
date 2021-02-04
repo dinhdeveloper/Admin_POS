@@ -3,6 +3,7 @@ package qtc.project.pos.ui.views.fragment.customer.detail;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,7 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
     public void init(HomeActivity activity, FragmentCustomerDetailViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-        KeyboardUtils.setupUI(getView(),activity);
+        KeyboardUtils.setupUI(getView(), activity);
         onClick();
     }
 
@@ -48,9 +49,12 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
     }
 
     @Override
-    public void sentDataToView(CustomerModel model) {
+    public void sentDataCustomerDetail(CustomerModel model) {
         try {
             if (model != null) {
+                if (!TextUtils.isEmpty(model.getFull_name())) {
+                    ui.title_header.setText(model.getFull_name());
+                }
                 ui.name_customer.setText(model.getFull_name());
                 ui.id_customer.setText(model.getId_code());
                 ui.address_customer.setText(model.getAddress());
@@ -93,40 +97,28 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
                 ui.layout_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        LayoutInflater layoutInflater = activity.getLayoutInflater();
-                        View popupView = layoutInflater.inflate(R.layout.alert_dialog_waiting, null);
-                        TextView title_text = popupView.findViewById(R.id.title_text);
-                        TextView content_text = popupView.findViewById(R.id.content_text);
-                        Button cancel_button = popupView.findViewById(R.id.cancel_button);
-                        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
-
-                        title_text.setText("Cảnh báo");
-                        content_text.setText("Bạn có muốn xóa khách hàng này không?");
-
-                        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                        alert.setView(popupView);
-                        AlertDialog dialog = alert.create();
-                        dialog.setCanceledOnTouchOutside(false);
-                        dialog.show();
-
-
-                        cancel_button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
-                        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (callback != null)
-                                    callback.deleteCustomer(model);
-                                dialog.dismiss();
-                            }
-                        });
+                        if (callback != null)
+                            callback.deleteCustomer(model);
                     }
                 });
+            } else {
+                setGone(ui.layout_delete);
+                ui.tvTitleUpdate.setText("Tạo mới");
+                ui.title_header.setText("Tạo mới khách hàng");
+                ui.layout_update.setOnClickListener(v -> {
+                    CustomerModel customerModel = new CustomerModel();
+                    customerModel.setId_code(ui.id_customer.getText().toString());
+                    customerModel.setFull_name(ui.name_customer.getText().toString());
+                    customerModel.setPhone_number(ui.phone_customer.getText().toString());
+                    customerModel.setAddress(ui.address_customer.getText().toString());
+                    customerModel.setEmail(ui.email_customer.getText().toString());
+                    customerModel.setLevel_name(ui.name_level_customer.getText().toString());
+                    customerModel.setLevel_id(id_level);
+
+                    if (callback != null)
+                        callback.updateCustomerDetail(customerModel);
+                });
+
             }
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
@@ -240,6 +232,9 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
 
+        @UiElement(R.id.title_header)
+        public TextView title_header;
+
         @UiElement(R.id.name_customer)
         public EditText name_customer;
 
@@ -266,6 +261,9 @@ public class FragmentCustomerDetailView extends BaseView<FragmentCustomerDetailV
 
         @UiElement(R.id.layout_delete)
         public LinearLayout layout_delete;
+
+        @UiElement(R.id.tvTitleUpdate)
+        public TextView tvTitleUpdate;
 
 
     }

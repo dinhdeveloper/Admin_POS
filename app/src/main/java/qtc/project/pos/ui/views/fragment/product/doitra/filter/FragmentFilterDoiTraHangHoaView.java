@@ -4,6 +4,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -33,6 +34,7 @@ public class FragmentFilterDoiTraHangHoaView extends BaseView<FragmentFilterDoiT
         this.activity = activity;
         this.callback = callback;
 
+        ui.title_header.setText("Lọc");
         initScheduleFilter();
 
         configPickerYear();
@@ -288,5 +290,10 @@ public class FragmentFilterDoiTraHangHoaView extends BaseView<FragmentFilterDoiT
 
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
+
+        @UiElement(R.id.title_header)
+        public TextView title_header;
+
+
     }
 }

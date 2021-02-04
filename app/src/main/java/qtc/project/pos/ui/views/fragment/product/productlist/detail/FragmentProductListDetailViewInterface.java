@@ -10,11 +10,13 @@ import qtc.project.pos.model.ProductListModel;
 public interface FragmentProductListDetailViewInterface extends BaseViewInterface {
     void  init(HomeActivity activity,FragmentProductListDetailViewCallback callback);
 
-    void sendDataToView(ProductListModel model);
+    void setProductDetail(ProductListModel model);
     void  setDataProductImage(String image);
     void initViewPopup(ArrayList<ProductCategoryModel> list);
 
     void showConfirm();
 
     void showConfirmDelete();
+
+    void clearData();
 }

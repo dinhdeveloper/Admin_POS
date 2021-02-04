@@ -1,6 +1,10 @@
 package qtc.project.pos.fragment.product.quanlylohang;
 
+import android.text.TextUtils;
 import android.util.Log;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +16,8 @@ import b.laixuantam.myaarlibrary.base.BaseParameters;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.api.product.productlist.ProductListRequest;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.event.BackShowRootViewEvent;
+import qtc.project.pos.event.UpdateListProductEvent;
 import qtc.project.pos.model.BaseResponseModel;
 import qtc.project.pos.model.PackageInfoModel;
 import qtc.project.pos.model.ProductListModel;
@@ -22,7 +28,7 @@ import qtc.project.pos.ui.views.fragment.product.quanlylohang.FragmentQuanLyLoHa
 public class FragmentQuanLyLoHang extends BaseFragment<FragmentQuanLyLoHangViewInterface, BaseParameters> implements FragmentQuanLyLoHangViewCallback {
 
     HomeActivity activity;
-
+    String search;
     @Override
     protected void initialize() {
         activity = (HomeActivity) getActivity();
@@ -41,17 +47,20 @@ public class FragmentQuanLyLoHang extends BaseFragment<FragmentQuanLyLoHangViewI
 
     @Override
     public void onBackprogress() {
-        if (activity!= null)
+        if (activity != null)
             activity.checkBack();
     }
 
     @Override
     public void callDataSearch(String toString) {
-        if (toString!=null){
+        if (toString != null) {
             showProgress();
             ProductListRequest.ApiParams params = new ProductListRequest.ApiParams();
             params.type_manager = "list_product";
-            params.product = toString;
+            if (!TextUtils.isEmpty(toString)) {
+                search = toString;
+                params.product = toString;
+            }
             AppProvider.getApiManagement().call(ProductListRequest.class, params, new ApiRequest.ApiCallback<BaseResponseModel<ProductListModel>>() {
                 @Override
                 public void onSuccess(BaseResponseModel<ProductListModel> body) {
@@ -79,8 +88,36 @@ public class FragmentQuanLyLoHang extends BaseFragment<FragmentQuanLyLoHangViewI
     }
 
     @Override
-    public void sentDataToDetail(PackageInfoModel model, String name_product,String id_product) {
-        activity.replaceFragment( FragmentChiTietLoHang.newIntance(model,name_product,id_product),true,null);
+    public void sentDataToDetail(PackageInfoModel model, String name_product, String id_product) {
+        if (activity != null) {
+            activity.changToFragmentLoHangDetail(model, name_product, id_product);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    view.hideRootView();
+                }
+            }, 500);
+        }
     }
-
+    boolean isUpdateItem = false;
+    @SuppressWarnings("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBackShowRootViewEvent(BackShowRootViewEvent event) {
+        isUpdateItem = true;
+        if (isUpdateItem) {
+            view.showRootView();
+            isUpdateItem = false;
+        }
+    }
+    @SuppressWarnings("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateListProductEvent(UpdateListProductEvent event) {
+        isUpdateItem = true;
+        callDataSearch(search);
+        if (isUpdateItem) {
+            view.showRootView();
+            view.hideRecyclerViewDetail();
+            isUpdateItem = false;
+        }
+    }
 }

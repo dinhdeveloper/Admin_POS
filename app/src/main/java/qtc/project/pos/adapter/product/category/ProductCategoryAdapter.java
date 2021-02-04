@@ -1,6 +1,7 @@
 package qtc.project.pos.adapter.product.category;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Filter;
@@ -16,23 +17,23 @@ import b.laixuantam.myaarlibrary.widgets.superadapter.SuperAdapter;
 import b.laixuantam.myaarlibrary.widgets.superadapter.SuperViewHolder;
 import qtc.project.pos.R;
 import qtc.project.pos.dependency.AppProvider;
+import qtc.project.pos.dialog.option.OptionModel;
 import qtc.project.pos.helper.Consts;
 import qtc.project.pos.model.ProductCategoryModel;
 
-public class ProductCategoryAdapter extends SuperAdapter<ProductCategoryModel> {
+public class ProductCategoryAdapter extends SuperAdapter<OptionModel> {
 
     ProductCategoryAdapterListener listener;
-    List<ProductCategoryModel> lists;
+    List<OptionModel> lists;
 
-    public ProductCategoryAdapter(Context context, List<ProductCategoryModel> items) {
+    public ProductCategoryAdapter(Context context, List<OptionModel> items) {
         super(context, items, R.layout.custom_item_category_product);
         this.lists = items;
         filter = new ProductCategoryFilter();
     }
 
     public interface ProductCategoryAdapterListener {
-        void onClickItem(ProductCategoryModel model);
-        void onRequestLoadMoreProduct();
+        void onClickItem(OptionModel model);
     }
 
     public void setListener(ProductCategoryAdapterListener listener) {
@@ -40,45 +41,39 @@ public class ProductCategoryAdapter extends SuperAdapter<ProductCategoryModel> {
     }
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, ProductCategoryModel item) {
-        LinearLayout item_category_product = holder.findViewById(R.id.item_category_product);
+    public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, OptionModel model) {
+        CardView item_category_product = holder.findViewById(R.id.item_category_product);
         ImageView image_product = holder.findViewById(R.id.image_product);
         TextView name_product_category = holder.findViewById(R.id.name_product_category);
         TextView description_product = holder.findViewById(R.id.description_product);
+
+        ProductCategoryModel item = (ProductCategoryModel)model.getDtaCustom();
 
         AppProvider.getImageHelper().displayImage(Consts.HOST_API+item.getImage(), image_product, null, R.drawable.imageloading);
         name_product_category.setText(item.getName());
         description_product.setText(item.getDescription());
 
-        item_category_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener!=null){
-                    listener.onClickItem(item);
-                }
+        item_category_product.setOnClickListener(view -> {
+            if (listener!=null){
+                listener.onClickItem(model);
             }
         });
-
-        if (layoutPosition == getCount() - 1) {
-            if (listener != null)
-                listener.onRequestLoadMoreProduct();
-        }
     }
 
     private String filterString;
-    private ArrayList<ProductCategoryModel> listData = new ArrayList<>();
-    private ArrayList<ProductCategoryModel> listDataBackup = new ArrayList<>();
+    private ArrayList<OptionModel> listData = new ArrayList<>();
+    private ArrayList<OptionModel> listDataBackup = new ArrayList<>();
     private ProductCategoryFilter filter;
 
     public ProductCategoryFilter getFilter() {
         return filter;
     }
 
-    public ArrayList<ProductCategoryModel> getListData() {
+    public ArrayList<OptionModel> getListData() {
         return listData;
     }
 
-    public ArrayList<ProductCategoryModel> getListDataBackup() {
+    public ArrayList<OptionModel> getListDataBackup() {
         return listDataBackup;
     }
 
@@ -93,11 +88,12 @@ public class ProductCategoryAdapter extends SuperAdapter<ProductCategoryModel> {
                 FilterResults results = new FilterResults();
                 if (listData != null && listData.size() > 0) {
                     int count = listData.size();
-                    List<ProductCategoryModel> tempItems = new ArrayList<ProductCategoryModel>();
+                    List<OptionModel> tempItems = new ArrayList<OptionModel>();
 
                     // search exactly
                     for (int i = 0; i < count; i++) {
-                        String name = listData.get(i).getName().toLowerCase();
+                        ProductCategoryModel model = (ProductCategoryModel)listData.get(i).getDtaCustom();
+                        String name = AccentRemove.removeAccent(model.getName().toLowerCase());
                         if (name.contains(filterString)) {
                             tempItems.add(listData.get(i));
                         }
@@ -106,7 +102,8 @@ public class ProductCategoryAdapter extends SuperAdapter<ProductCategoryModel> {
                     filterString = AccentRemove.removeAccent(filterString);
                     if (tempItems.size() == 0) {
                         for (int i = 0; i < count; i++) {
-                            String name = AccentRemove.removeAccent(listData.get(i).getName().toLowerCase());
+                            ProductCategoryModel model = (ProductCategoryModel)listData.get(i).getDtaCustom();
+                            String name = AccentRemove.removeAccent(model.getName().toLowerCase());
                             if (name.contains(filterString)) {
                                 tempItems.add(listData.get(i));
                             }
@@ -128,7 +125,7 @@ public class ProductCategoryAdapter extends SuperAdapter<ProductCategoryModel> {
         protected void publishResults(CharSequence constraint, FilterResults results) {
             listData.clear();
             if (results != null) {
-                List<ProductCategoryModel> listProductResult = (List<ProductCategoryModel>) results.values;
+                List<OptionModel> listProductResult = (List<OptionModel>) results.values;
                 if (listProductResult != null && listProductResult.size() > 0) {
                     listData.addAll(listProductResult);
                 }
@@ -140,7 +137,7 @@ public class ProductCategoryAdapter extends SuperAdapter<ProductCategoryModel> {
         }
     }
 
-    private void replaceAll(ArrayList<ProductCategoryModel> listData) {
+    private void replaceAll(ArrayList<OptionModel> listData) {
         lists.clear();
         lists.addAll(listData);
         notifyDataSetChanged();

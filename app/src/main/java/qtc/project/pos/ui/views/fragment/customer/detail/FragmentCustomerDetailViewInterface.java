@@ -10,7 +10,7 @@ import qtc.project.pos.model.LevelCustomerModel;
 public interface FragmentCustomerDetailViewInterface extends BaseViewInterface {
     void init(HomeActivity activity, FragmentCustomerDetailViewCallback callback);
 
-    void sentDataToView(CustomerModel model);
+    void sentDataCustomerDetail(CustomerModel model);
 
     void mappingPopup(ArrayList<LevelCustomerModel> list);
 

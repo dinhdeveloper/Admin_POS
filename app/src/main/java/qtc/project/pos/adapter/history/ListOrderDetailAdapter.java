@@ -38,9 +38,9 @@ public class ListOrderDetailAdapter extends SuperAdapter<OrderDetailModel> {
                 String pattern = "###,###.###";
                 DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
-                price_buy.setText(decimalFormat.format(Integer.parseInt(item.getPrice())));
+                price_buy.setText(decimalFormat.format(Long.valueOf(item.getPrice())));
                 quantity_product.setText("x"+item.getQuantity());
-                int total = Integer.parseInt(item.getQuantity()) * Integer.parseInt(item.getPrice());
+                long total = Integer.parseInt(item.getQuantity()) * Long.valueOf(item.getPrice());
                 total_price.setText(decimalFormat.format(total));
             }
         } catch (Exception e) {

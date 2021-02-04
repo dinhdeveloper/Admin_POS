@@ -64,7 +64,7 @@ public class LoginActivity extends BaseFragmentActivity<ActivityLoginViewInterfa
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         }else {
-            checkUpdateAppVersion();
+            //checkUpdateAppVersion();
         }
     }
 

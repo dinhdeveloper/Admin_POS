@@ -2,6 +2,7 @@ package qtc.project.pos.ui.views.fragment.product.quanlylohang.trahang;
 
 import android.app.DatePickerDialog;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import b.laixuantam.myaarlibrary.base.BaseUiContainer;
 import b.laixuantam.myaarlibrary.base.BaseView;
 import b.laixuantam.myaarlibrary.helper.KeyboardUtils;
+import b.laixuantam.myaarlibrary.widgets.dialog.alert.KAlertDialog;
+import b.laixuantam.myaarlibrary.widgets.slidedatetimepicker.SlideDateTimeListener;
+import b.laixuantam.myaarlibrary.widgets.slidedatetimepicker.SlideDateTimePicker;
 import qtc.project.pos.R;
 import qtc.project.pos.activity.HomeActivity;
 import qtc.project.pos.dependency.AppProvider;
@@ -34,23 +41,21 @@ public class FragmentDonTraHangView extends BaseView<FragmentDonTraHangView.UICo
     public void init(HomeActivity activity, FragmentDonTraHangViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-        KeyboardUtils.setupUI(getView(),activity);
+        KeyboardUtils.setupUI(getView(), activity);
+        ui.title_header.setText("Tạo đơn trả hàng");
         onClick();
     }
 
     private void onClick() {
-        ui.imageNavLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (callback!=null)
-                    callback.onBackProgress();
-            }
+        ui.imageNavLeft.setOnClickListener(v -> {
+            if (callback != null)
+                callback.onBackProgress();
         });
     }
 
     @Override
-    public void sendDataToView(PackageInfoModel infoModel,String name,String id) {
-        if (infoModel!=null){
+    public void sendDataToView(PackageInfoModel infoModel, String name, String id) {
+        if (infoModel != null) {
             ui.ngay_nhap.setText(infoModel.getImport_date());
             ui.ma_nha_cung_ung.setText(infoModel.getManufacturer_id());
             ui.nhacungung.setText(infoModel.getManufacturer_name());
@@ -64,60 +69,74 @@ public class FragmentDonTraHangView extends BaseView<FragmentDonTraHangView.UICo
         ui.date_ngay_tra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                picker = new DatePickerDialog(getContext(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                ui.ngay_tra.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                            }
-                        }, year, month, day);
-                picker.show();
+                new SlideDateTimePicker.Builder(activity.getSupportFragmentManager())
+                        .setListener(listener)
+                        .setInitialDate(new Date())
+                        .setTypeShowDialog(1)
+                        .build()
+                        .show();
             }
         });
 
-        ui.layout_create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    PackageReturnModel returnModel = new PackageReturnModel();
-                    returnModel.setProduct_return_id_code(ui.ma_tra_hang.getText().toString());
-                    returnModel.setEmployee_id(infoModel.getEmployee_id());
+        ui.layout_create.setOnClickListener(v -> {
+            try {
+                PackageReturnModel returnModel = new PackageReturnModel();
+                returnModel.setProduct_return_id_code(ui.ma_tra_hang.getText().toString());
+                returnModel.setEmployee_id(infoModel.getEmployee_id());
 
-                    if (ui.soluong_tra.getText().toString()!=null||ui.soluong_tra.getText().toString()!=""){
-                        int tonkho = Integer.parseInt(infoModel.getQuantity_storage());
-                        int nhapvao = Integer.parseInt(ui.soluong_tra.getText().toString());
-                        if (nhapvao>tonkho){
-                            Toast.makeText(activity, "Số lượng trả vượt quá số lượng còn lại.", Toast.LENGTH_SHORT).show();
-                        }else {
-                            returnModel.setProduct_return_description(ui.lydo_tra.getText().toString());
-                        }
+                if (!TextUtils.isEmpty(ui.soluong_tra.getText().toString())) {
+                    int tonkho = Integer.parseInt(infoModel.getQuantity_storage());
+                    int nhapvao = Integer.parseInt(ui.soluong_tra.getText().toString());
+                    if (nhapvao > tonkho) {
+                        activity.showAlert("Số lượng trả vượt quá số lượng còn lại.", KAlertDialog.ERROR_TYPE);
+                    } else {
+                        returnModel.setProduct_return_description(ui.lydo_tra.getText().toString());
                     }
-                    else {
-                        Toast.makeText(activity, "Không được để rỗng.", Toast.LENGTH_SHORT).show();
-                    }
-                    returnModel.setManufacturer_id(infoModel.getManufacturer_id());
-                    returnModel.setProduct_return_quantity(ui.soluong_tra.getText().toString());
-                    returnModel.setProduct_return_return_date(ui.ngay_tra.getText().toString());
-                    returnModel.setProduct_return_id(infoModel.getPack_id());
+                } else {
+                    activity.showAlert("Không được để trống.", KAlertDialog.ERROR_TYPE);
 
-                if (callback!=null){
+                }
+                returnModel.setManufacturer_id(infoModel.getManufacturer_id());
+                returnModel.setProduct_return_quantity(ui.soluong_tra.getText().toString());
+                returnModel.setProduct_return_return_date(ui.ngay_tra.getText().toString());
+                returnModel.setProduct_return_id(infoModel.getPack_id());
+
+                if (callback != null) {
                     callback.setDataDoiTraHang(returnModel);
                 }
-                }catch (NumberFormatException ex){
-                    Log.e("NumberFormatException",ex.getMessage());
-                }
+            } catch (NumberFormatException ex) {
+                Log.e("NumberFormatException", ex.getMessage());
             }
         });
 
         ui.layout_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callback!=null){
+                if (callback != null) {
                     callback.setOnBack();
                 }
             }
         });
     }
+
+    private SlideDateTimeListener listener = new SlideDateTimeListener() {
+
+        @Override
+        public void onDateTimeSet(Date date) {
+            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat sdfTimeServer = new SimpleDateFormat("yyyy-MM-dd");
+            String niceFormatDate = sdf.format(date);
+            String scheduleDateNhap = sdfTimeServer.format(date);
+
+            ui.ngay_tra.setText(niceFormatDate);
+
+        }
+
+        // Optional cancel listener
+        @Override
+        public void onDateTimeCancel() {
+        }
+    };
 
     @Override
     public void setOnBack() {
@@ -126,30 +145,10 @@ public class FragmentDonTraHangView extends BaseView<FragmentDonTraHangView.UICo
 
     @Override
     public void showSuccess() {
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View popupView = layoutInflater.inflate(R.layout.alert_dialog_success, null);
-        TextView title_text = popupView.findViewById(R.id.title_text);
-        TextView content_text = popupView.findViewById(R.id.content_text);
-        Button custom_confirm_button = popupView.findViewById(R.id.custom_confirm_button);
-
-        title_text.setText("Xác nhận");
-        content_text.setText("Tạo đơn trả hàng thành công!");
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-        alert.setView(popupView);
-        AlertDialog dialog = alert.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        custom_confirm_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ui.ngay_tra.setText(null);
-                ui.ma_tra_hang.setText(null);
-                ui.soluong_tra.setText(null);
-                ui.lydo_tra.setText(null);
-                dialog.dismiss();
-            }
-        });
+        ui.ngay_tra.setText(null);
+        ui.ma_tra_hang.setText(null);
+        ui.soluong_tra.setText(null);
+        ui.lydo_tra.setText(null);
     }
 
     @Override
@@ -196,6 +195,9 @@ public class FragmentDonTraHangView extends BaseView<FragmentDonTraHangView.UICo
 
         @UiElement(R.id.imageNavLeft)
         public ImageView imageNavLeft;
+
+        @UiElement(R.id.title_header)
+        public TextView title_header;
 
         @UiElement(R.id.date_ngay_tra)
         public ImageView date_ngay_tra;

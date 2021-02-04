@@ -260,6 +260,7 @@
                 android:layout_height="2dp"/>
 
             <LinearLayout
+                android:paddingVertical="@dimen/dp5"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:orientation="horizontal"
                 android:layout_marginVertical="@dimen/dp5"
@@ -300,6 +301,32 @@
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/priceGiam"
+                    android:textStyle="bold"
+                    android:gravity="right"
+                    android:textSize="@dimen/dp15"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingVertical="@dimen/dp5"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:orientation="horizontal"
+                android:layout_marginVertical="@dimen/dp5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Giảm trực tiếp: "
+                    android:textStyle="normal"
+                    android:textSize="@dimen/dp15"
+                    android:textColor="@color/colorCCC"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/priceTempTT"
                     android:textStyle="bold"
                     android:gravity="right"
                     android:textSize="@dimen/dp15"

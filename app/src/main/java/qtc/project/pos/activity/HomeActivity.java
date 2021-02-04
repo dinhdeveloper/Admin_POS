@@ -61,11 +61,18 @@ import qtc.project.pos.api.employee.UpdatePassEmployeeRequest;
 import qtc.project.pos.dependency.AppProvider;
 import qtc.project.pos.event.FroceSignoutEvent;
 import qtc.project.pos.event.StatusEmployeeEvent;
+import qtc.project.pos.fragment.customer.FragmentCustomerDetail;
+import qtc.project.pos.fragment.employee.FragmentEmployeeDetail;
+import qtc.project.pos.fragment.history.FragmentHistoryOrderCustomer;
 import qtc.project.pos.fragment.home.FragmentHome;
 import qtc.project.pos.fragment.levelcustomer.FragmentCreateLevelCustomer;
 import qtc.project.pos.fragment.levelcustomer.FragmentLevelCustomerDetail;
 import qtc.project.pos.fragment.order.FragmentOrderManager;
+import qtc.project.pos.fragment.product.doitra.FragmentChiTietDonTraHangHoa;
 import qtc.project.pos.fragment.product.doitra.FragmentDoiTraHangHoa;
+import qtc.project.pos.fragment.product.doitra.FragmentFilterDoiTraHangHoa;
+import qtc.project.pos.fragment.product.product_disable.FragmentProductDisable;
+import qtc.project.pos.fragment.product.productcategory.FragmentCategoryProduct;
 import qtc.project.pos.fragment.product.productcategory.FragmentCategoryProductDetail;
 import qtc.project.pos.fragment.product.productcategory.FragmentCreateProductCategory;
 import qtc.project.pos.fragment.product.productlist.FragmentProductList;
@@ -75,6 +82,7 @@ import qtc.project.pos.fragment.product.productlist.filter.FragmentFilterSanPham
 import qtc.project.pos.fragment.product.quanlylohang.FragmentChiTietLoHang;
 import qtc.project.pos.fragment.product.quanlylohang.FragmentCreateLoHang;
 import qtc.project.pos.fragment.product.quanlylohang.FragmentDonTraHang;
+import qtc.project.pos.fragment.product.quanlylohang.FragmentQuanLyLoHang;
 import qtc.project.pos.fragment.report.thongkebanhang.doanhthu_theo_khachhang.FragmentDoanhThuTheoKhachHang;
 import qtc.project.pos.fragment.report.thongkebanhang.doanhthu_theo_sanpham.FragmentDoanhThuTheoSp;
 import qtc.project.pos.fragment.report.thongkebanhang.sanpham_banchay.FragmentSanPhamBanChay;
@@ -84,7 +92,11 @@ import qtc.project.pos.fragment.report.thongkebanhang.tomtatdoanhthu.tongdoanhth
 import qtc.project.pos.fragment.report.thongkekho.tonkho_vs_doanhthu.FragmentTK_TonKho_VS_DoanhThu;
 import qtc.project.pos.fragment.report.thongkekho.xuatnhapkho.FragmentBaoCaoXuatNhapKho;
 import qtc.project.pos.model.BaseResponseModel;
+import qtc.project.pos.model.CustomerModel;
 import qtc.project.pos.model.EmployeeModel;
+import qtc.project.pos.model.PackageInfoModel;
+import qtc.project.pos.model.PackageReturnModel;
+import qtc.project.pos.model.ProductCategoryModel;
 import qtc.project.pos.model.ProductListModel;
 import qtc.project.pos.model.SupplierModel;
 import qtc.project.pos.ui.views.action_bar.base_main_actionbar.BaseMainActionbarViewInterface;
@@ -135,6 +147,10 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName()));
             startActivity(intent);
         }, null, KAlertDialog.WARNING_TYPE);
+    }
+
+    public void changToFragmentEmployeeDetail(EmployeeModel model) {
+        addFragment(FragmentEmployeeDetail.newInstance(model), true);
     }
 
     public class CheckAppVersionAsync extends AsyncTask<String, String, JSONObject> {
@@ -506,10 +522,10 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
         }
     }
 
-    public void setDataSearchProduct(ProductListModel[] list, String name, String id) {
+    public void setDataSearchProduct(BaseResponseModel dataList) {
         BaseFragment baseFragment = getCurrentFragment();
         if (baseFragment instanceof FragmentProductList) {
-            ((FragmentProductList) baseFragment).setDataSearchProduct(list, name, id);
+            ((FragmentProductList) baseFragment).setDataSearchProduct(dataList);
         }
         if (baseFragment instanceof FragmentFilterSanPham) {
             ((FragmentFilterSanPham) baseFragment).setOnBack();
@@ -533,8 +549,8 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
 
     public void setDataProduct(ProductListModel model) {
         BaseFragment baseFragment = getCurrentFragment();
-        if (baseFragment instanceof FragmentCreateLoHang) {
-            ((FragmentCreateLoHang) baseFragment).setDataProduct(model);
+        if (baseFragment instanceof FragmentChiTietLoHang) {
+            ((FragmentChiTietLoHang) baseFragment).setDataProduct(model);
         }
 //        if (baseFragment instanceof FragmentCreateLoHang) {
 //            ((FragmentCreateLoHang) baseFragment).setOnBack();
@@ -754,94 +770,110 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
 
     }
 
-    public void showAlert(String title, String message, int type) {
-
-        if (mCustomAlert == null) {
-            mCustomAlert = new KAlertDialog(this);
-            mCustomAlert.setCancelable(false);
-            mCustomAlert.setCanceledOnTouchOutside(false);
-        }
-        mCustomAlert.showCancelButton(false);
-
-        mCustomAlert.setTitleText(title);
-
-        mCustomAlert
-                .setContentText(message)
-                .setConfirmText("OK")
-                .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-                    @Override
-                    public void onClick(KAlertDialog kAlertDialog) {
-                        if (mCustomAlert != null)
-                            mCustomAlert.dismiss();
-                    }
-                }).changeAlertType(type);
-        mCustomAlert.show();
-    }
-
-    public void showAlert(String message) {
-        showAlert("", message, 0);
-    }
-
-    public void showConfirmAlert(String title, String mess, KAlertDialog.KAlertClickListener actionConfirm, int type) {
-        showConfirmAlert(title, mess, "", "", actionConfirm, null, type);
-    }
-
-    public void showConfirmAlert(String title, String mess, KAlertDialog.KAlertClickListener actionConfirm, KAlertDialog.KAlertClickListener actionCancel, int type) {
-        showConfirmAlert(title, mess, "", "", actionConfirm, actionCancel, type);
-    }
+//    public void showAlert(String title, String message, int type) {
+//
+//        if (mCustomAlert == null) {
+//            mCustomAlert = new KAlertDialog(this);
+//            mCustomAlert.setCancelable(false);
+//            mCustomAlert.setCanceledOnTouchOutside(false);
+//        }
+//        mCustomAlert.showCancelButton(false);
+//
+//        mCustomAlert.setTitleText(title);
+//
+//        mCustomAlert
+//                .setContentText(message)
+//                .setConfirmText("OK")
+//                .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+//                    @Override
+//                    public void onClick(KAlertDialog kAlertDialog) {
+//                        if (mCustomAlert != null)
+//                            mCustomAlert.dismiss();
+//                    }
+//                }).changeAlertType(type);
+//        mCustomAlert.show();
+//    }
+//
+//    public void showAlert(String message) {
+//        showAlert("", message, 0);
+//    }
+//
+//    public void showConfirmAlert(String title, String mess, KAlertDialog.KAlertClickListener actionConfirm, int type) {
+//        showConfirmAlert(title, mess, "", "", actionConfirm, null, type);
+//    }
+//
+//    public void showConfirmAlert(String title, String mess, KAlertDialog.KAlertClickListener actionConfirm, KAlertDialog.KAlertClickListener actionCancel, int type) {
+//        showConfirmAlert(title, mess, "", "", actionConfirm, actionCancel, type);
+//    }
+//
+//    public void showConfirmAlert(String title, String mess, String titleButtonConfirm, String titleButtonCancel, KAlertDialog.KAlertClickListener actionConfirm, KAlertDialog.KAlertClickListener actionCancel, int type) {
+//        if (mCustomAlert == null) {
+//            mCustomAlert = new KAlertDialog(this);
+//            mCustomAlert.setCancelable(false);
+//            mCustomAlert.setCanceledOnTouchOutside(false);
+//        }
+//
+//        mCustomAlert.setConfirmText(getString(R.string.KAlert_confirm_button_text));
+//
+//        mCustomAlert.setTitleText(Html.fromHtml(title).toString());
+//
+//        mCustomAlert.setContentText(Html.fromHtml(mess).toString());
+//
+//        if (!TextUtils.isEmpty(titleButtonConfirm)) {
+//            mCustomAlert.setConfirmText(titleButtonConfirm);
+//        } else {
+//            mCustomAlert.setConfirmText(getString(R.string.KAlert_confirm_button_text));
+//        }
+//
+//        switch (type) {
+//            case KAlertDialog.SUCCESS_TYPE:
+//                mCustomAlert.setCustomImage(R.drawable.ic_img_alert_success);
+//                break;
+//            case KAlertDialog.WARNING_TYPE:
+//                mCustomAlert.setCustomImage(R.drawable.ic_img_alert_warning);
+//                break;
+//        }
+//
+//        mCustomAlert.changeAlertType(KAlertDialog.CUSTOM_IMAGE_TYPE);
+//
+//        if (actionCancel != null) {
+//            mCustomAlert.setCancelClickListener(actionCancel);
+//
+//            if (!TextUtils.isEmpty(titleButtonCancel)) {
+//                mCustomAlert.setCancelText(titleButtonCancel);
+//            } else {
+//                mCustomAlert.setCancelText(getString(R.string.KAlert_cancel_button_text));
+//            }
+//        } else {
+//            mCustomAlert.showCancelButton(false);
+//        }
+//        if (actionConfirm != null) {
+//            mCustomAlert.setConfirmClickListener(actionConfirm);
+//        } else {
+//            mCustomAlert.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+//                @Override
+//                public void onClick(KAlertDialog kAlertDialog) {
+//                    mCustomAlert.dismiss();
+//                }
+//            });
+//        }
+//        mCustomAlert.show();
+//    }
 
     public void showConfirmAlert(String title, String mess, String titleButtonConfirm, String titleButtonCancel, KAlertDialog.KAlertClickListener actionConfirm, KAlertDialog.KAlertClickListener actionCancel, int type) {
-        if (mCustomAlert == null) {
-            mCustomAlert = new KAlertDialog(this);
-            mCustomAlert.setCancelable(false);
-            mCustomAlert.setCanceledOnTouchOutside(false);
-        }
-
-        mCustomAlert.setConfirmText(getString(R.string.KAlert_confirm_button_text));
-
-        mCustomAlert.setTitleText(Html.fromHtml(title).toString());
-
-        mCustomAlert.setContentText(Html.fromHtml(mess).toString());
-
-        if (!TextUtils.isEmpty(titleButtonConfirm)) {
-            mCustomAlert.setConfirmText(titleButtonConfirm);
-        } else {
-            mCustomAlert.setConfirmText(getString(R.string.KAlert_confirm_button_text));
-        }
 
         switch (type) {
             case KAlertDialog.SUCCESS_TYPE:
-                mCustomAlert.setCustomImage(R.drawable.ic_img_alert_success);
+                showCustomerImageAndBgButtonConfirmAlert(title, mess, titleButtonConfirm, R.drawable.alert_dialog_button_confirm_bg_custom, titleButtonCancel, R.drawable.alert_dialog_button_cancel_bg_custom, actionConfirm, actionCancel, R.drawable.ic_img_alert_success);
                 break;
             case KAlertDialog.WARNING_TYPE:
-                mCustomAlert.setCustomImage(R.drawable.ic_img_alert_warning);
+                showCustomerImageAndBgButtonConfirmAlert(title, mess, titleButtonConfirm, R.drawable.alert_dialog_button_cancel_bg_custom, titleButtonCancel, R.drawable.alert_dialog_button_confirm_bg_custom, actionConfirm, actionCancel, R.drawable.ic_img_alert_warning);
+                break;
+            case -1:
+                showCustomerImageAndBgButtonConfirmAlert(title, mess, titleButtonConfirm, R.drawable.alert_dialog_button_confirm_bg_custom, titleButtonCancel, R.drawable.alert_dialog_button_cancel_bg_custom, actionConfirm, actionCancel, R.drawable.ic_img_alert_warning_logout);
                 break;
         }
 
-        mCustomAlert.changeAlertType(KAlertDialog.CUSTOM_IMAGE_TYPE);
-
-        if (actionCancel != null) {
-            mCustomAlert.setCancelClickListener(actionCancel);
-
-            if (!TextUtils.isEmpty(titleButtonCancel)) {
-                mCustomAlert.setCancelText(titleButtonCancel);
-            } else {
-                mCustomAlert.setCancelText(getString(R.string.KAlert_cancel_button_text));
-            }
-        } else {
-            mCustomAlert.showCancelButton(false);
-        }
-        if (actionConfirm != null) {
-            mCustomAlert.setConfirmClickListener(actionConfirm);
-        } else {
-            mCustomAlert.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-                @Override
-                public void onClick(KAlertDialog kAlertDialog) {
-                    mCustomAlert.dismiss();
-                }
-            });
-        }
-        mCustomAlert.show();
     }
 
     public void changeToActivitySelectImage() {
@@ -1103,4 +1135,76 @@ public class HomeActivity extends BaseFragmentActivity<HomeActivityViewInterface
             ((FragmentDoiTraHangHoa) baseFragment).filterDataDate(thang, nam);
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // CHANGE TO FRAGMENT
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void changToFragmentCategoryProduct() {
+        isShowContainer++;
+        replaceFragment(new FragmentCategoryProduct(), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentCategoryProductDetail(ProductCategoryModel model) {
+        addFragment(FragmentCategoryProductDetail.newIntance(model), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentListProduct() {
+        isShowContainer++;
+        replaceFragment(new FragmentProductList(), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentProductDetail(ProductListModel model) {
+        addFragment(FragmentProductListDetail.newIntance(model).newIntance(model), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentFilterProduct() {
+        addFragment(new FragmentFilterSanPham(), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentLoHangManager() {
+        isShowContainer++;
+        replaceFragment(new FragmentQuanLyLoHang(), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentLoHangDetail(PackageInfoModel model, String name_product, String id_product) {
+        addFragment(FragmentChiTietLoHang.newIntance(model, name_product, id_product), true, null);
+    }
+
+    public void changToFragmentDoiTraHangHoa() {
+        isShowContainer++;
+        replaceFragment(new FragmentDoiTraHangHoa(), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentCreateDonTraHang(PackageInfoModel infoModel, String name, String id) {
+        addFragment(FragmentDonTraHang.newIntance(infoModel, name, id), true, null);
+    }
+
+    public void changToFragmentFilterDoiTraHangHoa() {
+        isShowContainer++;
+        replaceFragment(new FragmentFilterDoiTraHangHoa(), true, null);
+    }
+
+    public void changToFragmentDisableProduct() {
+        isShowContainer++;
+        replaceFragment(new FragmentProductDisable(), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentGetAllProduct(boolean check) {
+        addFragment(FragmentProductList.newInstance(check), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changeToFragmentChiTietDonTraHangHoa(PackageReturnModel model) {
+        addFragment(FragmentChiTietDonTraHangHoa.newIntance(model), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentCustomerDetail(CustomerModel model) {
+        addFragment(FragmentCustomerDetail.newIntance(model), true, Animation.SLIDE_IN_OUT);
+    }
+
+    public void changToFragmentHistoryOrderCustomer(CustomerModel model) {
+        isShowContainer++;
+        replaceFragment(FragmentHistoryOrderCustomer.newIntance(model), true, Animation.SLIDE_IN_OUT);
+    }
+
 }

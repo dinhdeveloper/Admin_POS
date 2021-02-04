@@ -76,6 +76,8 @@ public class ProductListRequest extends ApiRequest<ProductListRequest.Service, B
         }
         if (!TextUtils.isEmpty((params.page))) {
             builder.addFormDataPart("page", params.page);
+        }if (!TextUtils.isEmpty((params.limit))) {
+            builder.addFormDataPart("limit", params.limit);
         }
         if (!TextUtils.isEmpty((params.status_product))) {
             builder.addFormDataPart("status_product", params.status_product);
@@ -111,6 +113,7 @@ public class ProductListRequest extends ApiRequest<ProductListRequest.Service, B
         public String price_sell;
         public String product;
         public String page;
+        public String limit;
         public String status_product;
     }
 }

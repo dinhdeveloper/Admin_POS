@@ -12,6 +12,7 @@ public class OrderCustomerModel extends BaseResponseModel{
     private String order_total;
     private String employee_id;
     private String employee_code;
+    private String order_direct_discount;
     private String employee_fullname;
     private String employee_email;
     private String employee_phone_number;
@@ -43,6 +44,14 @@ public class OrderCustomerModel extends BaseResponseModel{
             list.addAll(Arrays.asList(order_detail));
             return list;
         }
+    }
+
+    public String getOrder_direct_discount() {
+        return order_direct_discount;
+    }
+
+    public void setOrder_direct_discount(String order_direct_discount) {
+        this.order_direct_discount = order_direct_discount;
     }
 
     public String getId_order() {
