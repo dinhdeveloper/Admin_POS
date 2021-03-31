@@ -307,6 +307,46 @@
                 android:layout_marginBottom="@dimen/dp10"
                 android:background="@color/colorAAA" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:text="8. Giá gốc(VNĐ) "
+                        android:textColor="@color/colorAAA"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <b.laixuantam.myaarlibrary.widgets.currencyedittext.CurrencyEditText
+                    android:id="@+id/gia_goc"
+                    android:imeOptions="actionNext"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:layout_marginVertical="@dimen/dp10"
+                    android:background="@color/hinhnen"
+                    android:inputType="number"
+                    android:textSize="14dp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:background="@color/colorAAA" />
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -320,7 +360,7 @@
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="@dimen/dp20"
                     android:layout_weight="1"
-                    android:text="8. Barcode "
+                    android:text="9. Barcode "
                     android:textColor="@color/colorAAA"
                     android:textStyle="bold" />
 
@@ -369,7 +409,7 @@
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="@dimen/dp20"
                     android:layout_weight="1"
-                    android:text="9. QR code "
+                    android:text="10. QR code "
                     android:textColor="@color/colorAAA"
                     android:textStyle="bold" />
 
@@ -508,7 +548,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <include layout="@layout/layout_disable_list" />
 

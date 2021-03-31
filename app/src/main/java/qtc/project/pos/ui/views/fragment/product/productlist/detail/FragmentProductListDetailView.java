@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
     public void init(HomeActivity activity, FragmentProductListDetailViewCallback callback) {
         this.activity = activity;
         this.callback = callback;
-        KeyboardUtils.setupUI(getView(),activity);
+        KeyboardUtils.setupUI(getView(), activity);
         onClick();
 
     }
@@ -74,7 +75,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         mScannerView.startCamera();
     }
 
-    public void genarateScanBarcode(String resultCode){
+    public void genarateScanBarcode(String resultCode) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix;
@@ -87,7 +88,7 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
         }
     }
 
-    public void genarateScanQrcode(String resultCode){
+    public void genarateScanQrcode(String resultCode) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix;
@@ -112,11 +113,13 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
             ui.qrcode.setText(model.getQr_code());
             ui.barcode.setText(model.getBarcode());
             ui.gia_ban.setText(model.getPrice_sell());
+            if (!TextUtils.isEmpty(model.getCost_historical()))
+                ui.gia_goc.setText(model.getCost_historical());
             try {
                 genarateScanBarcode(model.getBarcode());
                 genarateScanQrcode(model.getQr_code());
-            }catch (Exception e){
-                Log.e("Ex",e.getMessage());
+            } catch (Exception e) {
+                Log.e("Ex", e.getMessage());
             }
             ui.name_product_category.setText(model.getCategory_name());
 
@@ -135,6 +138,8 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
                     listModel.setBarcode(ui.barcode.getText().toString());
                     listModel.setQr_code(ui.qrcode.getText().toString());
                     listModel.setPrice_sell(ui.gia_ban.getStringValue());
+                    String cost_historical = !TextUtils.isEmpty(ui.gia_goc.getStringValue()) ? ui.gia_goc.getStringValue() : "0";
+                    listModel.setCost_historical(cost_historical);
                     if (callback != null) {
                         callback.updateProductDetail(listModel);
                     }
@@ -142,17 +147,17 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
             });
 
             ui.layout_delete.setOnClickListener(v -> {
-                if (callback!=null)
+                if (callback != null)
                     callback.deleteProduct(model);
             });
 
             ui.btnDisable.setOnClickListener(v -> {
-                if (callback!=null)
+                if (callback != null)
                     callback.disableProduct(model.getId());
             });
 
             //xoa sp
-        }else {
+        } else {
             ui.layout_delete.setVisibility(View.GONE);
             ui.title_header.setText("Tạo mới sản phẩm");
             ui.tvTitleUpdate.setText("Tạo mới");
@@ -167,6 +172,8 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
                 listModel.setBarcode(ui.barcode.getText().toString());
                 listModel.setQr_code(ui.qrcode.getText().toString());
                 listModel.setPrice_sell(ui.gia_ban.getStringValue());
+                String cost_historical = !TextUtils.isEmpty(ui.gia_goc.getStringValue()) ? ui.gia_goc.getStringValue() : "0";
+                listModel.setCost_historical(cost_historical);
                 if (callback != null) {
                     callback.updateProductDetail(listModel);
                 }
@@ -440,6 +447,9 @@ public class FragmentProductListDetailView extends BaseView<FragmentProductListD
 
         @UiElement(R.id.gia_ban)
         public CurrencyEditText gia_ban;
+
+        @UiElement(R.id.gia_goc)
+        public CurrencyEditText gia_goc;
 
         @UiElement(R.id.btnDisable)
         public RoundTextView btnDisable;

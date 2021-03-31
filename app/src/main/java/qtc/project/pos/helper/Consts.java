@@ -4,7 +4,7 @@ public class Consts {
 
     private static final String HOST_DOMAIN = "http://taphoa35.com/";
     private static final String HOST_DEV = "http://taphoa35.com/api/";
-    private static final String LOCALHOST = "http://192.168.100.27:80/api_pos/";
+    private static final String LOCALHOST = "http://192.168.100.21/taphoa35/";
 
     public static final String HOST_API = HOST_DOMAIN;
 

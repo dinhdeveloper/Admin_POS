@@ -17,6 +17,7 @@ public class ProductListModel extends BaseResponseModel {
     private String quantity_safetystock;
     private String category_name;
     private String price_sell;
+    private String cost_historical;
     private PackageInfoModel[] package_info;
     private StockOutModel[] stock_out;
 
@@ -141,5 +142,13 @@ public class ProductListModel extends BaseResponseModel {
 
     public void setCategory_name(String category_name) {
         this.category_name = category_name;
+    }
+
+    public String getCost_historical() {
+        return cost_historical;
+    }
+
+    public void setCost_historical(String cost_historical) {
+        this.cost_historical = cost_historical;
     }
 }
